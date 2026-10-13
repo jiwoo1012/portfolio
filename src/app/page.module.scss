@@ -1,0 +1,2973 @@
+/* =========================================================
+   COLORS
+========================================================= */
+
+$introBg: #0d1016;
+$introText: #eef1f4;
+
+$homeBg: #f3f6f5;
+
+$black: #111318;
+$purple: #898ef6;
+
+$line: rgba(
+  17,
+  19,
+  24,
+  0.1
+);
+
+$lensSize: 108px;
+$lensRadius: 54px;
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  background:
+    $introBg;
+
+  color:
+    $introText;
+
+  cursor: default;
+}
+
+/*
+  버튼 클릭 시 배경 자체에
+  요란한 glitch는 넣지 않음.
+
+  마지막에만 살짝 fade.
+*/
+
+.introExit {
+  animation:
+    introFadeOut
+    0.72s
+    ease
+    forwards;
+}
+
+@keyframes introFadeOut {
+  0%,
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(
+        255,
+        255,
+        255,
+        0.021
+      )
+      1px,
+      transparent
+      1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(
+        255,
+        255,
+        255,
+        0.021
+      )
+      1px,
+      transparent
+      1px
+    );
+
+  background-size:
+    36px
+    36px;
+
+  pointer-events:
+    none;
+}
+
+/* =========================================================
+   PIXELS
+========================================================= */
+
+.pixelField {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  overflow: hidden;
+
+  pointer-events:
+    none;
+
+  transition:
+    opacity
+    0.45s ease;
+}
+
+.pixelFieldStatement {
+  opacity: 0.24;
+}
+
+.pixelBit {
+  position: absolute;
+
+  left: var(--x);
+  top: var(--y);
+
+  width: var(--w);
+  height: var(--h);
+
+  background:
+    rgba(
+      137,
+      142,
+      246,
+      0.48
+    );
+
+  opacity: 0;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    scale(0.2);
+
+  animation:
+    pixelSpawn
+    0.3s
+    steps(3)
+    forwards;
+}
+
+.pixelBit:nth-child(
+  3n
+) {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.055
+    );
+}
+
+.pixelBit:nth-child(
+  5n
+) {
+  background:
+    rgba(
+      137,
+      142,
+      246,
+      0.75
+    );
+}
+
+.pixelBit:nth-child(
+  7n
+) {
+  width:
+    calc(
+      var(--w) * 1.7
+    );
+}
+
+.pixelBit::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    inherit;
+
+  animation:
+    pixelGhost
+    0.3s
+    steps(3)
+    forwards;
+}
+
+@keyframes pixelSpawn {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(
+          -50% - 8px
+        ),
+        calc(
+          -50% + 2px
+        )
+      )
+      scale(0.2);
+  }
+
+  25% {
+    opacity: 0.7;
+
+    transform:
+      translate(
+        calc(
+          -50% + 5px
+        ),
+        calc(
+          -50% - 1px
+        )
+      )
+      scale(0.7);
+  }
+
+  45% {
+    opacity: 0.15;
+
+    transform:
+      translate(
+        calc(
+          -50% - 3px
+        ),
+        calc(
+          -50% + 1px
+        )
+      )
+      scale(1.08);
+  }
+
+  68% {
+    opacity: 0.9;
+
+    transform:
+      translate(
+        calc(
+          -50% + 1px
+        ),
+        -50%
+      )
+      scale(0.94);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      )
+      scale(1);
+  }
+}
+
+@keyframes pixelGhost {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+
+  25% {
+    opacity: 0.35;
+
+    transform:
+      translateX(
+        8px
+      );
+  }
+
+  50% {
+    opacity: 0.1;
+
+    transform:
+      translateX(
+        -5px
+      );
+  }
+
+  75% {
+    opacity: 0.2;
+
+    transform:
+      translateX(
+        3px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+}
+
+/* =========================================================
+   CODE
+========================================================= */
+
+.codeStage {
+  position: absolute;
+
+  top: 47%;
+  left: 50%;
+
+  z-index: 3;
+
+  width:
+    min(
+      700px,
+      calc(
+        100% - 48px
+      )
+    );
+
+  padding:
+    20px
+    24px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  color:
+    $introText;
+}
+
+.codeStageInteractive {
+  cursor: none;
+}
+
+.codeStageRefined {
+  color: white;
+
+  .codeLabel {
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        0.84
+      );
+  }
+
+  .lineNumber {
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+  }
+
+  .codeLine:nth-child(
+    3n
+  ) {
+    color:
+      #aeb2ff;
+  }
+}
+
+/* =========================================================
+   CODE LABEL
+========================================================= */
+
+.codeLabel {
+  display: flex;
+
+  align-items:
+    center;
+
+  gap: 9px;
+
+  margin-bottom:
+    16px;
+
+  color:
+    rgba(
+      238,
+      241,
+      244,
+      0.65
+    );
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.12em;
+}
+
+.labelDot {
+  width: 6px;
+  height: 6px;
+
+  flex-shrink: 0;
+
+  background:
+    $purple;
+}
+
+/* =========================================================
+   CODE WINDOW
+========================================================= */
+
+.codeWindow {
+  position: relative;
+
+  min-height:
+    270px;
+
+  padding:
+    8px 4px;
+
+  font-family:
+    "Cascadia Code",
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+}
+
+.codeLine {
+  display: flex;
+
+  gap: 24px;
+
+  min-height:
+    22px;
+
+  margin:
+    11px 0;
+
+  color:
+    rgba(
+      238,
+      241,
+      244,
+      0.86
+    );
+
+  font-size:
+    clamp(
+      13px,
+      1.12vw,
+      16px
+    );
+
+  line-height:
+    1.45;
+
+  &:nth-child(
+    3n
+  ) {
+    color:
+      rgba(
+        151,
+        156,
+        255,
+        0.9
+      );
+  }
+}
+
+.lineNumber {
+  width: 24px;
+
+  flex-shrink: 0;
+
+  color:
+    rgba(
+      238,
+      241,
+      244,
+      0.22
+    );
+}
+
+.codeText {
+  white-space: pre;
+}
+
+/* =========================================================
+   CHARACTER GLITCH
+========================================================= */
+
+.typingChar {
+  position: relative;
+
+  display:
+    inline-block;
+
+  animation:
+    charLock
+    0.11s
+    steps(2)
+    both;
+}
+
+.typingChar::before,
+.typingChar::after {
+  content:
+    attr(
+      data-char
+    );
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  pointer-events:
+    none;
+}
+
+.typingChar::before {
+  color:
+    #9ba0ff;
+
+  animation:
+    charGhostLeft
+    0.11s
+    steps(2)
+    both;
+}
+
+.typingChar::after {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.45
+    );
+
+  animation:
+    charGhostRight
+    0.11s
+    steps(2)
+    both;
+}
+
+@keyframes charLock {
+  0% {
+    opacity: 0.18;
+
+    transform:
+      translateX(
+        -4px
+      );
+
+    filter:
+      blur(1px);
+  }
+
+  32% {
+    opacity: 1;
+
+    transform:
+      translateX(
+        3px
+      );
+  }
+
+  60% {
+    opacity: 0.45;
+
+    transform:
+      translateX(
+        -2px
+      );
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateX(0);
+
+    filter:
+      blur(0);
+  }
+}
+
+@keyframes charGhostLeft {
+  0% {
+    opacity: 0;
+  }
+
+  28% {
+    opacity: 0.58;
+
+    transform:
+      translateX(
+        -5px
+      );
+  }
+
+  62% {
+    opacity: 0.12;
+
+    transform:
+      translateX(
+        2px
+      );
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes charGhostRight {
+  0% {
+    opacity: 0;
+  }
+
+  24% {
+    opacity: 0.42;
+
+    transform:
+      translateX(
+        5px
+      );
+  }
+
+  62% {
+    opacity: 0.1;
+
+    transform:
+      translateX(
+        -2px
+      );
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   CODE CURSOR
+========================================================= */
+
+.codeCursor {
+  display:
+    inline-block;
+
+  margin:
+    7px 0
+    0 48px;
+
+  color:
+    $purple;
+
+  font-size:
+    16px;
+
+  font-weight:
+    800;
+
+  animation:
+    cursorBlink
+    0.55s
+    steps(1)
+    infinite;
+}
+
+@keyframes cursorBlink {
+  0%,
+  42% {
+    opacity: 1;
+  }
+
+  43%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   COMPLETE
+========================================================= */
+
+.completeCode {
+  margin:
+    14px 0
+    0 48px;
+
+  color:
+    $purple;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.12em;
+
+  animation:
+    completeAppear
+      0.22s
+      steps(2)
+      both,
+    completeBlink
+      0.3s
+      steps(1)
+      0.22s
+      3;
+}
+
+@keyframes completeAppear {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(
+        -6px
+      );
+  }
+
+  45% {
+    opacity: 1;
+
+    transform:
+      translateX(
+        3px
+      );
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes completeBlink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0.14;
+  }
+}
+
+/* =========================================================
+   CODE EXIT
+========================================================= */
+
+.sceneSwitching {
+  .codeStage {
+    animation:
+      codeSceneOut
+      0.4s
+      steps(4)
+      both;
+  }
+
+  .pixelField {
+    opacity: 0.16;
+  }
+}
+
+@keyframes codeSceneOut {
+  0% {
+    opacity: 1;
+
+    filter:
+      blur(0);
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+  }
+
+  20% {
+    opacity: 0.75;
+
+    transform:
+      translate(
+        calc(
+          -50% - 6px
+        ),
+        -50%
+      );
+  }
+
+  38% {
+    opacity: 0.2;
+
+    transform:
+      translate(
+        calc(
+          -50% + 5px
+        ),
+        -50%
+      );
+  }
+
+  58% {
+    opacity: 0.45;
+
+    transform:
+      translate(
+        calc(
+          -50% - 2px
+        ),
+        -50%
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    filter:
+      blur(3px);
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+  }
+}
+
+/* =========================================================
+   GLASS LENS
+========================================================= */
+
+.lensReveal {
+  position: absolute;
+  inset: 0;
+
+  z-index: 6;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  pointer-events:
+    none;
+
+  clip-path:
+    circle(
+      $lensRadius
+      at
+      var(--mouse-x)
+      var(--mouse-y)
+    );
+
+  transition:
+    opacity
+    0.1s ease;
+}
+
+.lensRevealVisible {
+  opacity: 1;
+}
+
+/*
+  원본 코드가 렌즈 안에서
+  두 겹으로 보이지 않게 함.
+*/
+
+.lensGlassBase {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    radial-gradient(
+      circle
+      at
+      var(--mouse-x)
+      var(--mouse-y),
+
+      rgba(
+        31,
+        36,
+        49,
+        0.99
+      )
+      0%,
+
+      rgba(
+        13,
+        16,
+        22,
+        0.99
+      )
+      100%
+    );
+}
+
+.lensZoomLayer {
+  position: absolute;
+  inset: 0;
+
+  z-index: 2;
+
+  transform:
+    scale(1.12);
+
+  transform-origin:
+    var(--mouse-x)
+    var(--mouse-y);
+
+  filter:
+    contrast(1.08)
+    brightness(1.1);
+}
+
+/* =========================================================
+   GLASS LENS FRAME
+========================================================= */
+
+.lens {
+  position: absolute;
+
+  left:
+    var(--mouse-x);
+
+  top:
+    var(--mouse-y);
+
+  z-index: 30;
+
+  width:
+    $lensSize;
+
+  height:
+    $lensSize;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.23
+    );
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle
+      at
+      28%
+      24%,
+
+      rgba(
+        255,
+        255,
+        255,
+        0.16
+      )
+      0%,
+
+      rgba(
+        255,
+        255,
+        255,
+        0.04
+      )
+      30%,
+
+      rgba(
+        137,
+        142,
+        246,
+        0.018
+      )
+      62%,
+
+      rgba(
+        0,
+        0,
+        0,
+        0.08
+      )
+      100%
+    );
+
+  opacity: 0;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    scale(0.9);
+
+  pointer-events:
+    none;
+
+  box-shadow:
+    0 12px 30px
+      rgba(
+        0,
+        0,
+        0,
+        0.36
+      ),
+    inset
+      0 1px 1px
+      rgba(
+        255,
+        255,
+        255,
+        0.25
+      ),
+    inset
+      0 -12px
+      20px
+      rgba(
+        0,
+        0,
+        0,
+        0.14
+      );
+
+  transition:
+    opacity
+      0.1s ease,
+    transform
+      0.1s ease;
+}
+
+.lensVisible {
+  opacity: 1;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    scale(1);
+}
+
+.lens::before {
+  content: "";
+
+  position: absolute;
+
+  top: 13px;
+  left: 17px;
+
+  width: 30px;
+  height: 14px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.2
+    );
+
+  filter:
+    blur(4px);
+
+  transform:
+    rotate(
+      -20deg
+    );
+}
+
+.lens::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 6px;
+
+  border-radius:
+    50%;
+
+  box-shadow:
+    inset
+      0 0 0
+      1px
+      rgba(
+        255,
+        255,
+        255,
+        0.07
+      ),
+    inset
+      0 9px
+      14px
+      rgba(
+        255,
+        255,
+        255,
+        0.055
+      ),
+    inset
+      0 -11px
+      19px
+      rgba(
+        0,
+        0,
+        0,
+        0.12
+      );
+}
+
+.lensLabel {
+  position: absolute;
+
+  top: -21px;
+  left: 3px;
+
+  display: flex;
+
+  gap: 6px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.48
+    );
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 7px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+
+  white-space:
+    nowrap;
+
+  b {
+    color:
+      $purple;
+  }
+}
+
+.lensHint {
+  position: absolute;
+
+  left: 50%;
+  bottom: 32px;
+
+  z-index: 5;
+
+  margin: 0;
+
+  transform:
+    translateX(
+      -50%
+    );
+
+  color:
+    rgba(
+      238,
+      241,
+      244,
+      0.2
+    );
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 7px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.08em;
+
+  pointer-events:
+    none;
+}
+
+/* =========================================================
+   STATEMENT
+========================================================= */
+
+.statement {
+  position: absolute;
+
+  top: 48%;
+  left: 50%;
+
+  z-index: 20;
+
+  width:
+    min(
+      820px,
+      calc(
+        100% - 40px
+      )
+    );
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  text-align:
+    center;
+}
+
+/* =========================================================
+   SMALL TEXT
+========================================================= */
+
+.statementEyebrow {
+  margin:
+    0 0
+    17px;
+
+  color:
+    $purple;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.14em;
+
+  opacity: 0;
+
+  animation:
+    detailLabelSignal
+    0.7s
+    steps(4)
+    0.28s
+    forwards;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.statementTitleWrap {
+  position: relative;
+
+  overflow:
+    visible;
+}
+
+.statementTitle {
+  position: relative;
+
+  margin: 0;
+
+  color:
+    #f5f7f8;
+
+  font-size:
+    clamp(
+      40px,
+      4.8vw,
+      72px
+    );
+
+  line-height:
+    1.12;
+
+  letter-spacing:
+    -0.05em;
+
+  font-weight:
+    900;
+
+  word-break:
+    keep-all;
+
+  opacity: 0;
+
+  /*
+    글자 자체가 TV 신호를 잡음.
+  */
+
+  animation:
+    textSignalIn
+    0.95s
+    steps(8)
+    forwards;
+
+  /*
+    pseudo element가
+    가로 조각 노이즈를 담당.
+  */
+}
+
+.statementTitle::before,
+.statementTitle::after {
+  content:
+    attr(
+      data-text
+    );
+
+  position: absolute;
+
+  inset: 0;
+
+  color:
+    inherit;
+
+  white-space:
+    pre-line;
+
+  pointer-events:
+    none;
+
+  opacity: 0;
+}
+
+/*
+  위쪽/중간 가로 조각.
+*/
+
+.statementTitle::before {
+  color:
+    #a6aaff;
+
+  text-shadow:
+    -3px 0
+      rgba(
+        137,
+        142,
+        246,
+        0.8
+      );
+
+  clip-path:
+    polygon(
+      0 9%,
+      100% 9%,
+      100% 23%,
+      0 23%,
+
+      0 44%,
+      100% 44%,
+      100% 54%,
+      0 54%,
+
+      0 76%,
+      100% 76%,
+      100% 82%,
+      0 82%
+    );
+
+  animation:
+    textSliceLeft
+    0.82s
+    steps(7)
+    forwards;
+}
+
+/*
+  다른 위치의 흰색 잔상.
+*/
+
+.statementTitle::after {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.85
+    );
+
+  text-shadow:
+    3px 0
+      rgba(
+        255,
+        255,
+        255,
+        0.22
+      );
+
+  clip-path:
+    polygon(
+      0 27%,
+      100% 27%,
+      100% 35%,
+      0 35%,
+
+      0 59%,
+      100% 59%,
+      100% 68%,
+      0 68%,
+
+      0 88%,
+      100% 88%,
+      100% 94%,
+      0 94%
+    );
+
+  animation:
+    textSliceRight
+    0.88s
+    steps(8)
+    0.03s
+    forwards;
+}
+
+/* =========================================================
+   MAIN TEXT SIGNAL
+========================================================= */
+
+@keyframes textSignalIn {
+  0% {
+    opacity: 0;
+
+    filter:
+      blur(4px)
+      contrast(1.8);
+
+    clip-path:
+      inset(
+        48% 0
+        48% 0
+      );
+  }
+
+  8% {
+    opacity: 0.8;
+
+    clip-path:
+      inset(
+        42% 0
+        42% 0
+      );
+  }
+
+  15% {
+    opacity: 0.12;
+
+    filter:
+      blur(2px)
+      contrast(2);
+  }
+
+  24% {
+    opacity: 0.9;
+
+    clip-path:
+      inset(
+        32% 0
+        32% 0
+      );
+  }
+
+  32% {
+    opacity: 0.28;
+
+    clip-path:
+      inset(
+        28% 0
+        25% 0
+      );
+  }
+
+  41% {
+    opacity: 1;
+
+    clip-path:
+      inset(
+        19% 0
+        18% 0
+      );
+
+    filter:
+      blur(1px)
+      contrast(1.55);
+  }
+
+  50% {
+    opacity: 0.38;
+  }
+
+  61% {
+    opacity: 1;
+
+    clip-path:
+      inset(
+        11% 0
+        10% 0
+      );
+  }
+
+  72% {
+    opacity: 0.68;
+
+    filter:
+      blur(0.4px)
+      contrast(1.25);
+  }
+
+  82% {
+    opacity: 1;
+
+    clip-path:
+      inset(
+        3% 0
+        3% 0
+      );
+  }
+
+  91% {
+    opacity: 0.86;
+  }
+
+  100% {
+    opacity: 1;
+
+    clip-path:
+      inset(
+        0
+      );
+
+    filter:
+      blur(0)
+      contrast(1);
+  }
+}
+
+/* =========================================================
+   TEXT STATIC SLICES
+========================================================= */
+
+@keyframes textSliceLeft {
+  0% {
+    opacity: 0;
+    transform:
+      translateX(
+        0
+      );
+  }
+
+  8% {
+    opacity: 0.9;
+
+    transform:
+      translateX(
+        -13px
+      );
+  }
+
+  17% {
+    opacity: 0.16;
+
+    transform:
+      translateX(
+        8px
+      );
+  }
+
+  27% {
+    opacity: 0.8;
+
+    transform:
+      translateX(
+        -9px
+      );
+  }
+
+  40% {
+    opacity: 0.1;
+
+    transform:
+      translateX(
+        7px
+      );
+  }
+
+  52% {
+    opacity: 0.62;
+
+    transform:
+      translateX(
+        -5px
+      );
+  }
+
+  66% {
+    opacity: 0.14;
+
+    transform:
+      translateX(
+        4px
+      );
+  }
+
+  78% {
+    opacity: 0.38;
+
+    transform:
+      translateX(
+        -2px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes textSliceRight {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+
+  12% {
+    opacity: 0.68;
+
+    transform:
+      translateX(
+        12px
+      );
+  }
+
+  21% {
+    opacity: 0.08;
+
+    transform:
+      translateX(
+        -8px
+      );
+  }
+
+  31% {
+    opacity: 0.76;
+
+    transform:
+      translateX(
+        9px
+      );
+  }
+
+  44% {
+    opacity: 0.12;
+
+    transform:
+      translateX(
+        -5px
+      );
+  }
+
+  58% {
+    opacity: 0.52;
+
+    transform:
+      translateX(
+        4px
+      );
+  }
+
+  72% {
+    opacity: 0.1;
+
+    transform:
+      translateX(
+        -3px
+      );
+  }
+
+  84% {
+    opacity: 0.28;
+
+    transform:
+      translateX(
+        2px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+}
+
+/* =========================================================
+   LABEL SIGNAL
+========================================================= */
+
+@keyframes detailLabelSignal {
+  0% {
+    opacity: 0;
+
+    filter:
+      blur(2px);
+  }
+
+  18% {
+    opacity: 1;
+
+    transform:
+      translateX(
+        -3px
+      );
+  }
+
+  32% {
+    opacity: 0.15;
+  }
+
+  48% {
+    opacity: 0.8;
+
+    transform:
+      translateX(
+        2px
+      );
+  }
+
+  68% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateX(0);
+
+    filter:
+      blur(0);
+  }
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.statementDescription {
+  margin:
+    22px auto
+    0;
+
+  max-width:
+    430px;
+
+  color:
+    rgba(
+      238,
+      241,
+      244,
+      0.45
+    );
+
+  font-size:
+    13px;
+
+  line-height:
+    1.65;
+
+  opacity: 0;
+
+  animation:
+    descriptionIn
+    0.38s
+    ease
+    0.72s
+    forwards;
+}
+
+@keyframes descriptionIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(
+        4px
+      );
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+.enterButton {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap: 28px;
+
+  min-width:
+    190px;
+
+  margin-top:
+    29px;
+
+  padding:
+    13px
+    16px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.68
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.035
+    );
+
+  color:
+    #f6f7f8;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  cursor: pointer;
+
+  box-shadow:
+    3px
+    3px
+    0
+    $purple;
+
+  opacity: 0;
+
+  animation:
+    buttonIn
+    0.35s
+    ease
+    0.82s
+    forwards;
+
+  transition:
+    background
+      0.16s ease,
+    color
+      0.16s ease,
+    transform
+      0.14s
+      steps(2),
+    box-shadow
+      0.14s
+      steps(2);
+
+  &:hover {
+    background:
+      #f6f7f8;
+
+    color:
+      $black;
+
+    transform:
+      translate(
+        2px,
+        2px
+      );
+
+    box-shadow:
+      1px
+      1px
+      0
+      $purple;
+  }
+}
+
+.enterText {
+  display:
+    inline-block;
+}
+
+.enterArrow {
+  display:
+    inline-block;
+
+  transition:
+    transform
+    0.18s ease;
+}
+
+.enterButton:hover
+.enterArrow {
+  transform:
+    translateX(
+      4px
+    );
+}
+
+@keyframes buttonIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(
+        5px
+      );
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+/* =========================================================
+   ENTER CLICK
+   글씨 자체가 TV 지지직으로 사라짐
+========================================================= */
+
+.introExit {
+  .statementEyebrow {
+    animation:
+      smallSignalOut
+      0.38s
+      steps(5)
+      forwards;
+  }
+
+  .statementDescription {
+    animation:
+      smallSignalOut
+      0.34s
+      steps(4)
+      0.08s
+      forwards;
+  }
+
+  .enterButton {
+    animation:
+      buttonSignalOut
+      0.4s
+      steps(5)
+      forwards;
+  }
+
+  .statementTitle {
+    animation:
+      titleSignalOut
+      0.62s
+      steps(8)
+      forwards;
+  }
+
+  .statementTitle::before {
+    animation:
+      exitSliceLeft
+      0.58s
+      steps(7)
+      forwards;
+  }
+
+  .statementTitle::after {
+    animation:
+      exitSliceRight
+      0.58s
+      steps(7)
+      forwards;
+  }
+}
+
+/* 제목 꺼짐 */
+
+@keyframes titleSignalOut {
+  0% {
+    opacity: 1;
+
+    filter:
+      blur(0)
+      contrast(1);
+
+    clip-path:
+      inset(0);
+  }
+
+  11% {
+    opacity: 0.48;
+
+    filter:
+      contrast(1.8);
+  }
+
+  20% {
+    opacity: 1;
+
+    clip-path:
+      inset(
+        7% 0
+        6% 0
+      );
+  }
+
+  31% {
+    opacity: 0.22;
+
+    clip-path:
+      inset(
+        14% 0
+        15% 0
+      );
+  }
+
+  43% {
+    opacity: 0.92;
+
+    clip-path:
+      inset(
+        22% 0
+        21% 0
+      );
+  }
+
+  56% {
+    opacity: 0.16;
+
+    clip-path:
+      inset(
+        29% 0
+        30% 0
+      );
+  }
+
+  68% {
+    opacity: 0.75;
+
+    clip-path:
+      inset(
+        36% 0
+        37% 0
+      );
+
+    filter:
+      blur(1px)
+      contrast(2);
+  }
+
+  81% {
+    opacity: 0.25;
+
+    clip-path:
+      inset(
+        44% 0
+        44% 0
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    clip-path:
+      inset(
+        49% 0
+        49% 0
+      );
+
+    filter:
+      blur(4px)
+      contrast(2.2);
+  }
+}
+
+/* 클릭 시 가로 조각이 확 찢어짐 */
+
+@keyframes exitSliceLeft {
+  0% {
+    opacity: 0;
+  }
+
+  9% {
+    opacity: 0.85;
+
+    transform:
+      translateX(
+        -10px
+      );
+  }
+
+  20% {
+    opacity: 0.2;
+
+    transform:
+      translateX(
+        13px
+      );
+  }
+
+  34% {
+    opacity: 0.9;
+
+    transform:
+      translateX(
+        -18px
+      );
+  }
+
+  47% {
+    opacity: 0.18;
+
+    transform:
+      translateX(
+        9px
+      );
+  }
+
+  63% {
+    opacity: 0.72;
+
+    transform:
+      translateX(
+        -12px
+      );
+  }
+
+  78% {
+    opacity: 0.22;
+
+    transform:
+      translateX(
+        5px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(
+        -3px
+      );
+  }
+}
+
+@keyframes exitSliceRight {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.72;
+
+    transform:
+      translateX(
+        12px
+      );
+  }
+
+  22% {
+    opacity: 0.16;
+
+    transform:
+      translateX(
+        -11px
+      );
+  }
+
+  36% {
+    opacity: 0.82;
+
+    transform:
+      translateX(
+        17px
+      );
+  }
+
+  50% {
+    opacity: 0.14;
+
+    transform:
+      translateX(
+        -8px
+      );
+  }
+
+  64% {
+    opacity: 0.65;
+
+    transform:
+      translateX(
+        10px
+      );
+  }
+
+  80% {
+    opacity: 0.18;
+
+    transform:
+      translateX(
+        -4px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(
+        3px
+      );
+  }
+}
+
+@keyframes smallSignalOut {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0.15;
+
+    transform:
+      translateX(
+        -3px
+      );
+  }
+
+  37% {
+    opacity: 0.85;
+
+    transform:
+      translateX(
+        2px
+      );
+  }
+
+  57% {
+    opacity: 0.1;
+  }
+
+  74% {
+    opacity: 0.4;
+
+    transform:
+      translateX(
+        -1px
+      );
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes buttonSignalOut {
+  0% {
+    opacity: 1;
+
+    transform:
+      translate(0);
+  }
+
+  18% {
+    opacity: 0.25;
+
+    transform:
+      translateX(
+        -5px
+      );
+  }
+
+  34% {
+    opacity: 0.9;
+
+    transform:
+      translateX(
+        4px
+      );
+  }
+
+  52% {
+    opacity: 0.15;
+
+    transform:
+      translateX(
+        -3px
+      );
+  }
+
+  70% {
+    opacity: 0.55;
+
+    transform:
+      translateX(
+        2px
+      );
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(0);
+  }
+}
+
+/* =========================================================
+   HOME
+========================================================= */
+
+.home {
+  min-height:
+    100vh;
+
+  background:
+    $homeBg;
+
+  color:
+    $black;
+
+  animation:
+    homeIn
+    0.65s
+    ease
+    both;
+}
+
+@keyframes homeIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(
+        8px
+      );
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 10;
+
+  height: 76px;
+
+  display: flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  padding:
+    0 6vw;
+
+  border-bottom:
+    1px solid
+    $line;
+
+  background:
+    rgba(
+      243,
+      246,
+      245,
+      0.92
+    );
+
+  backdrop-filter:
+    blur(12px);
+}
+
+.logo {
+  color:
+    $black;
+
+  text-decoration:
+    none;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-weight:
+    900;
+}
+
+.nav {
+  display: flex;
+
+  gap: 34px;
+
+  a {
+    color:
+      $black;
+
+    text-decoration:
+      none;
+
+    font-size:
+      12px;
+
+    font-weight:
+      700;
+
+    &:hover {
+      color:
+        $purple;
+    }
+  }
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  min-height:
+    calc(
+      100vh - 76px
+    );
+
+  display: grid;
+
+  grid-template-columns:
+    1.25fr
+    0.75fr;
+
+  align-items:
+    center;
+
+  gap: 80px;
+
+  padding:
+    8vw;
+
+  background-image:
+    linear-gradient(
+      rgba(
+        17,
+        19,
+        24,
+        0.02
+      )
+      1px,
+      transparent
+      1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(
+        17,
+        19,
+        24,
+        0.02
+      )
+      1px,
+      transparent
+      1px
+    );
+
+  background-size:
+    34px
+    34px;
+}
+
+.heroContent {
+  min-width: 0;
+
+  h2 {
+    margin:
+      16px 0
+      26px;
+
+    font-size:
+      clamp(
+        60px,
+        8vw,
+        126px
+      );
+
+    line-height:
+      0.86;
+
+    letter-spacing:
+      -0.06em;
+
+    span {
+      color:
+        $purple;
+    }
+  }
+}
+
+.heroLabel {
+  margin: 0;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    12px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+}
+
+.heroDescription {
+  margin: 0;
+
+  font-size:
+    16px;
+
+  line-height:
+    1.8;
+
+  color:
+    rgba(
+      17,
+      19,
+      24,
+      0.6
+    );
+}
+
+.heroButtons {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top:
+    32px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    14px
+    18px;
+
+  border:
+    1px solid
+    $black;
+
+  color:
+    $black;
+
+  text-decoration:
+    none;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+}
+
+.primaryButton {
+  background:
+    $black;
+
+  color:
+    white;
+}
+
+.secondaryButton {
+  background:
+    transparent;
+}
+
+.heroDetail {
+  justify-self:
+    end;
+
+  width:
+    min(
+      370px,
+      100%
+    );
+}
+
+.cornerText {
+  display: block;
+
+  margin-bottom:
+    10px;
+
+  text-align:
+    right;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    10px;
+
+  color:
+    rgba(
+      17,
+      19,
+      24,
+      0.42
+    );
+}
+
+.detailBox {
+  min-height:
+    240px;
+
+  display: flex;
+
+  align-items:
+    flex-end;
+
+  padding:
+    28px;
+
+  border:
+    1px solid
+    $black;
+
+  box-shadow:
+    7px
+    7px
+    0
+    $purple;
+
+  p {
+    margin: 0;
+
+    font-family:
+      "Courier New",
+      monospace;
+
+    font-size:
+      24px;
+
+    line-height:
+      1.2;
+
+    strong {
+      color:
+        $purple;
+    }
+  }
+}
+
+/* =========================================================
+   PLACEHOLDER SECTIONS
+========================================================= */
+
+.placeholderSection {
+  min-height:
+    420px;
+
+  display: grid;
+
+  grid-template-columns:
+    80px
+    1fr;
+
+  gap: 40px;
+
+  padding:
+    80px
+    8vw;
+
+  border-top:
+    1px solid
+    $line;
+
+  > span {
+    color:
+      $purple;
+
+    font-family:
+      "Courier New",
+      monospace;
+
+    font-size:
+      12px;
+  }
+
+  p {
+    margin:
+      0 0
+      12px;
+
+    font-family:
+      "Courier New",
+      monospace;
+
+    font-size:
+      12px;
+
+    font-weight:
+      700;
+  }
+
+  h3 {
+    margin: 0;
+
+    font-size:
+      clamp(
+        30px,
+        4vw,
+        60px
+      );
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (
+  max-width:
+    800px
+) {
+  .codeStage {
+    top: 44%;
+
+    width:
+      calc(
+        100% - 28px
+      );
+
+    padding:
+      16px
+      8px;
+  }
+
+  .codeWindow {
+    min-height:
+      245px;
+
+    padding:
+      5px 0;
+  }
+
+  .codeLine {
+    gap: 9px;
+
+    margin:
+      9px 0;
+
+    font-size:
+      9px;
+  }
+
+  .lineNumber {
+    width: 18px;
+  }
+
+  .lens,
+  .lensReveal,
+  .lensHint {
+    display: none;
+  }
+
+  .statement {
+    width:
+      calc(
+        100% - 36px
+      );
+  }
+
+  .statementTitle {
+    font-size:
+      clamp(
+        32px,
+        10vw,
+        48px
+      );
+
+    line-height:
+      1.18;
+  }
+
+  .statementDescription {
+    font-size:
+      12px;
+  }
+
+  .enterButton {
+    min-width:
+      180px;
+  }
+
+  .header {
+    padding:
+      0 24px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns:
+      1fr;
+
+    gap: 50px;
+
+    padding:
+      80px
+      24px;
+  }
+
+  .heroContent {
+    h2 {
+      font-size:
+        clamp(
+          50px,
+          16vw,
+          86px
+        );
+    }
+  }
+
+  .heroDetail {
+    justify-self:
+      start;
+  }
+
+  .heroButtons {
+    flex-wrap:
+      wrap;
+  }
+
+  .placeholderSection {
+    grid-template-columns:
+      1fr;
+
+    gap: 16px;
+
+    padding:
+      60px
+      24px;
+  }
+}
