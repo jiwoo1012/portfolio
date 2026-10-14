@@ -1,0 +1,105 @@
+@font-face { font-family: "About Pretendard"; src: url("/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "About Pixel"; src: url("/fonts/VT323-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+$dark: #17232c;
+$light: #eaf8fd;
+$blue: #a6c7d5;
+$yellow: #ffda83;
+
+.page { background: $dark; color: $light; font-family: "About Pretendard", Arial, sans-serif; -webkit-font-smoothing: antialiased; a { text-decoration: none; } a:focus-visible { outline: 2px solid $yellow; outline-offset: 7px; } section[id] { scroll-margin-top: 95px; } }
+.skip { position: fixed; top: -100px; left: 20px; z-index: 100; background: $yellow; color: $dark; padding: 15px; &:focus { top: 15px; } }
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 76px; padding: 0 5%; background: $light; color: $dark; z-index: 50; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #17232c20; nav { display: flex; gap: 38px; } nav a { font-size: 11px; font-weight: 800; padding: 12px 0; } nav a[aria-current] { text-decoration: underline; text-underline-offset: 7px; } }
+.logo { font-size: 22px; font-weight: 950; letter-spacing: -2px; }
+.available { font-size: 9px; font-weight: 700; display: flex; gap: 8px; align-items: center; &::before { content: ''; width: 5px; height: 5px; background: #79a06b; } }
+.hero { min-height: 690px; min-height: 90svh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: $light; color: $dark; text-align: center; padding: 130px 6% 100px; position: relative; h1 { margin: 0; font-size: clamp(30px, 4.4vw, 70px); font-weight: 850; line-height: 1.5; letter-spacing: -.055em; } h1 span { color: $blue; white-space: nowrap; } > p { font-size: clamp(11px, 1vw, 15px); font-weight: 750; margin: 20px 0 0; } }
+.heroBottom { position: absolute; bottom: 30px; width: 88%; display: flex; justify-content: space-between; font: 13px "About Pixel", monospace; letter-spacing: .1em; }
+.inner { width: min(1120px, 82%); margin: auto; }
+.introduction { padding: 160px 0 130px; }
+.eyebrow { font: 18px "About Pixel", monospace; letter-spacing: .08em; margin: 0 0 44px; }
+.greeting { margin: 0 0 55px; font-size: clamp(19px, 2.5vw, 30px); letter-spacing: -.04em; font-weight: 800; }
+.fillText { margin: 0; font-size: clamp(25px, 3.25vw, 48px); font-weight: 800; letter-spacing: -.04em; line-height: 1.6; word-break: keep-all; }
+.introLine { position: relative; display: block; width: fit-content; max-width: 100%; color: #62737c; }
+.introInk { position: absolute; inset: 0; color: $light; clip-path: inset(0 calc(100% - var(--fill, 100%)) 0 0); }
+.introNote { font-size: 15px; line-height: 1.9; color: $blue; margin: 32px 0 0; word-break: keep-all; }
+.background { padding: 40px 0 140px; }
+.resumeGrid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 42px; }
+.resumeColumn { border-left: 1px solid #a6c7d57a; padding-left: 25px; h2 { margin: 0 0 32px; font: 27px "About Pixel", monospace; } ol { list-style: none; margin: 0; padding: 0; } li + li { margin-top: 26px; } h3 { font-size: 14px; line-height: 1.6; margin: 6px 0; word-break: keep-all; } p { font-size: 12px; line-height: 1.8; margin: 4px 0; color: #b7c9d1; word-break: keep-all; } .period { font: 12px "About Pixel", monospace; color: $blue; letter-spacing: .05em; } }
+.badge { display: inline-block; margin-left: 8px; font: 10px "About Pretendard", sans-serif; color: $yellow; }
+.toolbox { border-top: 1px solid #a6c7d530; margin-top: 65px; padding-top: 30px; display: flex; gap: 40px; justify-content: space-between; flex-wrap: wrap; h3 { font: 19px "About Pixel", monospace; margin: 0 0 12px; color: $blue; } p { max-width: 250px; font-size: 11px; line-height: 1.9; margin: 0; } }
+.stackSection { height: 310svh; position: relative; }
+.stackStage { height: 100svh; min-height: 580px; position: sticky; top: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.stackTitle { position: absolute; top: 13%; left: 5%; right: 5%; display: flex; justify-content: space-between; margin: 0; font: clamp(76px, 12.5vw, 190px)/1 "About Pixel", monospace; letter-spacing: -.03em; }
+.cardDeck { position: relative; width: min(430px, 43vw); height: 380px; margin-top: 40px; }
+.detailCard { position: absolute; width: 100%; height: 340px; padding: 26px; background: $light; color: $dark; transform-origin: center top; box-shadow: 0 10px 25px #00000018; display: flex; flex-direction: column; justify-content: space-between; &:nth-child(1) { top: 0; background: $yellow; } &:nth-child(2) { top: 58px; } &:nth-child(3) { top: 116px; background: #c3dce4; } }
+.cardHeading { display: flex; gap: 18px; align-items: baseline; h3 { margin: 0; font-size: 17px; font-weight: 850; letter-spacing: -.04em; } > span { font: 26px "About Pixel", monospace; } }
+.cardBody { padding-top: 25px; > span { font: 15px "About Pixel", monospace; letter-spacing: .08em; opacity: .55; } p { font-size: 14px; line-height: 1.8; word-break: keep-all; max-width: 290px; margin: 12px 0 25px; } strong { display: block; text-align: right; font-size: 26px; line-height: 1.25; letter-spacing: -.06em; font-weight: 900; } }
+.stackCaption { position: absolute; bottom: 35px; right: 6%; left: 6%; display: flex; justify-content: space-between; align-items: end; gap: 30px; p { margin: 0; font-size: 12px; line-height: 1.7; text-align: right; } > span { font: 14px "About Pixel", monospace; color: $blue; } }
+.statement { position: relative; background: #fff; color: $dark; width: 100%; height: 190svh; }
+.statementStage { position: sticky; top: 0; height: 100svh; width: 100%; display: grid; place-items: center; padding: 100px 4% 50px; text-align: center;
+  &::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 24px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cpath fill='%2317232c' d='M0 0v12h8v6h8V6h8v12h8v-6h8V0h8v12h8v6h8V6h8v12h8v-6h8v6h8V6h8v6h8V0z'/%3E%3C/svg%3E") repeat-x top / 120px 24px; }
+  h2 { margin: 0; font-size: clamp(14px, 3.8vw, 64px); font-weight: 850; line-height: 1.85; letter-spacing: -.045em; }
+  em { font-style: normal; background: linear-gradient(transparent 64%, $blue 64%); }
+}
+.statementLine { position: relative; display: block; width: fit-content; margin-inline: auto; white-space: nowrap; color: #a9b9c1; }
+.statementInk { position: absolute; inset: 0; color: $dark; clip-path: inset(0 calc(100% - var(--fill, 100%)) 0 0); }
+.statementStage::before { top: 72px; }
+.statementStage::after { content: ''; position: absolute; inset: 0 0 auto; height: 72px; background: $dark; }
+.contact { height: 210svh; position: relative; }
+.contactStage { position: sticky; top: 0; height: 100svh; min-height: 450px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 90px 4% 70px; h2 { font: 36px "About Pixel", monospace; letter-spacing: .04em; margin: 0 0 25px; } }
+.pixelEmail { display: flex; flex-direction: column; align-items: center; width: min(1200px, 100%); position: relative;
+  &[data-ready="true"] { canvas { display: block; opacity: calc(1 - var(--email-opacity, 0)); } .emailFallback { opacity: var(--email-opacity, 0); } }
+  &:hover .emailAction { color: $yellow; }
+  &:focus-visible { .emailFallback { opacity: 1; } canvas { opacity: 0; } }
+}
+.emailVisual { display: grid; place-items: center; position: relative; width: 100%; aspect-ratio: 1200 / 440; container-type: inline-size;
+  canvas { display: none; width: 100%; height: auto; grid-area: 1 / 1; }
+}
+.emailFallback { grid-area: 1 / 1; font: bold 6.5cqw/1 monospace; white-space: nowrap; color: $light; text-align: center; }
+.emailAction { margin-top: 30px; font: 13px "About Pixel", monospace; color: $blue; letter-spacing: .08em; text-align: center; span { margin-left: 10px; } }
+.footer { position: absolute; bottom: 25px; left: 6%; right: 6%; display: flex; justify-content: space-between; gap: 20px; font: 12px "About Pixel", monospace; color: $blue; }
+
+@media (max-width: 760px) {
+  .header { height: 65px; nav { gap: 22px; } }
+  .available { display: none; }
+  .hero { min-height: 75svh; h1 { font-size: clamp(26px, 5.2vw, 40px); } }
+  .inner { width: 86%; }
+  .introduction { padding: 100px 0 70px; }
+  .fillText { font-size: clamp(23px, 4.5vw, 34px); }
+  .greeting { margin-bottom: 35px; }
+  .introNote { font-size: 13px; }
+  .resumeGrid { gap: 22px; grid-template-columns: 1fr; }
+  .resumeColumn { padding: 5px 0 8px 20px; h2 { margin-bottom: 22px; } ol { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; } li + li { margin-top: 0; } }
+  .background { padding-bottom: 80px; }
+  .toolbox { margin-top: 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .stackTitle { top: 12%; font-size: clamp(58px, 15vw, 110px); }
+  .cardDeck { width: min(350px, 76vw); height: 340px; margin-top: 45px; }
+  .detailCard { height: 280px; padding: 20px; &:nth-child(2) { top: 50px; } &:nth-child(3) { top: 100px; } }
+  .cardHeading { gap: 12px; h3 { font-size: 15px; } }
+  .cardBody { padding-top: 10px; p { font-size: 12px; margin-bottom: 18px; } strong { font-size: 24px; } }
+  .stackCaption { bottom: 25px; p { font-size: 10px; } > span { font-size: 11px; } }
+  .statementStage { padding: 85px 4% 35px; }
+  .statementStage::before { top: 65px; }
+  .statementStage::after { height: 65px; }
+  .statementStage h2 { font-size: clamp(16px, 5.2vw, 38px); }
+  .contactStage { h2 { font-size: 28px; } }
+  .pixelEmail { min-height: 200px; }
+  .emailAction { font-size: 11px; letter-spacing: .03em; }
+}
+@media (max-height: 700px) and (min-width: 761px) {
+  .cardDeck { height: 300px; margin-top: 0; }
+  .detailCard { height: 250px; padding: 20px; }
+  .cardBody p { margin-bottom: 12px; font-size: 12px; }
+  .cardBody strong { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stackSection, .contact, .statement { height: auto; }
+  .statementStage { position: relative; }
+  .stackStage { position: relative; height: auto; min-height: 0; padding: 160px 0 120px; overflow: visible; }
+  .stackTitle { top: 35px; font-size: clamp(55px, 10vw, 130px); }
+  .cardDeck { height: auto; margin: 0; }
+  .detailCard { position: relative; top: auto !important; height: auto; min-height: 280px; + .detailCard { margin-top: 22px; } }
+  .contactStage { position: relative; height: auto; min-height: 500px; }
+}
+
+.header nav a { color: inherit; text-transform: uppercase; border: 0; background: transparent; box-shadow: none; }
+.header nav a > span { display: none; }
+.header nav a[aria-current='page'] { background: transparent; box-shadow: none; border: 0; }

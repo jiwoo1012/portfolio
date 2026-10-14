@@ -6,6 +6,7 @@ import { skillIcons } from "../about/skill-icons";
 import { resumeSections } from "../about/profile";
 import { homeContact } from "./home-data";
 import HomeExperience from "./home-experience";
+import HomeHeader from "@/components/HomeHeader";
 import styles from "./page.module.scss";
 
 export const metadata: Metadata = { title: "김지우 | Full-stack Developer", description: "AI 닿지 않는 디테일까지 코드로 완성합니다. 풀스택 개발자 김지우의 포트폴리오." };
@@ -20,11 +21,7 @@ const resumes = [resumeSections[0], resumeSections[2]];
 export default function HomePage() {
   return <HomeExperience>
     <a className={styles.skip} href="#main-content">본문으로 건너뛰기</a>
-    <header className={styles.header}>
-      <Link href="/home" className={styles.logo} aria-label="김지우 홈">JIWOO</Link>
-      <nav aria-label="메인 메뉴"><Link href="/home" aria-current="page">HOME</Link><Link href="/about">ABOUT</Link><Link href="/project">PROJECT</Link><a href="#contact">CONTACT</a></nav>
-      <a href="#contact" className={styles.availability}><i />Open to Work</a>
-    </header>
+    <HomeHeader active="home" />
     <main id="main-content">
       <section className={styles.hero} aria-labelledby="home-title">
         <span className={styles.badge}><i />풀스택 개발자</span>

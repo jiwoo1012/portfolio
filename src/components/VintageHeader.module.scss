@@ -9,3 +9,8 @@
 .headerNote { font: 8px "Courier New", monospace; letter-spacing: .1em; }
 @media (max-width: 900px) { .headerNote { display: none; } .header { height: 75px; } }
 @media (max-width: 600px) { .header { width: 88%; height: 68px; gap: 10px; nav { gap: 0; } nav a { font-size: 11px; padding: 10px 12px; } } }
+
+.headerSpace { height: 94px; }
+.header { position: fixed; inset: 0 0 auto; width: 100%; padding-inline: 5%; background: #fff; z-index: 50; border-bottom: 1px solid #17232c20; }
+@media (max-width: 900px) { .headerSpace { height: 75px; } }
+@media (max-width: 600px) { .headerSpace { height: 68px; } .header { width: 100%; padding-inline: 6%; } }

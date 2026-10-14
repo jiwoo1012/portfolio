@@ -62,7 +62,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     proposalUrl: "",
     scaffold: true,
     team: "5명 (팀 프로젝트)",
-    stack: ["React", "Firebase", "OpenAI API", "Zustand", "Vercel"],
+    stack: ["React", "Sass", "OpenAI", "Firebase", "GitHub", "Vercel"],
     overview: "자작(JAJAK)은 사용자의 술 취향과 그날의 기분·상황을 반영해 전통주, 안주, 술잔으로 구성된 맞춤형 주안상을 추천하는 AI 기반 커머스 플랫폼입니다.\n\n마스코트 '막둥이'를 통해 전통주를 친근하게 소개하고, AI 큐레이션으로 개인에게 어울리는 주안상을 제안합니다. 상품 탐색부터 찜·장바구니, 추천 기록 관리까지 하나의 서비스로 구현했습니다.",
     background: "",
     target: "",

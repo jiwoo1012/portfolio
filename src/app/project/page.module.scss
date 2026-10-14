@@ -166,12 +166,86 @@
 }
 .cardLink:hover .titleButton, .cardLink:focus-visible .titleButton { color: #537584; }
 
+.technologyLogos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; list-style: none; padding: 0 5px; margin: 16px 0 0;
+  li { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; }
+  img { display: block; width: 28px; height: 28px; object-fit: contain; }
+}
+@media (max-width: 600px) { .technologyLogos { gap: 9px; li, img { width: 23px; height: 23px; } } }
 .thumbnail > .hoverCapture {
   opacity: 0;
   object-fit: cover;
   object-position: center top;
   pointer-events: none;
 }
+
+/* Project archive: full-screen scroll introduction, category band and question form. */
+@font-face { font-family: "Project Pixel"; src: url("/fonts/VT323-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Project Pretendard"; src: url("/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+.page { --pf-ink: #17232c; --pf-paper: #fff; --pf-muted: #52616a; --pf-line: #d7dce0; --pf-lime: #abc8d2; --pf-mono: "Project Pixel", monospace; background: #fff; color: #17232c; font-family: "Project Pretendard", Arial, sans-serif; a { text-decoration: none; } a:focus-visible, button:focus-visible { outline: 3px solid #537584; outline-offset: 4px; } }
+.projectIntro { height: 245svh; position: relative; margin-top: -72px; }
+.introStage { position: sticky; top: 0; height: 100svh; min-height: 500px; overflow: hidden; display: grid; place-items: center; background: #fff;
+  h1 { position: relative; z-index: 2; margin: 0; padding: 12px 22px; background: #fffffff2; font: clamp(68px, 10vw, 155px)/.9 "Project Pixel", monospace; letter-spacing: -.04em; }
+}
+.thumbnailRail { position: absolute; top: -13%; width: 29%; display: flex; flex-direction: column; gap: 12svh; will-change: transform, opacity; }
+.leftRail { left: 7%; }
+.rightRail { right: 7%; }
+.floatingThumbnail { position: relative; height: 30svh; min-height: 140px; overflow: hidden; background: #17232c;
+  img { object-fit: cover; object-position: top; }
+  span { position: absolute; bottom: 0; left: 0; background: #17232ce6; color: #fff; font-size: 10px; padding: 8px 12px; }
+}
+.introScroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #52616a; font: 12px "Project Pixel", monospace; span { font: 35px Arial, sans-serif; font-weight: 200; } }
+.collection { padding: 0 0 70px; background: #fff; border: 0; scroll-margin-top: 72px; }
+.categoryBand { position: relative; background: #abc8d2; padding: 85px 6% 25px;
+  &::before { content: ''; position: absolute; left: 0; top: -23px; width: 100%; height: 24px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24'%3E%3Cpath fill='%23abc8d2' d='M0 24V12h8v6h8V6h8v12h8v-6h8V0h8v12h8v6h8V6h8v12h8v-6h8v6h8V6h8v6h8v12z'/%3E%3C/svg%3E") repeat-x; }
+  h2 { text-align: center; margin: 0 0 65px; font: clamp(45px, 6vw, 84px)/1 "Project Pixel", monospace; }
+}
+.categoryTabs { display: flex; justify-content: space-around; gap: 20px; max-width: 1100px; margin: auto;
+  a { position: relative; color: #101d25; font: clamp(17px, 2.2vw, 30px) "Project Pixel", monospace; padding: 10px 0; }
+  a[aria-current]::before { content: ''; width: 5px; height: 5px; position: absolute; top: -7px; left: 50%; background: #17232c; }
+}
+.collectionCount { width: min(1200px, 90%); margin: 35px auto 18px; text-align: right; font: 12px "Project Pixel", monospace; color: #52616a; }
+.grid { width: min(1200px, 90%); margin: auto; gap: 30px 24px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card { padding: 0 12px 20px; border: 0; border-radius: 10px; box-shadow: none; background: #dedede; overflow: hidden; }
+.cardBar { display: flex; align-items: center; gap: 10px; height: 40px; font-size: 9px; font-weight: 800; span { font: bold 17px monospace; } }
+.thumbnail { border-radius: 5px; aspect-ratio: 16 / 10; background: #fff; }
+.cardMeta { margin: 16px 5px 7px; font-size: 10px; }
+.titleButton { padding: 0 5px; h3 { font-size: 22px; font-weight: 850; letter-spacing: -.05em; } }
+.cardDescription { padding: 0 5px; font-size: 12px; color: #17232c; }
+.cardTags { padding: 0 5px; margin-top: 12px; gap: 5px; li { border: 0; background: #fff; color: #334650; font: 10px/1.4 "Project Pretendard", sans-serif; padding: 5px 7px; } }
+.pagination { display: flex; justify-content: center; gap: 15px; margin: 50px 0 0; button { padding: 8px 10px; min-width: 35px; background: none; border: 0; font-weight: 800; font-size: 16px; cursor: pointer; } button[aria-current] { text-decoration: underline; text-underline-offset: 6px; } button:disabled { opacity: .25; cursor: default; } }
+.contactFooter { position: relative; background: #17232c; color: #fff; padding: 80px 6% 0;
+  &::before { content: ''; position: absolute; left: 0; top: -23px; width: 100%; height: 24px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24'%3E%3Cpath fill='%2317232c' d='M0 24V12h8v6h8V6h8v12h8v-6h8V0h8v12h8v6h8V6h8v12h8v-6h8v6h8V6h8v6h8v12z'/%3E%3C/svg%3E") repeat-x; }
+}
+.contactColumns { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  address { font-style: normal; display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 650; strong { margin-bottom: 20px; font-size: 18px; } }
+}
+.questionForm { h2 { font: clamp(35px, 4vw, 58px)/1 "Project Pixel", monospace; color: #abc8d2; margin: 0 0 18px; } label { display: block; font-size: 11px; margin: 12px 0 7px; span { color: #abc8d2; } } input, textarea { display: block; width: 100%; border: 2px solid transparent; background: #fff; padding: 12px; color: #17232c; border-radius: 0; font-size: 13px; } textarea { resize: vertical; min-height: 110px; } input:focus-visible, textarea:focus-visible { outline: 3px solid #abc8d2; outline-offset: 3px; } [aria-invalid='true'] { border-color: #f8ac9c; } .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
+.fieldError { color: #ffc1b3; font-size: 12px; margin: 6px 0 0; }
+.formBottom { display: flex; align-items: flex-start; justify-content: flex-end; gap: 15px; margin-top: 12px; p { flex: 1; font-size: 12px; line-height: 1.7; margin: 0; } button { flex-shrink: 0; border: 0; background: #abc8d2; color: #17232c; padding: 9px 15px; font-size: 12px; font-weight: 800; cursor: pointer; span { margin-left: 15px; } &:disabled { opacity: .6; cursor: wait; } } }
+.contactMe { display: block; margin: 55px -4% 0; width: fit-content; max-width: 108%; color: #060c10; font: clamp(60px, 18vw, 280px)/.85 "Project Pixel", monospace; letter-spacing: -.035em; white-space: nowrap; transition: color .2s; &:hover, &:focus-visible { color: #fff; } }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .contactColumns { gap: 35px; } }
+@media (max-width: 600px) {
+  .projectIntro { margin-top: -65px; }
+  .introStage { min-height: 450px; h1 { font-size: 70px; padding: 10px; } }
+  .thumbnailRail { width: 38%; gap: 14svh; }
+  .leftRail { left: 4%; } .rightRail { right: 4%; }
+  .floatingThumbnail { height: 25svh; span { font-size: 8px; } }
+  .categoryBand { padding: 55px 4% 15px; h2 { margin-bottom: 38px; } }
+  .categoryTabs { gap: 10px; }
+  .collection { scroll-margin-top: 65px; }
+  .grid { gap: 20px 12px; }
+  .card { padding: 0 8px 15px; border-radius: 6px; }
+  .cardBar { font-size: 7px; gap: 5px; height: 32px; span { font-size: 12px; } }
+  .titleButton h3, .videoCard .titleButton h3 { font-size: 16px; }
+  .cardDescription { font-size: 10px; }
+  .cardMeta { font-size: 8px; }
+  .cardTags li { font-size: 8px; padding: 4px; }
+  .contactFooter { padding-top: 50px; }
+  .contactColumns { grid-template-columns: 1fr; gap: 35px; }
+  .contactColumns address { font-size: 12px; }
+}
+@media (max-width: 380px) { .grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .projectIntro { height: auto; } .introStage { position: relative; } .thumbnailRail { will-change: auto; } }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .cardLink:hover .hoverCapture, .cardLink:focus-visible .hoverCapture {
     opacity: 1;

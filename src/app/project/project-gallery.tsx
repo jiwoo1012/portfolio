@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
@@ -6,8 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { projects, type Project } from "./projects";
 import styles from "./page.module.scss";
 import { projectDetails } from "./project-details";
+import { backendProjectOrder, projectToolIcons, projectTools } from "./project-tools";
 import VintageHeader from "@/components/VintageHeader";
 import vintage from "../home/page.module.scss";
+import ProjectIntro from "./project-intro";
+import ProjectContact from "./project-contact";
 import jajakHover from "../../../public/project/jajak/hover.webp";
 import chamverseHover from "../../../public/project/chamverse/hover.webp";
 import nodeHover from "../../../public/project/node/hover.webp";
@@ -25,16 +28,26 @@ const hoverCaptures: Partial<Record<string, StaticImageData>> = {
 };
 
 const categories = [
-  { id: "all", label: "전체" },
-  { id: "frontend", label: "Front" },
-  { id: "backend", label: "Back" },
-  { id: "design", label: "Design & Video" },
+  { id: "frontend", label: "FRONTEND" },
+  { id: "backend", label: "BACKEND" },
+  { id: "design", label: "DESIGN & VIDEO" },
 ];
 
 export default function ProjectGallery({ category }: { category: string }) {
-  const active = categories.some((item) => item.id === category) ? category : "all";
-  const development = projects.filter((project) => project.category !== "design");
-  const visible = active === "all" ? development : projects.filter((project) => project.category === active);
+  const active = categories.some((item) => item.id === category) ? category : "frontend";
+  const visible = projects.filter((project) => project.category === active);
+  if (active === "backend") visible.sort((a, b) => {
+    const rank = (id: string) => { const index = backendProjectOrder.indexOf(id); return index < 0 ? backendProjectOrder.length : index; };
+    return rank(a.id) - rank(b.id);
+  });
+  const [pagination, setPagination] = useState({ category: active, page: 1 });
+  const pageCount = Math.max(1, Math.ceil(visible.length / 6));
+  const page = pagination.category === active ? Math.min(pagination.page, pageCount) : 1;
+  const pageProjects = visible.slice((page - 1) * 6, page * 6);
+  function changePage(next: number) {
+    setPagination({ category: active, page: next });
+    document.getElementById("works")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  }
   const [selected, setSelected] = useState<Project | null>(null);
   const [slide, setSlide] = useState(0);
   const slides = selected ? selected.gallery ?? [selected.image] : [];
@@ -59,37 +72,24 @@ export default function ProjectGallery({ category }: { category: string }) {
   }, [selected]);
 
   return (
-    <div className={`${vintage.home} ${styles.page}`} id="top">
+    <div className={styles.page} id="top">
       <a className={vintage.skip} href="#works">작업 목록으로 건너뛰기</a>
       <VintageHeader active="project" />
       <main>
-        <section className={styles.hero} aria-labelledby="project-title">
-          <p className={styles.kicker}>THE PROJECT ARCHIVE / KIM JIWOO</p>
-          <h1 id="project-title"><span>Selected</span> <em>works.</em></h1>
-          <div className={styles.heroBottom}>
-            <p>아이디어에서 화면으로, 화면에서 경험으로.<br />직접 설계하고 구현하며 쌓아 온 작업들입니다.</p>
-            <span className={styles.archiveStamp}>BUILT WITH CARE<b>{String(development.length).padStart(2, "0")}</b>DEVELOPMENT PROJECTS</span>
-            <a href="#works">EXPLORE MY WORK ↙</a>
-          </div>
-        </section>
+        <ProjectIntro />
         <section id="works" className={styles.collection} aria-labelledby="works-title">
-          <div className={styles.collectionHeading}><h2 id="works-title">{active === "design" ? "Creative notes." : "The collection."}</h2><span>{active === "design" ? "DESIGN & MOVING IMAGES" : "FROM INTERFACE TO EXPERIENCE"}</span></div>
-          <div className={styles.toolbar}>
-            <nav aria-label="프로젝트 카테고리" className={styles.filters}>
-              {categories.map((item) => (
-                <Link key={item.id} href={item.id === "all" ? "/project" : `/project?category=${item.id}`} scroll={false}
-                  aria-current={active === item.id ? "page" : undefined}>
-                  {item.label}<sup>{item.id === "all" ? development.length : projects.filter((p) => p.category === item.id).length}</sup>
-                </Link>
-              ))}
+          <div className={styles.categoryBand}>
+            <h2 id="works-title">{categories.find((item) => item.id === active)?.label}</h2>
+            <nav aria-label="프로젝트 카테고리" className={styles.categoryTabs}>
+              {categories.map((item) => <Link key={item.id} href={`/project?category=${item.id}#works`} scroll={false} aria-current={active === item.id ? "page" : undefined}>{item.label}</Link>)}
             </nav>
-            <span className={styles.results} aria-live="polite">{String(visible.length).padStart(2, "0")} PROJECTS</span>
           </div>
-
+          <p className={styles.collectionCount} aria-live="polite">{visible.length} PROJECTS / {page} OF {pageCount}</p>
           <div className={styles.grid} key={active}>
-            {visible.map((project) => project.category !== "design" ? (
+            {pageProjects.map((project) => project.category !== "design" ? (
               <article key={project.id} className={styles.card}>
                 <Link className={styles.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>
+                  <div className={styles.cardBar}><span aria-hidden="true">&lt;/&gt;</span> {project.label}</div>
                   <div className={styles.thumbnail}>
                     <Image src={project.image} alt={`${project.title} 웹사이트 화면`} fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />
                     {hoverCaptures[project.id] && <Image className={styles.hoverCapture} src={hoverCaptures[project.id] ?? project.image} alt="" aria-hidden="true" fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />}
@@ -101,6 +101,7 @@ export default function ProjectGallery({ category }: { category: string }) {
               </article>
             ) : (
               <article key={project.id} className={`${styles.card} ${project.youtube ? styles.videoCard : ""}`}>
+                <div className={styles.cardBar}><span aria-hidden="true">✳</span> {project.youtube ? "VIDEO PROJECT" : "DESIGN PROJECT"}</div>
                 <button type="button" className={styles.thumbnail}
                   onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">
                   <Image src={project.image} alt={`${project.title} 표지`} fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />
@@ -114,10 +115,14 @@ export default function ProjectGallery({ category }: { category: string }) {
               </article>
             ))}
           </div>
-          <div className={styles.archiveEnd}><span>✳</span> MADE WITH CURIOSITY & CARE. <span>✳</span></div>
+          <nav className={styles.pagination} aria-label="프로젝트 목록 페이지">
+            <button onClick={() => changePage(page - 1)} disabled={page === 1} aria-label="이전 페이지">‹</button>
+            {Array.from({ length: pageCount }, (_, index) => <button key={index} aria-current={page === index + 1 ? "page" : undefined} onClick={() => changePage(index + 1)}>{index + 1}</button>)}
+            <button onClick={() => changePage(page + 1)} disabled={page === pageCount} aria-label="다음 페이지">›</button>
+          </nav>
         </section>
       </main>
-      <footer className={vintage.footer}><Link href="/home">jiwoo’s <em>folio.</em></Link><span>DESIGNED & BUILT BY KIM JIWOO</span><a href="#top">BACK TO TOP ↑</a></footer>
+      <ProjectContact />
 
       <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="preview-title" onClose={() => setSelected(null)}
         onKeyDown={(event) => {
@@ -169,9 +174,14 @@ export default function ProjectGallery({ category }: { category: string }) {
 }
 
 function ProjectTags({ project }: { project: Project }) {
-  const stack = projectDetails[project.id]?.stack;
-  const tags = stack?.length ? stack : project.label.split(" / ");
-  return <ul className={styles.cardTags} aria-label="기술 및 분야 태그">{tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>;
+  const stack = projectTools[project.id] ?? projectDetails[project.id]?.stack ?? [];
+  const tools = stack.filter((tool) => projectToolIcons[tool]);
+  if (!tools.length) return null;
+  return <ul className={styles.technologyLogos} aria-label="사용한 기술 및 도구">
+    {tools.map((tool) => <li key={tool} title={tool}>
+      <Image src={projectToolIcons[tool]!} alt={tool} width={28} height={28} sizes="28px" />
+    </li>)}
+  </ul>;
 }
 
 
