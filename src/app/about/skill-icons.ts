@@ -14,10 +14,13 @@ import photoshop from "../../../public/about/skill/Photoshop.png";
 import illustrator from "../../../public/about/skill/Illustrator.png";
 import premiere from "../../../public/about/skill/Premiere Pro.png";
 import afterEffects from "../../../public/about/skill/AfterEffect.png";
+import firebase from "../../../public/about/skill/firebase.png";
+import vercel from "../../../public/about/skill/vercel.png";
 
 export const skillIcons: Partial<Record<string, StaticImageData>> = {
   HTML: html, CSS: css, JavaScript: javascript, TypeScript: typescript,
   React: react, "Next.js": next, SCSS: scss, "Node.js": node, MySQL: mysql,
   GitHub: github, Figma: figma, Photoshop: photoshop, Illustrator: illustrator,
   "Premiere Pro": premiere, "After Effects": afterEffects,
+  Firestore: firebase, Vercel: vercel,
 };
