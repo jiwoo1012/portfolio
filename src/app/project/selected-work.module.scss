@@ -1,0 +1,10 @@
+.heading { margin: 0 4.5% 50px; font-size: 18px; font-weight: 650; }
+.button { position: relative; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; border: 0; padding: 0; background: none; color: #0b0b0b; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.folder { position: relative; z-index: 2; flex-shrink: 0; width: 28px; height: 24px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; path { stroke-dasharray: 1; stroke-dashoffset: 1; } }
+.folderFront { fill: #ece5db; }
+.letters { display: inline-flex; white-space: nowrap; }
+.letter { display: inline-block; opacity: 0; transform-origin: center; }
+.space { display: inline-block; width: .28em; }
+.button[aria-disabled="true"] { cursor: default; }
+@media (max-width: 700px) { .heading { margin-bottom: 35px; } }
+@media (prefers-reduced-motion: reduce) { .folder path { stroke-dashoffset: 0; } }

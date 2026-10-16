@@ -12,6 +12,29 @@ body {
   padding: 0;
 }
 
+::view-transition { pointer-events: none; }
+::view-transition-group(.project-image-zoom) {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+  z-index: 10;
+}
+::view-transition-old(.project-image-zoom),
+::view-transition-new(.project-image-zoom) {
+  height: 100%;
+  object-fit: cover;
+  overflow: clip;
+  animation-duration: 650ms;
+}
+::view-transition-group(site-header) { animation: none; z-index: 100; }
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 body {
   font-family:
     Arial,

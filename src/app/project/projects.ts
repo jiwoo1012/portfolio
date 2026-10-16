@@ -40,7 +40,7 @@ export type Project = {
 export const projects: Project[] = [
   { id: "09", title: "2025 문과인의 밤", description: "행사의 분위기와 정보를 담은 7장의 카드뉴스", category: "design", label: "CARD NEWS / EVENT", image: night01, gallery: [night01, night02, night03, night04, night05, night06, night07], color: "#e7ded9" },
   { id: "10", title: "VOH 카드뉴스", description: "한대방송국 VOH의 소식을 전하는 4장의 카드뉴스", category: "design", label: "CARD NEWS / VOH", image: voh01, gallery: [voh01, voh02, voh03, voh04], color: "#e7e2f1" },
-  { id: "01", title: "J. 전통의 새로운 경험", description: "전통의 분위기를 담은 브랜드 & 스토어 웹사이트", category: "frontend", label: "BRAND / COMMERCE", image: site01, color: "#eae3d8" },
+  { id: "01", title: "JAJAK", description: "전통의 분위기를 담은 브랜드 & 스토어 웹사이트", category: "frontend", label: "BRAND / COMMERCE", image: site01, color: "#eae3d8" },
   { id: "02", title: "CHAMVERSE", description: "좋아하는 애니메이션을 발견하는 콘텐츠 플랫폼", category: "frontend", label: "CONTENT PLATFORM", image: site02, color: "#f3e1e3" },
   { id: "03", title: "onvé", description: "나에게 맞는 뷰티 루틴을 찾는 쇼핑 경험", category: "frontend", label: "BEAUTY / COMMERCE", image: site03, color: "#e8e5df" },
   { id: "04", title: "bookly", description: "출판 서비스의 현황을 한눈에 보는 대시보드", category: "backend", label: "ADMIN DASHBOARD", image: site04, color: "#e5e6f0" },

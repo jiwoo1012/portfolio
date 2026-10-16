@@ -1,31 +1,20 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { projects, type Project } from "./projects";
 import styles from "./page.module.scss";
+import archive from "./archive.module.scss";
+import HomeHeader from "@/components/HomeHeader";
+import SelectedWork from "./selected-work";
+import DraggableProjectRow from "./draggable-project-row";
+import ProjectImageTransition from "./project-image-transition";
+import { homeContact } from "../home/home-data";
 import { projectDetails } from "./project-details";
 import { backendProjectOrder, projectToolIcons, projectTools } from "./project-tools";
-import VintageHeader from "@/components/VintageHeader";
 import vintage from "../home/page.module.scss";
-import ProjectIntro from "./project-intro";
-import ProjectContact from "./project-contact";
-import jajakHover from "../../../public/project/jajak/hover.webp";
-import chamverseHover from "../../../public/project/chamverse/hover.webp";
-import nodeHover from "../../../public/project/node/hover.webp";
-import onveHover from "../../../public/project/onve/hover.webp";
-import guestbookHover from "../../../public/project/guestbook/hover.webp";
-import dashboardHover from "../../../public/project/dashboard/hover.webp";
-
-const hoverCaptures: Partial<Record<string, StaticImageData>> = {
-  "01": jajakHover,
-  "02": chamverseHover,
-  "03": onveHover,
-  "04": dashboardHover,
-  "05": nodeHover,
-  "06": guestbookHover,
-};
+import { desktopCaptures as hoverCaptures } from "./project-captures";
 
 const categories = [
   { id: "frontend", label: "FRONTEND" },
@@ -34,19 +23,14 @@ const categories = [
 ];
 
 export default function ProjectGallery({ category }: { category: string }) {
-  const active = categories.some((item) => item.id === category) ? category : "frontend";
-  const visible = projects.filter((project) => project.category === active);
-  if (active === "backend") visible.sort((a, b) => {
-    const rank = (id: string) => { const index = backendProjectOrder.indexOf(id); return index < 0 ? backendProjectOrder.length : index; };
-    return rank(a.id) - rank(b.id);
-  });
-  const [pagination, setPagination] = useState({ category: active, page: 1 });
-  const pageCount = Math.max(1, Math.ceil(visible.length / 6));
-  const page = pagination.category === active ? Math.min(pagination.page, pageCount) : 1;
-  const pageProjects = visible.slice((page - 1) * 6, page * 6);
-  function changePage(next: number) {
-    setPagination({ category: active, page: next });
-    document.getElementById("works")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  useEffect(() => {
+    if (categories.some((item) => item.id === category)) {
+      document.getElementById(category)?.scrollIntoView({ behavior: "instant" });
+    }
+  }, [category]);
+  function scrollRow(id: string, direction: number) {
+    const row = document.getElementById(`${id}-row`);
+    row?.scrollBy({ left: direction * row.clientWidth * .8, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }
   const [selected, setSelected] = useState<Project | null>(null);
   const [slide, setSlide] = useState(0);
@@ -72,57 +56,34 @@ export default function ProjectGallery({ category }: { category: string }) {
   }, [selected]);
 
   return (
-    <div className={styles.page} id="top">
+    <div className={archive.page} id="top">
       <a className={vintage.skip} href="#works">작업 목록으로 건너뛰기</a>
-      <VintageHeader active="project" />
-      <main>
-        <ProjectIntro />
-        <section id="works" className={styles.collection} aria-labelledby="works-title">
-          <div className={styles.categoryBand}>
-            <h2 id="works-title">{categories.find((item) => item.id === active)?.label}</h2>
-            <nav aria-label="프로젝트 카테고리" className={styles.categoryTabs}>
-              {categories.map((item) => <Link key={item.id} href={`/project?category=${item.id}#works`} scroll={false} aria-current={active === item.id ? "page" : undefined}>{item.label}</Link>)}
-            </nav>
-          </div>
-          <p className={styles.collectionCount} aria-live="polite">{visible.length} PROJECTS / {page} OF {pageCount}</p>
-          <div className={styles.grid} key={active}>
-            {pageProjects.map((project) => project.category !== "design" ? (
-              <article key={project.id} className={styles.card}>
-                <Link className={styles.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>
-                  <div className={styles.cardBar}><span aria-hidden="true">&lt;/&gt;</span> {project.label}</div>
-                  <div className={styles.thumbnail}>
-                    <Image src={project.image} alt={`${project.title} 웹사이트 화면`} fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />
-                    {hoverCaptures[project.id] && <Image className={styles.hoverCapture} src={hoverCaptures[project.id] ?? project.image} alt="" aria-hidden="true" fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />}
-                  </div>
-                  <div className={styles.cardMeta}><span>{project.youtube ? "VIDEO" : project.category.toUpperCase()}</span></div>
-                  <div className={styles.titleButton}><h3>{project.title}</h3><span aria-hidden="true">↗</span></div>
-                  <p className={styles.cardDescription}>{project.description}</p><ProjectTags project={project} />
-                </Link>
-              </article>
-            ) : (
-              <article key={project.id} className={`${styles.card} ${project.youtube ? styles.videoCard : ""}`}>
-                <div className={styles.cardBar}><span aria-hidden="true">✳</span> {project.youtube ? "VIDEO PROJECT" : "DESIGN PROJECT"}</div>
-                <button type="button" className={styles.thumbnail}
-                  onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">
-                  <Image src={project.image} alt={`${project.title} 표지`} fill sizes="(max-width: 700px) 90vw, (max-width: 1000px) 44vw, 360px" />
-                  {project.youtube && <span className={styles.playIcon} aria-hidden="true">▶</span>}
-                </button>
-                <div className={styles.cardMeta}><span>{project.youtube ? "VIDEO" : project.category.toUpperCase()}</span></div>
-                <button className={styles.titleButton} onClick={() => openPreview(project)} aria-haspopup="dialog">
-                  <h3>{project.title}</h3><span aria-hidden="true">↗</span>
-                </button>
-                <p className={styles.cardDescription}>{project.description}</p><ProjectTags project={project} />
-              </article>
-            ))}
-          </div>
-          <nav className={styles.pagination} aria-label="프로젝트 목록 페이지">
-            <button onClick={() => changePage(page - 1)} disabled={page === 1} aria-label="이전 페이지">‹</button>
-            {Array.from({ length: pageCount }, (_, index) => <button key={index} aria-current={page === index + 1 ? "page" : undefined} onClick={() => changePage(index + 1)}>{index + 1}</button>)}
-            <button onClick={() => changePage(page + 1)} disabled={page === pageCount} aria-label="다음 페이지">›</button>
-          </nav>
-        </section>
+      <HomeHeader active="project" contactHref="#project-contact" />
+      <main id="works" className={archive.main}>
+        <SelectedWork />
+        {categories.map((category, categoryIndex) => {
+          const items = projects.filter((project) => project.category === category.id);
+          if (category.id === "backend") items.sort((a, b) => {
+            const rank = (id: string) => { const index = backendProjectOrder.indexOf(id); return index < 0 ? backendProjectOrder.length : index; };
+            return rank(a.id) - rank(b.id);
+          });
+          return <section id={category.id} className={archive.collection} key={category.id} aria-labelledby={`${category.id}-title`}>
+            <div className={archive.sectionHeading}><h2 id={`${category.id}-title`}>{category.label}</h2><div className={archive.rowControls}>{categoryIndex === 0 && <p>이미지를 누르면 프로젝트를 자세히 볼 수 있어요.</p>}<button type="button" onClick={() => scrollRow(category.id, -1)} aria-label={`${category.label} 이전 작업`} aria-controls={`${category.id}-row`}>←</button><button type="button" onClick={() => scrollRow(category.id, 1)} aria-label={`${category.label} 다음 작업`} aria-controls={`${category.id}-row`}>→</button></div></div>
+            <DraggableProjectRow id={`${category.id}-row`} label={category.label}>
+              {items.map((project) => {
+                const content = <><ProjectImageTransition id={project.id}><div className={archive.thumbnail}>
+                  <Image src={project.image} alt={`${project.title} 대표 화면`} fill sizes="(max-width: 700px) 68vw, 27vw" />
+                  {hoverCaptures[project.id] && <Image className={archive.hoverCapture} src={hoverCaptures[project.id]!} alt="" aria-hidden="true" fill sizes="(max-width: 700px) 68vw, 27vw" />}
+                  {project.youtube && <span className={archive.playIcon} aria-hidden="true">▶</span>}
+                  <ProjectTags project={project} />
+                </div></ProjectImageTransition><div className={archive.cardInfo}><div><h3>{project.id === "01" ? "JAJAK" : project.title}</h3><p>{project.description}</p></div><span className={archive.arrow} aria-hidden="true">↗</span></div></>;
+                return <article key={project.id} className={archive.card}>{project.category === "design" ? <button type="button" className={archive.cardLink} onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">{content}</button> : <Link className={archive.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>{content}</Link>}</article>;
+              })}
+            </DraggableProjectRow>
+          </section>;
+        })}
       </main>
-      <ProjectContact />
+      <footer className={archive.contact} id="project-contact"><p>Let’s Build<br />What’s Next</p><a href={`mailto:${homeContact.email}`}><span className={archive.contactArrow} aria-hidden="true">←</span><span>Let’s <em>Contact!</em></span></a></footer>
 
       <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="preview-title" onClose={() => setSelected(null)}
         onKeyDown={(event) => {
@@ -175,11 +136,11 @@ export default function ProjectGallery({ category }: { category: string }) {
 
 function ProjectTags({ project }: { project: Project }) {
   const stack = projectTools[project.id] ?? projectDetails[project.id]?.stack ?? [];
-  const tools = stack.filter((tool) => projectToolIcons[tool]);
+  const tools = stack;
   if (!tools.length) return null;
-  return <ul className={styles.technologyLogos} aria-label="사용한 기술 및 도구">
+  return <ul className={archive.technologyLogos} aria-label="사용한 기술 및 도구">
     {tools.map((tool) => <li key={tool} title={tool}>
-      <Image src={projectToolIcons[tool]!} alt={tool} width={28} height={28} sizes="28px" />
+      {projectToolIcons[tool] ? <Image src={projectToolIcons[tool]!} alt={tool} width={28} height={28} sizes="28px" /> : <span aria-label={tool}>{tool === "Canvas API" ? "CAN" : tool.slice(0, 3)}</span>}
     </li>)}
   </ul>;
 }
