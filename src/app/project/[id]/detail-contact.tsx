@@ -1,37 +1,100 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { homeContact } from "../../home/home-data";
+import { validateContact } from "@/lib/contact";
 import styles from "./page.module.scss";
 
 export default function DetailContact() {
   const root = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const element = root.current;
-    if (!element) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0;
-    const update = () => {
-      const rect = element.getBoundingClientRect();
-      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / rect.height));
-      element.style.setProperty("--contact-shift", `${reduced.matches ? 0 : (1 - progress) * 110}%`);
-      frame = 0;
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    reduced.addEventListener("change", schedule);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      reduced.removeEventListener("change", schedule);
-    };
-  }, []);
-  return <footer ref={root} className={styles.contactReveal} id="contact">
-    <div className={styles.contactTop}><span>함께 만들 다음 이야기를 기다립니다. ↔</span><a href="/project">다른 프로젝트 보기 ↗</a><a href="#top">BACK TO TOP ↑</a></div>
-    <div className={styles.contactWindow}><a className={styles.contactWord} href={`mailto:${homeContact.email}`}>CONTACT</a></div>
-    <div className={styles.contactBottom}><address><strong>LET’S WORK TOGETHER.</strong><a href={`mailto:${homeContact.email}`}>{homeContact.email}</a><a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a></address><a href={homeContact.githubUrl} target="_blank" rel="noopener noreferrer">GITHUB ↗</a><span>© KIM JIWOO · DESIGNED &amp; BUILT WITH CARE</span></div>
-  </footer>;
+  const [email, setEmail] = useState("");
+  const [question, setQuestion] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (status === "sending") return;
+
+    const validation = validateContact(email.trim(), question);
+    if (validation.email || validation.message) {
+      setStatus("error");
+      setFeedback(validation.email || validation.message);
+      return;
+    }
+
+    setStatus("sending");
+    setFeedback("메일을 전송하고 있어요...");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), message: question.trim(), website: "" }),
+      });
+      const data: { success?: boolean; error?: string } = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "전송에 실패했습니다.");
+      }
+
+      setStatus("success");
+      setFeedback("질문이 정상적으로 전송되었어요! 감사합니다.");
+      setEmail("");
+      setQuestion("");
+    } catch (error) {
+      setStatus("error");
+      setFeedback(error instanceof Error ? error.message : "전송에 실패했어요. 다시 시도해 주세요.");
+    }
+  };
+
+  return (
+    <footer ref={root} className={styles.contactReveal} id="contact">
+      <div className={styles.contactWindow}>
+        <a className={styles.contactWord} href={`mailto:${homeContact.email}`} aria-label="이메일로 연락하기">
+          CONTACT
+        </a>
+      </div>
+      <div className={styles.contactBottom}>
+        <div className={styles.contactQuestion}>
+          <h2>HAVE YOU QUESTION?</h2>
+          <form onSubmit={handleSubmit}>
+            <label className={styles.contactField}>
+              <span className={styles.contactSrOnly}>답변받을 이메일</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => { setEmail(event.target.value); if (status !== "sending") setStatus("idle"); }}
+                placeholder="답변받을 이메일을 입력하세요."
+                maxLength={254}
+                required
+              />
+            </label>
+            <label className={`${styles.contactField} ${styles.contactMessage}`}>
+              <span className={styles.contactSrOnly}>질문 내용</span>
+              <textarea
+                value={question}
+                onChange={(event) => { setQuestion(event.target.value); if (status !== "sending") setStatus("idle"); }}
+                placeholder="질문을 남겨주세요!"
+                maxLength={5000}
+                rows={1}
+                required
+              />
+              <button type="submit" disabled={status === "sending"} aria-label="문의 메일 전송하기" title="문의 메일 전송하기">
+                <svg viewBox="0 0 32 24" fill="none" aria-hidden="true">
+                  <rect x="1" y="1" width="30" height="22" rx="3" fill="currentColor" />
+                  <path d="m2 4 14 10L30 4" stroke="#171717" strokeWidth="1.5" />
+                </svg>
+              </button>
+            </label>
+            <p className={`${styles.contactFeedback} ${status === "error" ? styles.contactFeedbackError : ""}`} role="status" aria-live="polite">{feedback}</p>
+          </form>
+        </div>
+
+        <address className={styles.contactDetails}>
+          <div><strong>EMAIL</strong><span aria-hidden="true">|</span><a href={`mailto:${homeContact.email}`}>{homeContact.email}</a></div>
+          <div><strong>TEL</strong><span aria-hidden="true">|</span><a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a></div>
+        </address>
+      </div>
+    </footer>
+  );
 }

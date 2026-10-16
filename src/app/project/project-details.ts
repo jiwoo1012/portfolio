@@ -389,7 +389,7 @@ const chart = new Chart(context, {
       },
     ],
     contributionGroups: [
-      { title: "개발 기여", items: [
+      { title: "01. 개발 기여", items: [
         { title: "AI 큐레이션", anchor: "ai-curation", description: "사용자 설문 및 추천 로직 구현, 결과 페이지 개발, 추천 기록 저장" },
         { title: "막동이 주막", anchor: "makdong-game", description: "게임 페이지 구현" },
         { title: "마이페이지", anchor: "user-commerce", description: "찜 목록·AI 추천 기록 조회, UI 설계 및 디자인" },
@@ -398,7 +398,7 @@ const chart = new Chart(context, {
         { title: "관리자", anchor: "admin-support", description: "관리자 공통 레이아웃·헤더 개발, 대시보드 UI 설계 및 디자인" },
         { title: "라우팅", anchor: "admin-support", description: "고객센터 페이지 라우팅 및 화면 연결" },
       ] },
-      { title: "팀 리딩 및 협업", items: [
+      { title: "02. 팀 리딩 및 협업", items: [
         { title: "프로젝트 관리", description: "개발 일정 수립, 팀원별 역할 분담 및 작업 진행 상황 관리" },
         { title: "UI/UX 통합", description: "전체 디자인 방향 조율, 공통 UI 기준 정립 및 페이지별 디자인 일관성 관리" },
         { title: "Git 협업", description: "브랜치 및 PR 관리, 코드 리뷰·병합, 충돌 해결" },

@@ -67,10 +67,10 @@ export function RoleStack({ groups }: { groups: NonNullable<ProjectDetail["contr
     </div></div>
   </section>;
 }
+
 function CodeBlock({ title, code }: { title: string; code: string }) {
   return <div className={styles.codeBlock}><p>{title}</p><pre tabIndex={0} aria-label={`${title} 코드`}><code>{code}</code></pre></div>;
 }
-
 export function FeatureViewer({ items, screenshots }: { items: Implementation[]; screenshots: ProjectDetail["screenshots"] }) {
   const [selected, setSelected] = useState(0);
   const [view, setView] = useState("screen");
@@ -147,11 +147,11 @@ export function Retrospective({
   previousProject?: string;
   nextProject?: string;
 }) {
-   const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(0);
   const titles = ["프로젝트 성과", "기술적 성장", "협업 개선점"];
 
   return (
-    <section id="retrospective" className={styles.retrospectiveSection}>
+     <section id="retrospective" className={styles.retrospectiveSection}>
       <h2>프로젝트 회고</h2>
       <div className={styles.accordion}>
         {titles.map((title, index) => {
@@ -202,16 +202,21 @@ export function Retrospective({
       <nav className={styles.retrospectiveNav} aria-label="프로젝트 탐색">
         <div className={styles.retrospectiveNavPrev}>
           {previousProject ? (
-            <Link href={`/project/${previousProject}`} className={styles.projectNavOutline}>← 이전</Link>
+            <Link href={`/project/${previousProject}`} className={styles.projectNavOutline}><span className={styles.projectNavArrow} aria-hidden="true">←</span> 이전</Link>
           ) : <span className={styles.projectNavDisabled}>← 이전</span>}
         </div>
         <div className={styles.retrospectiveNavNext}>
           {nextProject ? (
-            <Link href={`/project/${nextProject}`} className={styles.projectNavSolid}>다음 →</Link>
+            <Link href={`/project/${nextProject}`} className={styles.projectNavSolid}>다음 <span className={styles.projectNavArrow} aria-hidden="true">→</span></Link>
           ) : <span className={styles.projectNavDisabled}>다음 →</span>}
         </div>
-        <Link href="/project" className={styles.workListLink}>
-          WORK 목록으로 <span aria-hidden="true">→</span>
+        <Link href="/project" className={styles.workListLink} aria-label="WORK 목록으로 이동">
+          <span className={styles.workListText}>WORK 목록으로</span>
+          <span className={styles.workListArrow} aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M5 16h22m-9-9 9 9-9 9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </Link>
       </nav>
     </section>

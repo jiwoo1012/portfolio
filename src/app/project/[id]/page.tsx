@@ -34,6 +34,7 @@ export default async function ProjectDetailPage({ params }: Props) {
   ];
   return <div className={styles.page} id="top">
     <a className={styles.skip} href="#overview">본문으로 건너뛰기</a>
+    <div className={styles.frontLayer}>
     <HomeHeader active="project" contactHref="#contact" />
     <main>
       <div className={styles.backRow}><Link href={`/project?category=${project.category}`} aria-label="프로젝트 목록으로 돌아가기">←</Link></div>
@@ -59,6 +60,8 @@ export default async function ProjectDetailPage({ params }: Props) {
       <Troubleshooting challenges={detail.challenges} implementations={detail.implementations ?? []} />
       <Retrospective outcomes={detail.outcomes} growth={detail.retrospective} improvements={detail.improvements} previousProject={previousProject} nextProject={nextProject} />
     </main>
+    </div>
+    <div id="contact" className={styles.contactSpacer} aria-hidden="true" />
     <DetailContact />
   </div>;
 }
