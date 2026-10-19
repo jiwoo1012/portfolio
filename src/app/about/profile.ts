@@ -68,9 +68,9 @@ export const resumeSections: ResumeSection[] = [
   ] },
   { id: "activities-leadership", number: "06", title: "Activities & Leadership", subtitle: "대외 활동 · 리더십 경험", entries: [
     {
-      period: "2025", title: "제44대 한국언어문학과 부회장",
+      period: "2025", title: "제44대 한국언어문학과 부학생회장",
       organization: "한양대학교 ERICA",
-      highlights: ["분기별 학과 사업 로드맵 수립", "다수 이해관계자 간 커뮤니케이션 조율 및 리스크 관리"],
+      highlights: ["학과 행사 기획·운영 및 학생회 조직 관리 ", "재학생 의견 수렴 및 학생회 임원 간 소통·업무 조율"],
     },
     {
       period: "2025", title: "학생회 [끌림] 디자인팀 / 문과인의 밤 Design TF",

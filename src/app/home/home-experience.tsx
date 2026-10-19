@@ -16,6 +16,16 @@ export default function HomeExperience({ children }: { children: ReactNode }) {
         gsap.utils.toArray<HTMLElement>("[data-photo]").forEach((photo) => {
           gsap.from(photo, { y: 25, duration: .8, ease: "power2.out", scrollTrigger: { trigger: photo, start: "top 94%", once: true } });
         });
+        gsap.utils.toArray<HTMLElement>("[data-skill-group]").forEach((group) => {
+          const heading = group.querySelector("h3");
+          const icons = group.querySelector("ul");
+          if (!heading || !icons) return;
+          gsap.fromTo(icons.querySelectorAll("img, [data-skill-name]"), { y: 40, autoAlpha: 0 }, {
+            y: 0, autoAlpha: 1, duration: 1, ease: "power3.out",
+            clearProps: "transform,opacity,visibility",
+            scrollTrigger: { trigger: heading, start: "top 88%", once: true },
+          });
+        });
       }, root);
       return () => context.revert();
     });

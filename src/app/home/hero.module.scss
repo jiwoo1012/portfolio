@@ -1,0 +1,178 @@
+.scrollScene {
+  position: relative;
+  height: 560svh;
+  background: #ece5db;
+}
+
+.hero {
+  --hero-paper: #ece5db;
+  position: sticky;
+  top: 0;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  min-height: 360px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--hero-paper);
+  color: #080808;
+}
+
+.marquee {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  animation: driftRight 65s linear infinite;
+  will-change: transform;
+}
+
+.keywords {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-shrink: 0;
+  min-width: 100vw;
+  gap: clamp(60px, 12vw, 180px);
+  padding-right: clamp(60px, 12vw, 180px);
+  white-space: nowrap;
+  font-size: clamp(28px, 5.3vw, 82px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -.035em;
+  line-height: 1.2;
+}
+
+.logoMask {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: min(44vw, 540px);
+  height: min(30vw, 360px);
+  background: var(--hero-paper);
+  pointer-events: none;
+}
+
+.floatingLogo {
+  position: fixed;
+  z-index: 101;
+  left: 50%;
+  top: 50svh;
+  width: min(40vw, 480px);
+  transform: translate(-50%, -50%);
+  img { display: block; width: 100%; height: auto; }
+}
+
+.keywords [data-source] { display: inline-block; }
+.particles { position: absolute; inset: 0; pointer-events: none; }
+.statement {
+  position: absolute;
+  top: 34%;
+  left: 0;
+  width: 100%;
+  padding: 0 6%;
+  pointer-events: none;
+  font-size: clamp(22px, 4.5vw, 64px);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: 1.4;
+
+  p {
+    width: fit-content;
+    margin: 0 auto;
+    white-space: nowrap;
+    visibility: hidden;
+    will-change: transform, opacity;
+  }
+  p:first-child { padding-right: 10vw; }
+  p + p { margin-top: clamp(16px, 3vh, 36px); padding-left: 14vw; }
+}
+.particle {
+  transform-origin: top left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  font-size: clamp(28px, 5.3vw, 82px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -.035em;
+  line-height: 1.2;
+  will-change: transform;
+  > span { display: inline-block; }
+}
+
+.introduction {
+  position: absolute;
+  top: 34%;
+  width: 100%;
+  padding: 0 4%;
+  text-align: center;
+  visibility: hidden;
+  pointer-events: none;
+  font-size: clamp(18px, 4.5vw, 64px);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: 1.4;
+  p { margin: 0; white-space: nowrap; }
+  p + p { margin-top: clamp(16px, 3vh, 36px); }
+}
+.accent { color: #ee383b; }
+.emphasis { display: inline-block; transform-origin: center bottom; }
+.emphasis > span { display: inline-block; transform-origin: center bottom; }
+@keyframes emphasisBounce {
+  0%, 65%, 100% { transform: translateY(0) scale(1); }
+  10% { transform: translateY(-.28em) scale(1.06, 1.1); }
+  22% { transform: translateY(0) scale(1.08, .93); }
+  34% { transform: translateY(-.14em) scale(1.03, 1.05); }
+  46% { transform: translateY(0) scale(1.04, .97); }
+  56% { transform: translateY(-.05em) scale(1); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .emphasis[data-bouncing] > span { animation: emphasisBounce 1.8s ease-in-out infinite; }
+}
+.roleTitle {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  color: #a2a2a2;
+  font-size: clamp(19px, 5.3vw, 82px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: .02em;
+  line-height: 1.2;
+  pointer-events: none;
+  span { display: inline-block; }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes driftRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; will-change: auto; }
+}

@@ -21,6 +21,7 @@ export default function SelectedWork() {
     let alive = true;
     let busy = true;
     let opened = false;
+    let repeatTimer: ReturnType<typeof setInterval> | undefined;
 
     async function animate(element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) {
       const animation = element.animate(frames, { ...options, fill: "both" });
@@ -81,9 +82,13 @@ export default function SelectedWork() {
       if (reduced.matches) paths.forEach((path) => { path.style.strokeDashoffset = "0"; });
       else await Promise.all(paths.map((path, index) => animate(path, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 520, delay: index * 200, easing: "ease-in-out" })));
       if (alive) await fly(true);
+      if (alive) repeatTimer = setInterval(() => {
+        if (!busy && !reduced.matches && !document.hidden) void fly(!opened);
+      }, 4000);
     })();
     return () => {
       alive = false;
+      clearInterval(repeatTimer);
       animations.forEach((animation) => animation.cancel());
       reduced.removeEventListener("change", finishMotion);
       toggle.current = () => {};

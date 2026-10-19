@@ -71,13 +71,14 @@ export default function ProjectGallery({ category }: { category: string }) {
             <div className={archive.sectionHeading}><h2 id={`${category.id}-title`}>{category.label}</h2><div className={archive.rowControls}>{categoryIndex === 0 && <p>이미지를 누르면 프로젝트를 자세히 볼 수 있어요.</p>}<button type="button" onClick={() => scrollRow(category.id, -1)} aria-label={`${category.label} 이전 작업`} aria-controls={`${category.id}-row`}>←</button><button type="button" onClick={() => scrollRow(category.id, 1)} aria-label={`${category.label} 다음 작업`} aria-controls={`${category.id}-row`}>→</button></div></div>
             <DraggableProjectRow id={`${category.id}-row`} label={category.label}>
               {items.map((project) => {
+                const siteUrl = projectDetails[project.id]?.siteUrl || project.siteUrl || project.youtube?.url;
                 const content = <><ProjectImageTransition id={project.id}><div className={archive.thumbnail}>
                   <Image src={project.image} alt={`${project.title} 대표 화면`} fill sizes="(max-width: 700px) 68vw, 27vw" />
                   {hoverCaptures[project.id] && <Image className={archive.hoverCapture} src={hoverCaptures[project.id]!} alt="" aria-hidden="true" fill sizes="(max-width: 700px) 68vw, 27vw" />}
                   {project.youtube && <span className={archive.playIcon} aria-hidden="true">▶</span>}
                   <ProjectTags project={project} />
-                </div></ProjectImageTransition><div className={archive.cardInfo}><div><h3>{project.id === "01" ? "JAJAK" : project.title}</h3><p>{project.description}</p></div><span className={archive.arrow} aria-hidden="true">↗</span></div></>;
-                return <article key={project.id} className={archive.card}>{project.category === "design" ? <button type="button" className={archive.cardLink} onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">{content}</button> : <Link className={archive.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>{content}</Link>}</article>;
+                </div></ProjectImageTransition><div className={archive.cardInfo}><div><h3>{project.id === "01" ? "JAJAK" : project.title}</h3><p>{project.description}</p></div></div></>;
+                return <article key={project.id} className={archive.card}>{project.category === "design" ? <button type="button" className={archive.cardLink} onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">{content}</button> : <Link className={archive.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>{content}</Link>}{siteUrl ? <a className={archive.arrow} href={siteUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} 사이트 바로가기 (새 탭)`} title="사이트 바로가기">↗</a> : <span className={archive.arrow} aria-disabled="true" title="사이트 링크 준비 중">↗</span>}</article>;
               })}
             </DraggableProjectRow>
           </section>;
@@ -140,7 +141,7 @@ function ProjectTags({ project }: { project: Project }) {
   if (!tools.length) return null;
   return <ul className={archive.technologyLogos} aria-label="사용한 기술 및 도구">
     {tools.map((tool) => <li key={tool} title={tool}>
-      {projectToolIcons[tool] ? <Image src={projectToolIcons[tool]!} alt={tool} width={28} height={28} sizes="28px" /> : <span aria-label={tool}>{tool === "Canvas API" ? "CAN" : tool.slice(0, 3)}</span>}
+      {projectToolIcons[tool] ? <Image src={projectToolIcons[tool]!} alt={tool} width={30} height={30} sizes="30px" /> : <span aria-label={tool}>{tool === "Canvas API" ? "CAN" : tool.slice(0, 3)}</span>}
     </li>)}
   </ul>;
 }

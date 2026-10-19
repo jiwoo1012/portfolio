@@ -2,7 +2,7 @@
 .header {
   position: fixed; inset: 0 0 auto; width: 100%; height: 90px; z-index: 100;
   padding-inline: 4%; display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  background: transparent; color: #090909; border: 0;
+  background: transparent; color: var(--home-nav-ink, #090909); border: 0;
   font-family: "Header Pretendard", Arial, sans-serif;
   a { color: inherit; text-decoration: none; }
   a:focus-visible { outline: 2px solid #ee3b38; outline-offset: 6px; }

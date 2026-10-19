@@ -9,7 +9,7 @@
 .collection:first-of-type .sectionHeading h2 { font-style: italic; }
 .rowControls { display: flex; align-items: center; gap: 12px; p { margin: 0 12px 0 0; font-size: 11px; font-weight: 600; } button { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; border: 1px solid #b9b0a3; background: transparent; cursor: pointer; font-size: 16px; } }
 .row { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 72px) / 3.65); gap: 24px; overflow-x: auto; padding: 3px 4.5% 17px; scroll-padding-inline: 4.5vw; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #b6ab9b transparent; overscroll-behavior-x: contain; }
-.card { min-width: 0; scroll-snap-align: start; }
+.card { position: relative; min-width: 0; scroll-snap-align: start; }
 .row { scrollbar-width: none; -ms-overflow-style: none; &::-webkit-scrollbar { display: none; } &[data-dragging] { scroll-snap-type: none; scroll-behavior: auto; } }
 .dragCursor { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; visibility: hidden; opacity: 0; transition: opacity .15s; > span { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 50%; background: #ee3b38; color: #fff5e8; box-shadow: 0 4px 20px #00000012; transform: translate(-50%, -50%); font-size: 24px; line-height: 1; transition: scale .15s; } small { font-size: 10px; font-weight: 800; letter-spacing: .12em; margin-top: 5px; } &[data-visible] { visibility: visible; opacity: 1; } &[data-dragging] > span { scale: .88; background: #0b0b0b; } }
 @media (hover: hover) and (pointer: fine) { .row { cursor: grab; user-select: none; .cardLink { cursor: inherit; } &[data-dragging] { cursor: grabbing; } } }
@@ -17,11 +17,14 @@
 .cardLink { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: inherit; cursor: pointer; }
 .thumbnail { position: relative; display: block; width: 100%; aspect-ratio: 1.58; overflow: hidden; background: #0b0b0b; > img { object-fit: cover; object-position: top; transition: transform .35s; } }
 .hoverCapture { opacity: 0; pointer-events: none; }
-.technologyLogos { position: absolute; z-index: 2; right: 7px; bottom: 7px; display: flex; gap: 3px; padding: 0; margin: 0; list-style: none; max-width: calc(100% - 14px); flex-wrap: wrap; justify-content: flex-end; li { display: grid; place-items: center; width: 23px; height: 23px; padding: 3px; background: #f4eee4; border-radius: 3px; } img { display: block; width: 100%; height: 100%; object-fit: contain; } }
+.technologyLogos { position: absolute; z-index: 2; right: 8px; bottom: 8px; display: flex; gap: 5px; padding: 0; margin: 0; list-style: none; max-width: calc(100% - 16px); flex-wrap: wrap; justify-content: flex-end; li { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; padding: 4px; background: #f4eee4; border-radius: 5px; } img { display: block; width: 100%; height: 100%; object-fit: contain; } }
 .cardInfo { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-top: 12px; > div { min-width: 0; } h3 { margin: 0 0 4px; font-size: 17px; font-weight: 900; line-height: 1.2; letter-spacing: -.035em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } p { margin: 0; font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
-.technologyLogos span { font-size: 8px; font-weight: 900; }
+.technologyLogos span { font-size: 11px; font-weight: 900; }
 .arrow { display: grid; flex-shrink: 0; place-items: center; width: 26px; height: 26px; background: #ee3b38; color: #ece5db; border-radius: 50%; font-size: 22px; line-height: 1; transition: transform .2s; }
-.cardLink:hover .arrow { transform: rotate(-35deg); }
+.cardInfo { padding-right: 38px; }
+.card > .arrow { position: absolute; right: 0; bottom: 9px; }
+.arrow[href]:hover, .arrow[href]:focus-visible { transform: rotate(-35deg); }
+.arrow[aria-disabled="true"] { opacity: .4; cursor: default; }
 .playIcon { position: absolute; inset: 0; display: grid; place-items: center; color: white; font-size: 35px; text-shadow: 0 2px 15px #000; }
 .contact { background: #050505; color: #ece5db; padding: 95px 6% 70px; text-align: right; > p { font-size: clamp(44px, 7.5vw, 108px); line-height: 1.05; font-weight: 400; letter-spacing: -.045em; margin: 0 0 32px; } > a { display: inline-flex; align-items: center; gap: 25px; font-size: clamp(42px, 7.4vw, 106px); font-weight: 800; line-height: 1.2; letter-spacing: -.045em; } em { font-style: normal; color: #ee3b38; } .contactArrow { color: #ee3b38; font-weight: 300; transition: transform .2s; } > a:hover .contactArrow { transform: translateX(-12px); } }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .cardLink:hover .hoverCapture, .cardLink:focus-visible .hoverCapture { opacity: 1; object-position: bottom; transition: opacity .2s, object-position 10s linear .25s; } }
