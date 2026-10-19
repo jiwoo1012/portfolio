@@ -45,7 +45,7 @@ test('successful send fixes the recipient and uses the visitor address only for 
   });
   const response = await send(request({ email: ' visitor@example.com ', message: ' <script>question</script> ', to: 'other@example.com' }));
   assert.equal(response.status, 200);
-  assert.deepEqual(payload.to, ['wldn041012@naver.com']);
+  assert.deepEqual(payload.to, ['jiwoo6306@gmail.com']);
   assert.equal(payload.reply_to, 'visitor@example.com');
   assert.equal(payload.from, 'contact@verified.example');
   assert.equal(payload.html, undefined);

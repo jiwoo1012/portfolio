@@ -1,5 +1,6 @@
 "use client";
 
+import { emailComposeUrl } from "@/lib/email-link";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -84,7 +85,7 @@ export default function PixelEmail({ email }: { email: string }) {
     return () => media.revert();
   }, [email]);
 
-  return <a ref={link} className={styles.pixelEmail} href={`mailto:${email}`} aria-label={`${email}로 이메일 보내기`}>
+  return <a ref={link} className={styles.pixelEmail} href={emailComposeUrl(email)} aria-label={`${email}로 이메일 보내기`}>
     <span className={styles.emailVisual}>
       <canvas ref={canvas} aria-hidden="true" />
       <span className={styles.emailFallback}>{email}</span>

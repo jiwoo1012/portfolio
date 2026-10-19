@@ -1,6 +1,6 @@
-﻿// 연락처와 외부 이력서 링크를 받으면 이곳에 연결합니다.
+// 연락처와 외부 이력서 링크를 받으면 이곳에 연결합니다.
 export const homeContact = {
-  email: "wldn041012@naver.com",
+  email: "jiwoo6306@gmail.com",
   phone: "010-4939-3578",
   githubUrl: "https://github.com/jiwoo1012",
   resumeUrl: "/about#education",

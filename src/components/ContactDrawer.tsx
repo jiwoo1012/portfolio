@@ -1,5 +1,6 @@
 "use client";
 
+import { emailComposeUrl } from "@/lib/email-link";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import Image from "next/image";
 import { homeContact } from "@/app/home/home-data";
@@ -17,6 +18,16 @@ export default function ContactDrawer({ href, children }: { href: string; childr
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState({ email: "", message: "" });
   const [feedback, setFeedback] = useState("");
+
+  useEffect(() => {
+    const openInvitation = () => {
+      setClosing(false);
+      setFlying(false);
+      setOpen(true);
+    };
+    window.addEventListener("open-contact-invitation", openInvitation);
+    return () => window.removeEventListener("open-contact-invitation", openInvitation);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -54,6 +65,22 @@ export default function ContactDrawer({ href, children }: { href: string; childr
     busy.current = true;
     setSending(true);
     try {
+      const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      if (serviceID || templateID || publicKey) {
+        if (!serviceID || !templateID || !publicKey) throw new Error("이메일 전송 설정을 확인 중입니다. 이메일 주소를 눌러 직접 연락해 주세요.");
+        if (data.get("website")) throw new Error("입력 내용을 확인해 주세요.");
+        const { default: emailjs } = await import("@emailjs/browser");
+        try {
+          await emailjs.send(serviceID, templateID, {
+            reply_email: email, message,
+            to_name: "김지우", subject: "[포트폴리오] 새로운 문의",
+          }, { publicKey });
+        } catch {
+          throw new Error("편지를 전송하지 못했습니다. 잠시 후 다시 시도하거나 이메일 주소를 눌러 직접 연락해 주세요.");
+        }
+      } else {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -62,6 +89,7 @@ export default function ContactDrawer({ href, children }: { href: string; childr
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || "전송하지 못했습니다. 다시 시도해 주세요.");
+      }
       setFeedback("질문이 전송되었습니다. 이메일로 답변드릴게요.");
       form.reset();
       if (dialog.current?.open && dialog.current.dataset.closing !== "true") setFlying(true);
@@ -85,7 +113,7 @@ export default function ContactDrawer({ href, children }: { href: string; childr
           <h2 id="contact-invitation">AN INVITATION TO CONNECT</h2>
           <p className={styles.greeting}>더 나은 코드를 위한 시작은<br /><mark>올바른 질문</mark>이라고 믿습니다.</p>
           <address>
-            <a href={`mailto:${homeContact.email}`}>EMAIL_ <mark>{homeContact.email}</mark></a>
+            <a href={emailComposeUrl(homeContact.email)}>EMAIL_ <mark>{homeContact.email}</mark></a>
             <a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>TEL_ <mark>{homeContact.phone}</mark></a>
           </address>
           <p className={styles.question}>궁금한 점도<br />편하게 물어봐주세요!</p>

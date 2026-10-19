@@ -20,9 +20,9 @@ export async function POST(request: Request) {
   if (errors.email || errors.message) return Response.json({ error: errors.email || errors.message }, { status: 400 });
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
-  const to = process.env.CONTACT_TO_EMAIL?.trim() || "wldn041012@naver.com";
+  const to = process.env.CONTACT_TO_EMAIL?.trim() || "jiwoo6306@gmail.com";
   if (validateContact(to, "configuration").email) return Response.json({ error: "문의 수신 설정을 확인 중입니다. 잠시 후 다시 시도해 주세요." }, { status: 503 });
-  if (!apiKey || !from) return Response.json({ error: "현재 문의 전송을 준비 중입니다. wldn041012@naver.com으로 직접 메일을 보내주세요." }, { status: 503 });
+  if (!apiKey || !from) return Response.json({ error: "현재 문의 전송을 준비 중입니다. jiwoo6306@gmail.com으로 직접 메일을 보내주세요." }, { status: 503 });
   try {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",

@@ -83,10 +83,10 @@ export const resumeSections: ResumeSection[] = [
     },
   ] },
   { id: "awards-certificates", number: "07", title: "Awards & Certificates", subtitle: "수상 내역 · 자격증", entries: [
-    { period: "2026", title: "웹디자인기능사", organization: "한국산업인력공단", badge: "자격증" },
+    { period: "2026", title: "웹디자인개발기능사", organization: "한국산업인력공단"},
     { period: "2026", title: "SQLD", organization: "한국데이터산업진흥원(K-DATA)", badge: "취득 예정", planned: true },
     { period: "2027", title: "정보처리기사", organization: "한국산업인력공단", badge: "취득 예정", planned: true },
-    { period: "2026", title: "무형서재 교내 공모전", organization: "메시지 전달 및 서비스 기획 부문", badge: "우수상" },
     { period: "2026", title: "독한원정대 교내 공모전", organization: "사회문제 탐구 미디어 콘텐츠 기획 부문", badge: "금상" },
+    { period: "2025", title: "무형서재 교내 공모전", organization: "메시지 전달 및 서비스 기획 부문", badge: "우수상" },
   ] },
 ];

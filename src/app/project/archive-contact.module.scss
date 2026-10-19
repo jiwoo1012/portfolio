@@ -1,0 +1,55 @@
+.footer { background: #050505; color: #ece5db; padding: 90px 6% 85px; }
+.inner { width: min(100%, 1120px); margin: auto; }
+.heading {
+  margin: 0 0 32px;
+  font-size: clamp(44px, 7.5vw, 108px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  span { display: block; }
+  span:first-child { padding-left: 23%; }
+}
+.link {
+  --arrow-gap: clamp(20px, 4vw, 55px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: calc(.8em + var(--arrow-gap));
+  width: fit-content;
+  margin-left: auto;
+  font-size: clamp(40px, 7.4vw, 106px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.045em;
+  color: inherit;
+  text-decoration: none;
+  em { font-style: normal; color: #ee3b38; }
+  &:hover .text, &:focus-visible .text { transform: translateX(calc(-.8em - var(--arrow-gap))); }
+  &:hover .arrow, &:focus-visible .arrow { left: calc(100% - .8em); }
+}
+.text { white-space: nowrap; transform: translateX(0); transition: transform .75s cubic-bezier(.22,1,.36,1); }
+.arrow { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: .8em; color: #ee3b38; svg { display: block; width: 100%; height: auto; } }
+@keyframes contactArrowSwitch {
+  0% { left: 0; opacity: 1; transform: translate(0, -50%); }
+  38% { left: 0; opacity: 0; transform: translate(-.4em, -50%); }
+  39% { left: calc(100% - .8em); opacity: 0; transform: translate(.4em, -50%); }
+  100% { left: calc(100% - .8em); opacity: 1; transform: translate(0, -50%); }
+}
+@keyframes contactNudge {
+  0%, 48%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-.14em); }
+  32% { transform: translateX(.025em); }
+  65% { transform: translateX(-.1em); }
+  80% { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .link:hover .arrow, .link:focus-visible .arrow { animation: contactArrowSwitch .8s cubic-bezier(.22,1,.36,1) both; }
+  .link:not([data-clicked="true"]):hover .arrow svg,
+  .link:not([data-clicked="true"]):focus-visible .arrow svg { animation: contactNudge 1.5s ease-in-out .8s infinite; }
+}
+@media (prefers-reduced-motion: reduce) { .text, .arrow { transition: none; } }
+@media (max-width: 600px) {
+  .footer { padding: 65px 6% 60px; }
+  .heading { font-size: clamp(36px, 9.5vw, 57px); margin-bottom: 30px; }
+  .link { --arrow-gap: 18px; font-size: clamp(28px, 7.8vw, 47px); }
+}

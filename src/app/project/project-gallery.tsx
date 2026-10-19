@@ -6,11 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { projects, type Project } from "./projects";
 import styles from "./page.module.scss";
 import archive from "./archive.module.scss";
+import contactStyles from "./archive-contact.module.scss";
 import HomeHeader from "@/components/HomeHeader";
 import SelectedWork from "./selected-work";
 import DraggableProjectRow from "./draggable-project-row";
 import ProjectImageTransition from "./project-image-transition";
-import { homeContact } from "../home/home-data";
 import { projectDetails } from "./project-details";
 import { backendProjectOrder, projectToolIcons, projectTools } from "./project-tools";
 import vintage from "../home/page.module.scss";
@@ -33,6 +33,7 @@ export default function ProjectGallery({ category }: { category: string }) {
     row?.scrollBy({ left: direction * row.clientWidth * .8, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }
   const [selected, setSelected] = useState<Project | null>(null);
+  const [contactClicked, setContactClicked] = useState(false);
   const [slide, setSlide] = useState(0);
   const slides = selected ? selected.gallery ?? [selected.image] : [];
   const currentImage = slides[slide];
@@ -78,13 +79,22 @@ export default function ProjectGallery({ category }: { category: string }) {
                   {project.youtube && <span className={archive.playIcon} aria-hidden="true">▶</span>}
                   <ProjectTags project={project} />
                 </div></ProjectImageTransition><div className={archive.cardInfo}><div><h3>{project.id === "01" ? "JAJAK" : project.title}</h3><p>{project.description}</p></div></div></>;
-                return <article key={project.id} className={archive.card}>{project.category === "design" ? <button type="button" className={archive.cardLink} onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">{content}</button> : <Link className={archive.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>{content}</Link>}{siteUrl ? <a className={archive.arrow} href={siteUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} 사이트 바로가기 (새 탭)`} title="사이트 바로가기">↗</a> : <span className={archive.arrow} aria-disabled="true" title="사이트 링크 준비 중">↗</span>}</article>;
+                return <article key={project.id} className={archive.card}>{project.category === "design" ? <button type="button" className={archive.cardLink} onClick={() => openPreview(project)} aria-label={`${project.title} ${project.youtube ? "영상 재생" : "카드뉴스 보기"}`} aria-haspopup="dialog">{content}</button> : <Link className={archive.cardLink} href={`/project/${project.id}`} aria-label={`${project.title} 상세 보기`}>{content}</Link>}{siteUrl ? <a className={archive.arrow} href={siteUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} 사이트 바로가기 (새 탭)`} title="사이트 바로가기">↗</a> : null}</article>;
               })}
             </DraggableProjectRow>
           </section>;
         })}
       </main>
-      <footer className={archive.contact} id="project-contact"><p>Let’s Build<br />What’s Next</p><a href={`mailto:${homeContact.email}`}><span className={archive.contactArrow} aria-hidden="true">←</span><span>Let’s <em>Contact!</em></span></a></footer>
+      <footer className={contactStyles.footer} id="project-contact">
+        <div className={contactStyles.inner}>
+          <p className={contactStyles.heading}><span>Let’s Build</span><span>What’s Next</span></p>
+          <a className={contactStyles.link} href="#project-contact" aria-haspopup="dialog" data-clicked={contactClicked}
+            onClick={(event) => { event.preventDefault(); setContactClicked(true); window.dispatchEvent(new Event("open-contact-invitation")); }} onMouseLeave={() => setContactClicked(false)} onBlur={() => setContactClicked(false)}>
+            <span className={contactStyles.arrow} aria-hidden="true"><svg viewBox="0 0 80 64" fill="none"><path d="M72 32H8m24-24L8 32l24 24" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
+            <span className={contactStyles.text}>Let’s <em>Contact!</em></span>
+          </a>
+        </div>
+      </footer>
 
       <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="preview-title" onClose={() => setSelected(null)}
         onKeyDown={(event) => {

@@ -39,4 +39,4 @@ export const projectToolIcons: Partial<Record<string, StaticImageData | string>>
   GSAP: "/about/skill/GSAP.png",
 };
 
-export const backendProjectOrder = ["18", "04", "08"];
+export const backendProjectOrder = ["18", "06", "08"];

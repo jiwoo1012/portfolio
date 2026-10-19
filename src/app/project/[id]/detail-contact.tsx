@@ -1,5 +1,6 @@
 "use client";
 
+import { emailComposeUrl } from "@/lib/email-link";
 import { useRef, useState, type FormEvent } from "react";
 import { homeContact } from "../../home/home-data";
 import { validateContact } from "@/lib/contact";
@@ -50,7 +51,7 @@ export default function DetailContact() {
   return (
     <footer ref={root} className={styles.contactReveal} id="contact">
       <div className={styles.contactWindow}>
-        <a className={styles.contactWord} href={`mailto:${homeContact.email}`} aria-label="이메일로 연락하기">
+        <a className={styles.contactWord} href={emailComposeUrl(homeContact.email)} aria-label="이메일로 연락하기">
           CONTACT
         </a>
       </div>
@@ -91,7 +92,7 @@ export default function DetailContact() {
         </div>
 
         <address className={styles.contactDetails}>
-          <div><strong>EMAIL</strong><span aria-hidden="true">|</span><a href={`mailto:${homeContact.email}`}>{homeContact.email}</a></div>
+          <div><strong>EMAIL</strong><span aria-hidden="true">|</span><a href={emailComposeUrl(homeContact.email)}>{homeContact.email}</a></div>
           <div><strong>TEL</strong><span aria-hidden="true">|</span><a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a></div>
         </address>
       </div>

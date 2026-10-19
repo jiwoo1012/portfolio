@@ -1,5 +1,6 @@
 "use client";
 
+import { emailComposeUrl } from "@/lib/email-link";
 import { useRef, useState, type FormEvent } from "react";
 import { validateContact } from "@/lib/contact";
 import { homeContact } from "../home/home-data";
@@ -46,7 +47,7 @@ export default function ProjectContact() {
 
   return <footer className={styles.contactFooter} id="project-contact">
     <div className={styles.contactColumns}>
-      <address><strong>김지우</strong><a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a><a href={`mailto:${homeContact.email}`}>{homeContact.email}</a></address>
+      <address><strong>김지우</strong><a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a><a href={emailComposeUrl(homeContact.email)}>{homeContact.email}</a></address>
       <form className={styles.questionForm} onSubmit={submit} noValidate aria-labelledby="question-title" aria-busy={sending}>
         <h2 id="question-title">Have a Question?</h2>
         <label htmlFor="question-email">답변받을 이메일 <span>(필수)</span></label>
@@ -59,6 +60,6 @@ export default function ProjectContact() {
         <div className={styles.formBottom}><p role="status">{status}</p><button type="submit" disabled={sending}>{sending ? "보내는 중…" : "물어보기"}<span aria-hidden="true">↗</span></button></div>
       </form>
     </div>
-    <a className={styles.contactMe} href={`mailto:${homeContact.email}`}>CONTACT ME</a>
+    <a className={styles.contactMe} href={emailComposeUrl(homeContact.email)}>CONTACT ME</a>
   </footer>;
 }

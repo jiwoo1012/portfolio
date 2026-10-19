@@ -1,3 +1,4 @@
+import { emailComposeUrl } from "@/lib/email-link";
 import type { Metadata } from "next";
 
 import HomeAbout from "./home-about";
@@ -26,7 +27,7 @@ export default function HomePage() {
     <footer className={footerStyles.footer} aria-labelledby="contact-title">
       <h2 id="contact-title" className={footerStyles.word}>CONTACT</h2>
       <address className={footerStyles.details}>
-        <a href={`mailto:${homeContact.email}`}>{homeContact.email}</a>
+        <a href={emailComposeUrl(homeContact.email)}>{homeContact.email}</a>
         <a href={`tel:${homeContact.phone.replaceAll("-", "")}`}>{homeContact.phone}</a>
       </address>
     </footer>
