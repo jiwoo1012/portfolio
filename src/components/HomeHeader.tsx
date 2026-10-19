@@ -1,4 +1,4 @@
-import Link from "next/link";
+import ContactDrawer from "./ContactDrawer";
 import Image from "next/image";
 import type { PageName } from "./Gnb";
 import TopNavigationLink from "./TopNavigationLink";
@@ -16,7 +16,7 @@ export default function HomeHeader({ active, reserveSpace = true, showLogo = tru
       <nav aria-label="메인 메뉴">
         {([['home', 'HOME'], ['about', 'ABOUT'], ['project', 'WORK']] as const).map(([path, label]) =>
           <TopNavigationLink href={`/${path}`} aria-current={active === path ? "page" : undefined} key={path}>{label}<Underline /></TopNavigationLink>)}
-        <Link href={contact}>CONTACT<Underline /></Link>
+        <ContactDrawer href={contact}>CONTACT<Underline /></ContactDrawer>
       </nav>
     </header>
     {reserveSpace && <div className={styles.spacer} aria-hidden="true" />}

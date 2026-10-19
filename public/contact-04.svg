@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 682 981">
+  <defs>
+    <style>
+    </style>
+    <image id="image" width="736" height="1308" xlink:href="../../../../Downloads/Firefly (29).png"/>
+  </defs>
+  <use transform="translate(-389 -1337) scale(1.15 1.07)" xlink:href="#image"/>
+  <use transform="translate(-72 -174) scale(1.12 1.07)" xlink:href="#image"/>
+</svg>
