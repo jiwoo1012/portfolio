@@ -1,9 +1,8 @@
-
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image, { type StaticImageData } from "next/image";
-import { desktopCaptures, mobileCaptures } from "../project-captures";
+import { desktopCaptures, mobileCaptures, mobileVideos } from "../project-captures";
 import ProjectImageTransition from "../project-image-transition";
 import styles from "./project-preview.module.scss";
 
@@ -23,8 +22,7 @@ export default function ProjectPreview({
 
   const image = capture ?? (device === "pc" ? fallback : undefined);
 
-  // JAJAK 모바일 미리보기 영상
-  const isJajakMobile = id === "01" && device === "mobile";
+  const mobileVideo = device === "mobile" ? mobileVideos[id] : undefined;
 
   return (
     <div className={styles.preview}>
@@ -59,18 +57,21 @@ export default function ProjectPreview({
             device === "pc" ? "PC" : "모바일"
           } 미리보기`}
         >
-          {isJajakMobile ? (
+          {mobileVideo ? (
             <video
-              key="jajak-mobile"
-              src="/project/jajak/jajak_Mobile.mp4"
+              key={mobileVideo}
+              src={mobileVideo}
               autoPlay
               muted
               loop
               playsInline
-              preload="auto"
+              controls
+              preload="metadata"
               className={styles.mobileVideo}
-              aria-label="JAJAK 모바일 서비스 시연 영상"
-            />
+              aria-label={`${title} 모바일 서비스 시연 영상`}
+            >
+              영상을 재생할 수 없습니다. <a href={mobileVideo}>영상 파일 열기</a>
+            </video>
           ) : image ? (
             <Image
               key={device}
@@ -98,3 +99,4 @@ export default function ProjectPreview({
     </div>
   );
 }
+

@@ -43,6 +43,13 @@ export default async function ProjectDetailPage({ params }: Props) {
           <h1 id="project-title">{id === "01" ? "JAJAK" : detail.serviceName || project.title}</h1>
           <p className={styles.heroDescription}>{detail.overview || project.description}</p>
           <div className={styles.projectLinks}>{links.map(({ label, url }) => url ? <a key={label} href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a> : <span key={label} title="자료 준비 중">{label} · 준비 중</span>)}</div>
+          {detail.demoAccount && <div className={styles.demoAccount}>
+            <h2>관리자 계정</h2>
+            <dl>
+              <div><dt>아이디</dt><dd>{detail.demoAccount.username}</dd></div>
+              <div><dt>비밀번호</dt><dd>{detail.demoAccount.password}</dd></div>
+            </dl>
+          </div>}
         </div>
         <ProjectPreview id={id} title={detail.serviceName || project.title} fallback={project.image} />
       </section>

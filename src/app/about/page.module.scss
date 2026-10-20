@@ -1,48 +1,226 @@
-﻿$ink: #34221c;
-$muted: #74685f;
-$line: #d4cabb;
-$mono: 'Courier New', monospace;
-$serif: Georgia, 'Times New Roman', serif;
-.page { color: $ink; }
-.introduction { width: min(1120px, 90%); margin: auto; padding: 40px 0 48px; > .eyebrow { text-align: center; } h1 { margin: 24px 0 42px; text-align: center; font: 400 clamp(65px, 12vw, 156px)/1.05 $serif; letter-spacing: -.065em; > span { color: #fff0d1; } em { font-weight: 400; } } }
-.eyebrow { font: 9px/1.7 $mono; letter-spacing: .06em; margin: 0; }
-.profileRow { border-top: 1px solid #34221c40; padding-top: 28px; display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 30px; align-items: center; h2 { font-size: 26px; font-weight: 500; margin: 0 0 12px; span { display: block; font: 9px $mono; margin-top: 10px; } } }
-.role { font: 9px $mono; margin: 0; }
-.summary { font-size: 13px; line-height: 1.9; margin: 0; word-break: keep-all; }
-.contacts { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; a { font: 11px/1.7 $mono; border-bottom: 1px solid #34221c50; overflow-wrap: anywhere; } }
-.resumeBody { background: #f6f0e3; padding: 0 max(5vw, calc((100vw - 1120px) / 2)); border-top: 1px solid #34221c20; }
-.sectionNav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding: 28px 0; border-bottom: 1px solid $line; a { display: flex; align-items: center; gap: 10px; font-size: 11px; line-height: 1.6; padding: 5px 0; } span { font: 8px $mono; color: $muted; } a:hover { text-decoration: underline; text-underline-offset: 5px; } }
-.resumeSection { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 65px; padding: 65px 0; border-bottom: 1px solid $line; }
-.sectionTitle { h2 { font: 400 43px/1.08 $serif; letter-spacing: -1.7px; margin: 18px 0 15px; } > p:last-child { font-size: 12px; color: $muted; line-height: 1.8; } h2 span { color: #537584; } }
-.timeline { list-style: none; padding: 0; margin: 0; }
-.timelineEntry { padding: 0 0 30px; + li { border-top: 1px solid $line; padding-top: 28px; } &:last-child { padding-bottom: 0; } h3 { font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -.6px; margin: 12px 0 8px; word-break: keep-all; } }
-.entryHeading { display: flex; align-items: center; gap: 18px; margin-bottom: 10px; }
-.entryHeadingText { flex: 1; min-width: 0; }
-.entryMeta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.period { font: 11px/1.7 $mono; color: #537584; margin: 0; }
-.entryBadge { padding: 4px 8px; border: 1px solid #d2c09a; background: #fff0d1; font-size: 10px; line-height: 1.5; }
-.plannedBadge { background: transparent; border: 1px dashed #85796e; color: $muted; }
-.organization { font-size: 13px; line-height: 1.8; margin: 0; }
-.entryDescription, .highlights { font-size: 13px; line-height: 1.9; color: $muted; word-break: keep-all; margin: 12px 0 0; }
-.highlights { padding-left: 18px; li + li { margin-top: 4px; } }
-.educationLogo { width: 72px; height: 76px; flex: 0 0 72px; display: grid; place-items: center; background: #fffdf7; border: 1px solid #e5ddd0; img { width: 58px; height: 58px; object-fit: contain; } }
-.projectLink { display: inline-block; margin-top: 22px; border-bottom: 1px solid $ink; padding-bottom: 8px; font-size: 11px; }
-.skillGroup { + .skillGroup { border-top: 1px solid $line; padding-top: 23px; margin-top: 25px; } h3 { margin: 0 0 16px; font: italic 25px $serif; } ul { padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 9px; list-style: none; } li { display: flex; align-items: center; gap: 9px; padding: 10px 12px; border: 1px solid #e1d8ca; background: #fffdf7; font: 11px $mono; } img { width: 30px; height: 30px; object-fit: contain; } }
-.monogram { display: grid; place-items: center; width: 30px; height: 30px; font: bold 12px $mono; color: #537584; background: #e4edef; }
-.resumeEmpty { color: $muted; font-size: 13px; }
-.endnote { padding: 35px 0 45px; display: flex; justify-content: space-between; align-items: center; gap: 20px; > span { font: 9px $mono; color: $muted; } a { font-size: 13px; border-bottom: 1px solid; padding-bottom: 8px; } a span { margin-left: 25px; } }
-@media (max-width: 1000px) { .resumeSection { grid-template-columns: 240px minmax(0, 1fr); gap: 35px; } .sectionTitle h2 { font-size: 36px; } .profileRow { grid-template-columns: 1fr 1.4fr; } .contacts { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: 15px 30px; } }
-@media (max-width: 650px) {
-  .introduction { padding: 30px 0; h1 { font-size: clamp(49px, 12vw, 78px); margin: 25px 0 30px; } }
-  .profileRow { grid-template-columns: 1fr; gap: 22px; h2 { font-size: 24px; span { display: inline-block; margin-left: 14px; } } }
-  .summary { font-size: 12px; }
-  .sectionNav { justify-content: flex-start; gap: 12px 22px; padding: 22px 0; a { font-size: 10px; } }
-  .resumeSection { grid-template-columns: 1fr; gap: 24px; padding: 38px 0; }
-  .sectionTitle h2 { font-size: 37px; margin: 12px 0; }
-  .sectionTitle > p:last-child { margin-bottom: 0; }
-  .timelineEntry h3 { font-size: 19px; }
-  .entryHeading { gap: 12px; align-items: flex-start; }
-  .educationLogo { width: 56px; height: 60px; flex-basis: 56px; img { width: 44px; height: 44px; } }
-  .skillGroup li { padding: 9px 10px; font-size: 10px; }
-  .endnote { align-items: flex-start; flex-direction: column; }
+﻿@font-face {
+  font-family: "About Pretendard";
+  src: url("/fonts/PretendardVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
 }
+
+.page {
+  isolation: isolate;
+  --home-nav-ink: #fff;
+  background: #000;
+  color: #fff;
+  font-family: "About Pretendard", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  // The shared logo uses multiply on light pages; preserve its red ink here.
+  header img { mix-blend-mode: normal; }
+}
+
+.foreground {
+  position: relative;
+  z-index: 1;
+  background: #000;
+}
+
+.skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 110;
+  padding: 12px 18px;
+  background: #fff;
+  color: #000;
+  transform: translateY(-160%);
+  &:focus { transform: translateY(0); }
+}
+
+.hero {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 100px 24px 64px;
+
+  h1 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(64px, 8.7vw, 144px);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1.22;
+    letter-spacing: -.025em;
+    span { display: block; }
+  }
+}
+
+.introduction {
+  position: relative;
+  height: 250svh;
+}
+
+.introStage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 90px 24px;
+}
+
+.greeting {
+  position: relative;
+  h2 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(21px, 3vw, 48px);
+    font-weight: 750;
+    line-height: 1.35;
+    letter-spacing: -.035em;
+  }
+}
+
+.line {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ink {
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  clip-path: inset(0 calc(100% - var(--fill, 100%)) 0 0);
+}
+
+.hand {
+  position: absolute;
+  left: calc(100% + clamp(12px, 2.7vw, 44px));
+  bottom: -.15em;
+  width: clamp(44px, 5.5vw, 88px);
+  height: auto;
+  object-fit: contain;
+  transform-origin: 50% 88%;
+  animation: wave 2.4s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(18deg); }
+  20%, 40% { transform: rotate(-13deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: clamp(60px, 12vw, 78px); }
+  .greeting { margin-right: 42px; }
+  .greeting h2 { font-size: clamp(17px, 4.7vw, 28px); }
+  .hand { width: 44px; left: calc(100% + 8px); }
+}
+
+.journey {
+  position: relative;
+  height: 500svh;
+}
+
+.journeyStage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.journeyTrack {
+  position: relative;
+  width: max(200vw, 1500px);
+  height: 100%;
+  will-change: transform;
+}
+
+.journeyTitle {
+  position: absolute;
+  top: 18%;
+  left: 3.5%;
+  margin: 0;
+  color: #000;
+  -webkit-text-stroke: 1.5px #fff;
+  font-size: clamp(58px, 7.5vw, 128px);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.journeyLine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: #ba492e;
+  stroke-width: 1.5;
+  // Keep dash lengths in SVG coordinates, matching pathLength="1".
+  // Butt caps also keep the fully hidden path from showing a starting dot.
+  stroke-linecap: butt;
+}
+
+.journeyDot {
+  position: absolute;
+  width: clamp(18px, 2.3vw, 36px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ba492e;
+  translate: -50% -50%;
+}
+
+.dotOne { left: 18%; top: 47.14%; }
+.dotTwo { left: 44%; top: 67.86%; }
+.dotThree { left: 72.5%; top: 28.57%; }
+
+.journeyCard {
+  position: absolute;
+  width: 19%;
+  max-width: 490px;
+  h3 { margin: 6px 0 14px; font-size: clamp(18px, 1.65vw, 28px); line-height: 1.35; word-break: keep-all; }
+  p { margin: 0; font-size: clamp(12px, 1vw, 17px); font-weight: 550; line-height: 1.6; word-break: keep-all; }
+}
+
+.journeyNumber { font-size: clamp(24px, 2.1vw, 36px); font-weight: 900; }
+.cardOne { left: 3%; top: 49%; width: 15%; .journeyNumber { display: block; text-align: right; padding-right: 24px; } }
+.cardTwo { left: 44%; top: 71%; }
+.cardThree { left: 74.5%; top: 29%; }
+
+@media (max-width: 600px) {
+  .journey { height: 600svh; }
+  .journeyTrack { width: 300vw; }
+  .journeyTitle { left: 2%; font-size: 56px; }
+  .journeyCard h3 { font-size: 18px; }
+  .journeyCard p { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  // Hide animation content before hydration, as well as before its scroll range.
+  .line { --fill: 0%; }
+  // Initial dash values live on the SVG attributes so CSS cannot override the animation.
+  .journeyDot, .journeyCard { opacity: 0; }
+  .journeyTitle { clip-path: inset(0 100% 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey { height: auto; }
+  .journeyStage { position: relative; height: auto; overflow: visible; padding: 100px 7%; }
+  .journeyTrack { width: 100%; height: auto; will-change: auto; }
+  .journeyTitle { position: relative; top: auto; left: auto; font-size: clamp(42px, 8vw, 100px); margin-bottom: 60px; }
+  .journeyLine, .journeyDot { display: none; }
+  .journeyCard {
+    position: relative; top: auto; left: auto; width: 100%; max-width: none;
+    padding: 0 0 40px 24px; border-left: 2px solid #ba492e;
+    .journeyNumber { text-align: left; }
+  }
+  .introduction { height: 100svh; }
+  .introStage { position: relative; }
+  .hand { animation: none; }
+  .ink { clip-path: none; }
+}
+

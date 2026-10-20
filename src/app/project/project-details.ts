@@ -4,6 +4,7 @@ export type ProjectDetail = {
   githubUrl?: string;
   presentationUrl?: string;
   proposalUrl?: string;
+  demoAccount?: { username: string; password: string };
   contributionGroups?: { title: string; items: { title: string; description: string; anchor?: string }[] }[];
   implementations?: {
     id: string;
@@ -22,7 +23,7 @@ export type ProjectDetail = {
     implementationDetails?: string;
     flowchart?: { src: string; alt: string; width: number; height: number };
     codeExamples?: { summary?: string; title: string; filename?: string; code: string; rationale: string }[];
-    images: { src: string; alt: string; title: string; caption: string; width: number; height: number }[];
+    images: { src: string; alt: string; title: string; caption: string; width: number; height: number; autoScroll?: boolean }[];
   }[];
   scaffold?: boolean;
   background?: string;
@@ -56,6 +57,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     period: "2026.08.10 ~ 2026.09.09",
     role: "팀장 · 핵심 서비스 기능 개발 · AI/Firebase 연동 · UI/UX 설계 및 프로젝트 통합",
     serviceName: "자작 (JAJAK)",
+    demoAccount: { username: "jajak-admin01@jajak-admin.com", password: "Jajak!Admin01" },
     siteUrl: "https://jajak-ten.vercel.app/",
     githubUrl: "https://github.com/jiwoo1012/TeamProject2",
     presentationUrl: "",
@@ -484,12 +486,1253 @@ const chart = new Chart(context, {
     // retrospective: "배운 점과 다음 개선 방향",
     // screenshots: [{ src: "/project/jajak/example.png", alt: "화면 설명", caption: "기능 설명" }],
   },
-  "02": { ...emptyProjectDetail },
-  "03": { ...emptyProjectDetail },
-  "04": { ...emptyProjectDetail },
-  "05": { ...emptyProjectDetail },
-  "06": { ...emptyProjectDetail },
+"02": {
+    ...emptyProjectDetail,
+    serviceName: "CHAMVERSE",
+    siteUrl: "https://kimhyeonso.github.io/CHAMVERSE/html/intro.html",
+    githubUrl: "https://github.com/kimhyeonso/NODE",
+    period: "2026.07.22 - 2026.07.24",
+    team: "4명 (팀 프로젝트)",
+    role: "기획/디자인: 콘텐츠 이용 영역 UI/UX 화면 설계\n화면 구현: 캐릭터 투표, 랭킹 이미지, 마이페이지 구현",
+    stack: ["HTML5", "CSS3", "JavaScript"],
+    overview: "CHAMVERSE는 캐릭터를 중심으로 다양한 콘텐츠를 탐색하고, 최애 캐릭터 투표와 랭킹을 통해 사용자들이 직접 참여할 수 있도록 제작한 웹사이트입니다. 이벤트 소개부터 캐릭터 선택, 투표 결과 확인, 마이페이지까지 이어지는 사용자 경험을 구현했으며, 직관적인 UI와 인터랙션을 통해 팬덤 콘텐츠를 즐길 수 있도록 구성했습니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 주요 기능",
+        items: [
+          { title: "캐릭터 투표", anchor: "vote-character", description: "캐릭터 선택·해제 및 투표 버튼 상태 연동" },
+          { title: "랭킹 페이지", anchor: "vote-ranking", description: "캐릭터별 순위 정보를 보여주는 랭킹 UI 구현" },
+          { title: "마이페이지", anchor: "mypage", description: "사용자 정보 및 콘텐츠 이용을 위한 마이페이지 UI 구현" },
+          { title: "UI/UX 화면 설계", anchor: "event-intro", description: "콘텐츠 탐색과 이용 흐름을 고려한 와이어프레임 설계" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "event-intro",
+        title: "01. 이벤트 진입 페이지",
+        summary: "이벤트 콘텐츠를 소개하고, 사용자가 투표 페이지로 진입할 수 있도록 구성한 안내 페이지입니다.",
+        responsibilities: [
+          "- 이벤트 진입 화면 구현",
+          "- 이벤트 안내 콘텐츠 및 UI 구성",
+          "- 투표 페이지 이동 기능 구현"
+        ],
+        steps: ["이벤트 소개 확인", "투표 참여 버튼 클릭", "투표 페이지 진입"],
+        implementationDetails: "이벤트의 주요 정보를 한눈에 확인할 수 있도록 화면을 구성하고, 사용자가 투표 기능으로 자연스럽게 이동할 수 있도록 페이지 간 이동 흐름을 구현했습니다.",
+        images: [{
+          src: "/project/chamverse/vote-event.png", width: 1466, height: 6847,
+          title: "이벤트 진입 페이지", alt: "CHAMVERSE 캐릭터 투표 이벤트 소개부터 TOP 3와 전체 순위까지의 전체 화면",
+          caption: "캐릭터 투표 이벤트 페이지", autoScroll: true,
+        }],
+      },
+      {
+        id: "vote-character",
+        title: "02. 최애 캐릭터 투표",
+        summary: "좋아하는 캐릭터를 선택하고 투표할 수 있는 사용자 참여형 기능입니다.",
+        responsibilities: [
+          "- 캐릭터 선택 및 선택 해제 기능",
+          "- 선택 캐릭터 정보와 하단 투표 UI 연동",
+          "- 투표 버튼 활성화 상태 관리"
+        ],
+        steps: ["캐릭터 카드 선택", "플로팅 선택 정보 확인", "투표 제출"],
+        implementationDetails: "selectedCharacter를 기준으로 캐릭터 선택 상태를 관리하고, 카드의 선택 표시와 하단 캐릭터 정보 및 투표 버튼이 함께 변경되도록 구현했습니다. 이벤트 위임과 closest()를 활용해 카드 내부 어느 영역을 클릭해도 동일한 선택 동작이 실행되도록 처리했습니다.",
+        video: "/project/chamverse/mobile.mp4",
+        codeExamples: [
+          {
+            title: "선택 상태와 투표 UI 동기화",
+            summary: "selectedCharacter 상태에 따라 하단 플로팅 UI와 제출 버튼 상태를 갱신하는 함수 구현",
+            filename: "vote.js",
+            code: `const updateFloating = () => {
+  if (!selectedCharacter) {
+    clearSelection();
+    return;
+  }
+
+  selectedName.textContent =
+    \`\${selectedCharacter.name}을(를) 선택했어요!\`;
+
+  selectedThumb.innerHTML = \`
+    <img
+      src="\${selectedCharacter.image}"
+      alt="\${selectedCharacter.name}"
+    >
+  \`;
+
+  selectedThumb.style.background = selectedCharacter.color;
+  voteSubmit.disabled = false;
+  voteFloating.classList.add('is-visible');
+};
+
+const clearSelection = () => {
+  document.querySelectorAll('.vote-character').forEach(item => {
+    item.classList.remove('is-selected');
+  });
+
+  voteSubmit.disabled = true;
+  voteFloating.classList.remove('is-visible');
+  selectedThumb.innerHTML = '';
+  selectedName.textContent = '캐릭터를 선택해주세요';
+};`,
+            rationale: "selectedCharacter를 단일 상태 기준으로 설정하고 updateFloating()과 clearSelection()으로 UI 갱신을 분리하여 캐릭터 선택/해제 시 연관된 UI들이 일관되게 동작하도록 구현했습니다.",
+          },
+          {
+            title: "카드 내부 클릭 위치와 관계없는 선택 처리",
+            summary: "이벤트 위임과 closest()를 활용해 카드 내 어디를 눌러도 정상 동작하도록 처리",
+            filename: "vote.js",
+            code: `characterGrid.addEventListener('click', event => {
+  const card = event.target.closest('.vote-character');
+
+  if (!card) return;
+
+  const characterId = card.dataset.characterId;
+  const character = characters.find(
+    item => item.id === characterId
+  );
+
+  if (!character) return;
+
+  // 캐릭터 선택 및 UI 갱신
+});`,
+            rationale: "개별 자식 요소에 이벤트 리스너를 일일이 걸지 않고 characterGrid 부모 요소에 이벤트 위임을 적용한 후, closest('.vote-character')를 사용해 이미지나 텍스트 어디를 클릭하든 정확하게 해당 카드의 dataset 값을 조회할 수 있도록 최적화했습니다.",
+          },
+        ],
+        images: [{
+          src: "/project/chamverse/vote.png", width: 1466, height: 2508,
+          title: "최애 캐릭터 투표", alt: "CHAMVERSE 최애 캐릭터 선택 및 투표 화면",
+          caption: "캐릭터 선택과 투표 참여", autoScroll: true,
+        }],
+      },
+      {
+        id: "vote-ranking",
+        title: "03. 투표 랭킹",
+        summary: "캐릭터별 투표 순위를 확인할 수 있도록 구성한 랭킹 페이지입니다.",
+        responsibilities: [
+          "- 캐릭터별 랭킹 화면 구현",
+          "- 순위 및 캐릭터 정보 UI 구성",
+          "- 랭킹 페이지 레이아웃 및 스타일링"
+        ],
+        steps: ["TOP 랭킹 확인", "전체 캐릭터 순위 조회"],
+        implementationDetails: "캐릭터별 순위와 관련 정보를 사용자가 쉽게 비교할 수 있도록 랭킹 화면을 구성하고, 주요 정보를 시각적으로 구분해 확인할 수 있는 UI를 구현했습니다.",
+        images: [{
+          src: "/project/chamverse/rank.png", width: 1466, height: 3287,
+          title: "투표 랭킹", alt: "CHAMVERSE 캐릭터별 투표 순위와 전체 랭킹 화면",
+          caption: "캐릭터 투표 랭킹", autoScroll: true,
+        }],
+      },
+      {
+        id: "mypage",
+        title: "04. 마이페이지",
+        summary: "사용자와 관련된 정보 및 콘텐츠 이용 기능을 확인할 수 있도록 구성한 개인화 페이지입니다.",
+        responsibilities: [
+          "- 마이페이지 화면 및 레이아웃 구현",
+          "- 사용자 정보 표시 영역 구성",
+          "- 콘텐츠 이용 관련 UI 구현"
+        ],
+        steps: ["마이페이지 진입", "이용 현황 및 정보 확인"],
+        implementationDetails: "사용자 정보와 콘텐츠 이용 영역을 구분하여 마이페이지를 구성하고, 각 기능을 쉽게 찾고 이용할 수 있도록 화면 구조와 UI를 구현했습니다.",
+        images: [{
+          src: "/project/chamverse/mypage.png", width: 1466, height: 1763,
+          title: "마이페이지", alt: "CHAMVERSE 회원 정보, 계속 시청하기, 찜한 콘텐츠 및 설정을 보여주는 마이페이지",
+          caption: "회원 정보와 콘텐츠 이용 영역", autoScroll: true,
+        }],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "선택 상태와 투표 UI 동기화",
+        subtitle: "상태 변경에 따른 하단 플로팅 바 및 버튼 활성화 제어",
+        problem: "카드 선택 표시, 하단 캐릭터 정보, 투표 버튼의 상태를 일관되게 관리하는 과정에서 상태 불일치가 발생할 수 있었습니다.",
+        cause: "여러 DOM 요소를 개별적으로 제어할 경우 상태 변경 타이밍에 따라 일부 UI만 업데이트되거나 누락되는 상황이 발생했습니다.",
+        solution: "초기 개별 제어 방식에서 벗어나, updateFloating()과 clearSelection() 함수를 도입하여 selectedCharacter 상태 변화에 따라 하단 플로팅 정보와 투표 제출 버튼의 활성화 여부가 한 번에 연동되도록 수정했습니다.",
+        result: "캐릭터 변경 및 선택 해제 시 관련 UI가 빠짐없이 함께 변경되도록 구현했습니다.",
+        language: "JavaScript",
+        before: `let selectedCharacter = null;
+
+if (selectedCharacter?.id === character.id) {
+  selectedCharacter = null;
+  clearSelection();
+  return;
+}
+
+selectedCharacter = character;
+
+document.querySelectorAll('.vote-character').forEach(item => {
+  item.classList.remove('is-selected');
+});
+
+card.classList.add('is-selected');
+updateFloating();`,
+        after: `const updateFloating = () => {
+  if (!selectedCharacter) {
+    clearSelection();
+    return;
+  }
+
+  selectedName.textContent =
+    \`\${selectedCharacter.name}을(를) 선택했어요!\`;
+
+  selectedThumb.innerHTML = \`
+    <img
+      src="\${selectedCharacter.image}"
+      alt="\${selectedCharacter.name}"
+    >
+  \`;
+
+  selectedThumb.style.background = selectedCharacter.color;
+  voteSubmit.disabled = false;
+  voteFloating.classList.add('is-visible');
+};
+
+const clearSelection = () => {
+  document.querySelectorAll('.vote-character').forEach(item => {
+    item.classList.remove('is-selected');
+  });
+
+  voteSubmit.disabled = true;
+  voteFloating.classList.remove('is-visible');
+  selectedThumb.innerHTML = '';
+  selectedName.textContent = '캐릭터를 선택해주세요';
+};`,
+      },
+      {
+        title: "카드 내부 클릭 위치와 관계없는 선택 처리",
+        subtitle: "이벤트 위임과 closest() 및 data-attribute 활용",
+        problem: "이미지·텍스트 등 카드 내부의 어느 요소를 클릭해도 동일한 선택 로직이 실행되어야 하는 요구사항이 있었습니다.",
+        cause: "자식 요소(이미지나 텍스트)를 직접 클릭할 때 target이 카드 버튼이 아닌 내부 태그를 가리키게 되어 데이터 조회가 실패하는 문제가 있었습니다.",
+        solution: "기존의 개별 요소 타깃 참조 방식에서 벗어나, 부모 그리드에 이벤트 위임을 적용하고 closest('.vote-character')와 dataset.characterId를 활용하여 카드 내부 어느 영역을 클릭하든 정확한 캐릭터 데이터를 판별하도록 개선했습니다.",
+        result: "클릭 위치와 관계없이 정확한 캐릭터 데이터를 조회하고 선택 상태를 처리했습니다.",
+        language: "JavaScript",
+        before: `<button
+  type="button"
+  class="vote-character"
+  data-character-id="\${character.id}"
+>
+  <!-- 캐릭터 이미지와 이름 -->
+</button>`,
+        after: `characterGrid.addEventListener('click', event => {
+  const card = event.target.closest('.vote-character');
+
+  if (!card) return;
+
+  const characterId = card.dataset.characterId;
+  const character = characters.find(
+    item => item.id === characterId
+  );
+
+  if (!character) return;
+
+  // 캐릭터 선택 및 UI 갱신
+});`,
+      },
+    ],
+
+    outcomes: [
+      "콘텐츠 이용 영역의 UI/UX 설계와 캐릭터 투표·랭킹·마이페이지 구현을 담당하며, 애니메이션 콘텐츠를 탐색하고 참여할 수 있는 OTT 플랫폼 제작에 기여했습니다.",
+    ],
+    retrospective: "JavaScript를 활용한 DOM 조작과 이벤트 처리, 선택 상태 관리 등을 경험하며 사용자 인터랙션을 구현하는 역량을 키웠습니다.",
+    improvements: "짧은 개발 기간 동안 팀원 간 작업 범위와 구현 기준을 사전에 명확히 정하는 것이 중요하다는 점을 배웠습니다. 이후에는 공통 UI 규칙과 기능 연결 방식을 먼저 정리해 통합 과정의 재작업을 줄이고자 합니다.",
+  },
+  "03": {
+    ...emptyProjectDetail,
+    serviceName: "onvé",
+    siteUrl: "https://onve-five.vercel.app/",
+    githubUrl: "https://github.com/jiwoo1012/onve", // 필요시 실제 깃허브 주소로 수정하세요
+    demoAccount: { username: "qwer@asd.com", password: "12345678" },
+    period: "2026.07 - 2026.08",
+    team: "1명 (개인 프로젝트)",
+    role: "기획/디자인, 프론트엔드 개발, 인증/데이터 연동, 관리자/운영 전 과정 단독 수행",
+    stack: ["React", "Vite", "Zustand", "Firebase", "SCSS", "GSAP", "Recharts", "Vercel"],
+    overview: "onvé는 상품 탐색부터 장바구니, 주문, 사용자 정보 관리까지 온라인 쇼핑의 주요 흐름을 구현한 패션 이커머스 웹 서비스입니다.\n\n사용자가 상품을 편리하게 탐색하고 구매할 수 있도록 화면을 구성했으며, React 기반의 프론트엔드 개발과 Firebase를 활용한 인증 및 데이터 연동 기능을 구현했습니다.\n서비스 기획, UI/UX 디자인, 프론트엔드 개발, 데이터베이스 연동 및 배포까지 전 과정을 단독으로 진행한 개인 프로젝트입니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "기획·디자인", description: "서비스 구조 설계, 사용자 흐름 기 기획, UI/UX 디자인" },
+          { title: "프론트엔드", description: "공통 레이아웃, 상품 탐색, 상세 페이지 및 커머스 기능 구현" },
+          { title: "인증·데이터", description: "Firebase 기반 사용자 인증, 데이터 저장 및 연동" },
+          { title: "관리자·운영", description: "관리자 기능 구현, 서비스 배포 및 테스트" },
+        ],
+      },
+      {
+        title: "기술 스택",
+        items: [
+          { title: "Frontend", description: "React, JavaScript, React Router" },
+          { title: "Styling", description: "SCSS, GSAP" },
+          { title: "State Management", description: "Zustand" },
+          { title: "Backend / Database", description: "Firebase" },
+          { title: "Data Visualization", description: "Recharts" },
+          { title: "Build / Deployment", description: "Vite, Vercel" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "auth",
+        title: "01. 회원가입 및 사용자 인증",
+        summary: "Firebase Authentication을 기반으로 안전한 회원가입, 로그인, 로그아웃 및 권한별 접근 제어를 구현했습니다.",
+        responsibilities: [
+          "- Firebase Authentication 기반 회원가입·로그인·로그아웃 구현",
+          "- Zustand를 활용한 인증 상태 및 사용자 프로필 관리",
+          "- 로그인 여부와 관리자 권한에 따른 페이지 접근 제어"
+        ],
+        steps: ["회원가입/로그인 요청", "Firebase 인증 처리", "Zustand 상태 반영 및 권한 제어"],
+        implementationDetails: "Firebase Authentication과 연동하여 사용자의 세션을 안전하게 관리하고, Zustand 스토어를 통해 전역에서 인증 상태와 프로필을 참조할 수 있도록 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "product-search",
+        title: "02. 상품 조회 및 검색·정렬",
+        summary: "Firestore에 저장된 상품 데이터를 기반으로 세밀한 필터링과 정렬 기능을 제공합니다.",
+        responsibilities: [
+          "- Firestore 기반 상품 목록 조회 및 카테고리별 필터링",
+          "- 상품명 검색 및 인기순·최신순·가격순·이름순 정렬",
+          "- 할인율을 반영한 가격 정렬 및 검색 결과 상태 처리"
+        ],
+        steps: ["카테고리 선택 및 검색어 입력", "Firestore 쿼리 필터링", "정렬 조건 반영 결과 출력"],
+        implementationDetails: "사용자의 검색어와 카테고리, 정렬 조건을 동적으로 결합하여 Firestore 상품 데이터를 조회하고, 할인율이 적용된 최종 가격을 기준으로 정확한 정렬이 이루어지도록 구현했습니다.",
+        images: [],
+      },
+      {
+        id: "cart-order",
+        title: "03. 장바구니 및 주문·재고 관리",
+        summary: "LocalStorage와 Firestore 트랜잭션을 연동하여 안정적인 장바구니 및 주문 처리 프로세스를 구축했습니다.",
+        responsibilities: [
+          "- 상품 수량 변경·삭제 및 localStorage 기반 장바구니 유지",
+          "- 할인 금액과 배송비를 반영한 주문 예정 금액 계산",
+          "- Firebase Cloud Functions와 Firestore 트랜잭션을 활용한 주문 생성 및 재고 차감"
+        ],
+        steps: ["장바구니 상품 및 수량 관리", "최종 결제 금액 계산", "트랜잭션 기반 주문 생성 및 재고 차감"],
+        implementationDetails: "클라이언트 측에서는 localStorage로 장바구니 상태를 유지하고, 주문 단계에서는 Cloud Functions와 Firestore 트랜잭션을 결합하여 동시성 문제를 방지하며 재고가 안전하게 차감되도록 구현했습니다.",
+        images: [],
+      },
+      {
+        id: "admin-dashboard",
+        title: "04. 관리자 페이지 및 대시보드",
+        summary: "운영 데이터를 시각화하고 상품 및 회원 정보를 효율적으로 관리할 수 있는 관리자 대시보드입니다.",
+        responsibilities: [
+          "- 상품 등록·수정·삭제 및 재고 관리 기능 구현",
+          "- 회원·상품·리뷰 데이터 집계 및 운영 현황 조회",
+          "- Recharts 기반 카테고리별 재고 시각화 및 재고 부족 상품 표시"
+        ],
+        steps: ["관리자 계정 로그인", "운영 지표 및 대시보드 확인", "상품 및 재고 관리 수행"],
+        implementationDetails: "관리자 전용 권한을 통해 상품 관리(CRUD)와 회원/리뷰 데이터를 조회할 수 있으며, Recharts를 도입해 카테고리별 재고 분포와 부족 상품 현황을 직관적인 차트로 시각화했습니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "비동기 인증 상태 확인에 따른 페이지 이동 오류",
+        subtitle: "Firebase 인증 상태 복원 전 로그인 페이지 강제 이동 방지",
+        problem: "로그인한 사용자가 마이페이지에 직접 접근하거나 새로고침할 때, Firebase 인증 상태가 복원되기 전에 로그인 페이지로 이동하는 문제를 해결해야 했습니다.",
+        cause: "초기 렌더링 시 인증 정보가 아직 로드되지 않아 user 상태가 null로 판별되면서 비로그인 사용자로 오인하는 현상이 발생했습니다.",
+        solution: "인증 확인 전의 null 상태가 비로그인으로 처리되는 문제를 방지하기 위해 사용자 정보와 인증 확인 여부를 별도로 관리했습니다. Firebase 인증 콜백이 실행되기 전에는 로딩 화면을 표시하고, 확인 완료 후에만 페이지 이동을 처리하도록 변경했습니다. 이를 통해 비동기 인증 과정에서 발생하는 잘못된 페이지 이동을 방지하고, 컴포넌트 해제 시 인증 구독도 정리했습니다.",
+        result: "새로고침 시 인증 정보가 안정적으로 복원된 후 페이지가 렌더링되도록 개선하여 불필요한 리다이렉트 오류를 해결했습니다.",
+        language: "JavaScript",
+        after: `const [user, setUser] = useState(null);
+const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    setIsAuthChecked(true);
+
+    if (!currentUser) navigate('/login');
+  });
+
+  return () => unsubscribe();
+}, [navigate]);
+
+if (!isAuthChecked) {
+  return <p>인증 정보를 확인하는 중입니다.</p>;
+}
+
+if (!user) return null;`,
+      },
+      {
+        title: "Firebase 인증 계정과 회원 데이터 불일치",
+        subtitle: "Authentication 계정 존재 시 Firestore 누락 프로필 자동 복구",
+        problem: "Firebase Authentication에는 계정이 존재하지만 Firestore에 회원 문서가 없는 경우에도 마이페이지에서 사용자 정보를 조회할 수 있도록 개선해야 했습니다.",
+        cause: "비정상적인 가입 중단이나 데이터 손실로 인해 Auth와 Firestore 간 데이터 동기화가 깨지는 예외 상황이 존재했습니다.",
+        solution: "회원 정보 조회 시 user-not-found 오류를 구분하고, 해당 경우에만 기본 프로필을 생성하도록 복구 로직을 추가했습니다. 기존 문서가 존재하면 이를 재사용하고 다른 오류는 별도로 처리하여, 회원 데이터 누락 상황에서도 마이페이지 정보를 복구할 수 있도록 개선했습니다.",
+        result: "데이터 누락으로 인한 앱 크래시나 조회 실패를 예방하고 무결성을 높였습니다.",
+        language: "JavaScript",
+        after: `let userProfile;
+
+try {
+  userProfile = await getUserProfile(user.uid);
+} catch (error) {
+  if (error.message !== 'user-not-found') throw error;
+
+  userProfile = await createUserProfile(user);
+}
+
+setProfile(userProfile);
+setNickname(userProfile.nickname || '');`,
+      },
+      {
+        title: "화면별 데이터 저장소 불일치 및 상태 동기화",
+        subtitle: "LocalStorage와 React 상태 동시 갱신을 통한 장바구니 일관성 확보",
+        problem: "상품 상세·장바구니와 마이페이지에서 서로 다른 저장소를 사용하여, 장바구니 데이터가 화면마다 일치하지 않을 수 있는 구조를 개선해야 했습니다.",
+        cause: "화면마다 데이터를 다루는 기준과 저장 위치가 분리되어 있어 컴포넌트 간 실시간 동기화가 이루어지지 않았습니다.",
+        solution: "두 화면이 동일한 cart 키를 사용하도록 저장소를 통일하고, 상품 삭제 시 localStorage와 React 상태를 함께 갱신하도록 수정했습니다. 이를 통해 동일 브라우저 내 화면 간 데이터 조회 기준을 일치시키고 장바구니 관리 로직의 일관성을 개선했습니다.",
+        result: "어떤 화면에서 장바구니를 수정하더라도 즉시 UI와 저장소에 동일하게 반영되도록 정합성을 맞췄습니다.",
+        language: "JavaScript",
+        after: `// 동일한 localStorage 데이터 조회
+setCartItems(loadLocal('cart', []));
+
+// 삭제 시 저장 데이터와 React 상태 동시 갱신
+const nextItems = cartItems.filter(
+  (item) => item.id !== itemId
+);
+
+saveLocal('cart', nextItems);
+setCartItems(nextItems);`,
+      },
+      {
+        title: "Vercel 배포 환경에서 SPA 라우팅 처리",
+        subtitle: "Client-side Routing 404 오류 해결을 위한 Vercel Rewrite 설정",
+        problem: "React Router 기반 SPA에서 하위 경로로 직접 접근하거나 새로고침할 때 발생할 수 있는 404 오류를 방지해야 했습니다.",
+        cause: "React Router는 클라이언트에서 경로를 처리하지만, 하위 주소로 직접 접근하면 배포 서버가 먼저 요청을 처리한다는 점을 확인했습니다.",
+        solution: "이에 Vercel의 rewrite 규칙을 추가하여 요청 주소를 유지하면서 index.html을 제공하도록 구성했습니다. 이를 통해 하위 경로 요청을 React Router에서 처리할 수 있도록 배포 환경을 개선했습니다.",
+        result: "새로고침이나 직접 URL 입력 시에도 404 에러 없이 정상적으로 라우팅되도록 설정했습니다.",
+        language: "JSON",
+        after: `vercel.json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}`,
+      },
+    ],
+
+    outcomes: [
+      "서비스 기획부터 UI/UX 디자인, 프론트엔드 개발, Firebase 연동 및 배포까지 전 과정을 단독으로 진행했습니다.",
+      "사용자 인증, 상품 탐색, 장바구니·주문, 관리자 대시보드 등 이커머스의 주요 기능을 구현하며 하나의 웹 서비스를 완성했습니다.",
+      "기여도: 100% / 개인 프로젝트"
+    ],
+
+    retrospective: "Firebase Authentication과 Firestore를 연동하며 인증 상태 관리와 회원 데이터 처리 경험을 쌓았습니다. 또한 Cloud Functions와 Firestore 트랜잭션을 활용한 주문·재고 처리, Zustand 기반 상태 관리 및 배포 환경의 라우팅 문제를 해결하며 데이터 흐름과 일관성을 고려하는 역량을 키웠습니다.",
+
+    improvements: "장바구니 데이터를 localStorage로 관리해 브라우저나 기기 간 데이터 공유에 한계가 있었습니다. 향후 사용자별 장바구니 데이터를 서버에 저장하고, 주문 처리 로직의 예외 상황과 데이터 검증을 보완하여 서비스의 안정성과 확장성을 높이고자 합니다.",
+  },
+"04": {
+    ...emptyProjectDetail,
+    serviceName: "Bookly",
+    siteUrl: "https://bookly-admin.vercel.app/", // 예시 주소, 필요시 수정하세요
+    githubUrl: "https://github.com/jiwoo1012/bookly", // 예시 주소, 필요시 수정하세요
+    period: "2026.08.24 - 2026.09.01",
+    team: "1명 (개인 프로젝트)",
+    role: "대시보드 및 데이터 시각화, 도서·회원·게시판·계정 관리 기능 개발, 인터랙션 구현 단독 수행",
+    stack: ["React", "SCSS", "GSAP", "Chart.js", "Vite", "Vercel"],
+    overview: "BOOKLY는 도서 서비스의 운영 데이터를 효율적으로 관리하고 시각화하기 위해 제작한 도서 관리 관리자 대시보드입니다.\n\n회원 현황과 독서 통계, 도서 정보, 리뷰, 공지사항, 이벤트, 문의 및 관리자 계정을 하나의 시스템에서 관리할 수 있도록 구성했습니다. Chart.js를 활용해 주요 통계 데이터를 시각화하고, 검색·필터링·상세 조회 기능을 통해 필요한 정보를 빠르게 확인할 수 있도록 구현했습니다.\n또한 드래그 스크롤, 슬라이딩 탭, 모달, 토스트 알림 등 다양한 인터랙션을 적용해 관리자의 업무 효율성과 사용 편의성을 고려한 관리 환경을 구현했습니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "대시보드 및 데이터 시각화", anchor: "stats", description: "Chart.js 기반 통계 차트 구현, 회원 추이 및 도서 장르별 데이터 시각화" },
+          { title: "도서·회원 관리", anchor: "books", description: "도서 검색 및 카테고리 필터링, 인기 도서 조회, 회원 검색 및 상태별 조회 기능 구현" },
+          { title: "게시판 및 콘텐츠 관리", anchor: "board", description: "리뷰·이벤트·공지사항 관리, 베스트 리뷰 설정 및 문의 상태별 조회 기능 구현" },
+          { title: "관리자 계정 관리", anchor: "admins", description: "관리자 등록·수정·삭제, 역할 및 활성 상태 변경, 상세 정보 모달 구현" },
+          { title: "UI 및 사용자 인터랙션", anchor: "interaction", description: "드래그 스크롤, 슬라이딩 탭, 모달, 토스트 알림 등 관리자 화면의 인터랙션 구현" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "stats",
+        title: "01. 통계 데이터 시각화",
+        summary: "Chart.js를 활용하여 회원 추이 및 도서 장르별 독서 지표를 직관적으로 시각화했습니다.",
+        responsibilities: [
+          "- Chart.js 기반 통계 차트 구현",
+          "- 회원 추이 및 도서 장르별 데이터 시각화"
+        ],
+        steps: ["데이터 수집 및 가공", "Chart.js 인스턴스 생성", "반응형 통계 차트 렌더링"],
+        implementationDetails: "Chart.js를 활용해 회원 추이 및 도서 장르별 독서 지표 차트를 구현하여 서비스 운영 핵심 지표를 한눈에 파악할 수 있도록 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "books",
+        title: "02. 도서 관리 기능",
+        summary: "도서명·저자 검색, 카테고리 및 기간별 인기 도서 조회와 상세 정보를 제공합니다.",
+        responsibilities: [
+          "- 도서 검색 및 카테고리 필터링",
+          "- 인기 도서 조회",
+          "- 도서 상세 정보 제공"
+        ],
+        steps: ["도서 검색어 입력 및 필터 선택", "조건별 도서 목록 조회", "상세 정보 모달 확인"],
+        implementationDetails: "도서명 및 저자 검색 기능을 제공하고, 카테고리별·기간별 인기 도서 조회와 상세 정보 모달을 통해 방대한 도서 데이터를 효율적으로 관리할 수 있도록 구현했습니다.",
+        images: [],
+      },
+      {
+        id: "members",
+        title: "03. 회원 관리 기능",
+        summary: "아이디·이름·닉네임 검색과 회원 상태별 필터링, 상세 정보 모달을 통한 관리 기능을 제공합니다.",
+        responsibilities: [
+          "- 아이디·이름·닉네임 검색",
+          "- 회원 상태별 필터링",
+          "- 상세 정보 모달 구현"
+        ],
+        steps: ["회원 검색어 입력", "상태별 필터 적용", "상세 정보 확인"],
+        implementationDetails: "아이디, 이름, 닉네임 기반의 빠른 회원 검색과 상태별 필터링을 지원하며, 상세 모달을 통해 개별 회원의 정보를 정확하게 조회하고 관리할 수 있습니다.",
+        images: [],
+      },
+      {
+        id: "board",
+        title: "04. 게시판 관리 기능",
+        summary: "리뷰, 이벤트, 공지사항, 문의 게시판의 통합 관리 및 상태별 조회 기능을 구현했습니다.",
+        responsibilities: [
+          "- 리뷰 노출 및 베스트 리뷰 설정",
+          "- 이벤트·공지사항 CRUD",
+          "- 문의 상태별 조회 구현"
+        ],
+        steps: ["게시판 유형 선택", "콘텐츠 등록·수정·삭제 및 베스트 선정", "문의 상태별 필터 조회"],
+        implementationDetails: "리뷰 관리와 베스트 리뷰 설정, 이벤트 및 공지사항의 CRUD 기능을 제공하며, 고객 문의를 상태별로 분류하여 신속하게 응대할 수 있는 관리 프로세스를 구축했습니다.",
+        images: [],
+      },
+      {
+        id: "admins",
+        title: "05. 관리자 계정 관리",
+        summary: "관리자 등록·수정·삭제 및 역할 설정, 활성·비활성 상태를 제어하는 계정 관리 기능입니다.",
+        responsibilities: [
+          "- 관리자 등록·수정·삭제",
+          "- 역할 설정 및 활성·비활성 상태 관리",
+          "- 상세 정보 모달 구현"
+        ],
+        steps: ["관리자 목록 조회", "계정 정보 수정 및 상태 토글", "권한 및 역할 관리"],
+        implementationDetails: "관리자 계정의 생성, 수정, 삭제뿐만 아니라 역할(Role) 및 활성·비활성 상태를 직관적으로 변경할 수 있으며, 상세 모달을 통해 계정별 세부 권한을 관리합니다.",
+        images: [],
+      },
+      {
+        id: "interaction",
+        title: "06. 사용자 인터랙션",
+        summary: "드래그 기반 카테고리 스크롤, 슬라이딩 탭, 모달 및 토스트 알림을 구현했습니다.",
+        responsibilities: [
+          "- 드래그 기반 카테고리 스크롤",
+          "- 슬라이딩 탭 및 모달 구현",
+          "- 토스트 알림을 통한 피드백 제공"
+        ],
+        steps: ["마우스 드래그 및 탭 조작", "모달 및 토스트 인터랙션 실행"],
+        implementationDetails: "드래그 스크롤과 슬라이딩 탭을 적용해 넓은 데이터 영역을 부드럽게 탐색할 수 있게 하였고, 모달과 토스트 알림으로 관리자 작업에 즉각적인 피드백을 제공합니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "이벤트 전파로 인한 관리자 상태 변경 충돌",
+        subtitle: "stopPropagation을 활용한 행 클릭과 상태 버튼 이벤트 분리",
+        problem: "관리자 목록에서 행을 클릭하면 상세 모달이 열리고, 행 내부의 상태 버튼을 클릭하면 활성·비활성 상태만 변경되도록 구현했습니다.",
+        cause: "상태 버튼의 클릭 이벤트가 상위 행까지 전파되면서, 관리자 상태 변경과 상세 모달 열기가 동시에 실행될 수 있었습니다. 이는 이벤트 버블링으로 인해 하위 요소의 클릭 이벤트가 상위 요소의 이벤트 핸들러까지 전달되기 때문입니다.",
+        solution: "stopPropagation()을 적용해 상태 버튼의 클릭 이벤트가 상위 행으로 전달되지 않도록 처리했습니다. 이를 통해 상태 변경과 상세 모달 열기의 동작을 분리하고, 의도하지 않은 모달 실행을 방지했습니다.",
+        result: "버블링 현상을 차단하여 버튼 클릭 시 상태만 정확히 토글되도록 인터랙션을 개선했습니다.",
+        language: "JavaScript",
+        before: `const toggleAdminStatus = (id) => {
+  setAdmins(
+    admins.map((a) =>
+      a.id === id
+        ? { ...a, status: a.status === '활성' ? '비활성' : '활성' }
+        : a
+    )
+  );
+};
+<td>
+  <button onClick={() => toggleAdminStatus(adm.id)}>
+    {adm.status}
+  </button>
+</td>`,
+        after: `const toggleAdminStatus = (e, id) => {
+  e.stopPropagation();
+
+  setAdmins(
+    admins.map((a) =>
+      a.id === id
+        ? {
+            ...a,
+            status: a.status === '활성'
+              ? '비활성'
+              : '활성'
+          }
+        : a
+    )
+  );
+};
+<td onClick={(e) => e.stopPropagation()}>
+  <button onClick={(e) => toggleAdminStatus(e, adm.id)}>
+    {adm.status}
+  </button>
+</td>`,
+      },
+      {
+        title: "드래그와 클릭 이벤트 충돌로 인한 카테고리 오선택",
+        subtitle: "마우스 이동 거리(Threshold) 계산을 통한 드래그와 클릭 판정 분리",
+        problem: "도서 카테고리 목록에서 마우스 드래그를 통한 가로 스크롤과 클릭을 통한 카테고리 필터링을 함께 지원하도록 구현했습니다.",
+        cause: "드래그를 종료하는 과정에서 클릭 이벤트가 함께 발생할 수 있어, 사용자가 목록을 스크롤하려는 동작이 의도하지 않은 카테고리 선택으로 이어질 수 있었습니다. 드래그와 일반 클릭을 구분하는 기준이 필요했습니다.",
+        solution: "마우스 이동 거리가 3px를 초과하면 드래그로 판단하도록 처리했습니다. 드래그 이후 발생하는 클릭 이벤트를 무시하여 가로 스크롤과 카테고리 선택을 구분하고, 의도하지 않은 필터 변경을 방지했습니다.",
+        result: "스크롤 동작과 필터 선택 클릭이 독립적으로 부드럽게 작동하도록 수정했습니다.",
+        language: "JavaScript",
+        before: `const handleDragMove = (e) => {
+  if (!dragState.current.isDown) return;
+  const el = filterRowRef.current;
+  if (!el) return;
+  e.preventDefault();
+  const x = e.pageX - el.offsetLeft;
+  const walk = x - dragState.current.startX;
+  el.scrollLeft = dragState.current.startScrollLeft - walk;
+};
+
+const handleCategoryClick = (item) => {
+  setCategory(item);
+};`,
+        after: `const handleDragMove = (e) => {
+  if (!dragState.current.isDown) return;
+
+  const el = filterRowRef.current;
+  if (!el) return;
+
+  e.preventDefault();
+
+  const x = e.pageX - el.offsetLeft;
+  const walk = x - dragState.current.startX;
+
+  if (Math.abs(walk) > 3) {
+    dragState.current.moved = true;
+  }
+
+  el.scrollLeft =
+    dragState.current.startScrollLeft - walk;
+};
+
+const handleCategoryClick = (item) => {
+  if (dragState.current.moved) return;
+  setCategory(item);
+};`,
+      },
+      {
+        title: "이미지 로딩 실패에 대응하는 대체 이미지 처리",
+        subtitle: "onError 이벤트 핸들러와 동적 SVG Placeholder 적용",
+        problem: "도서 목록과 상세 페이지에서 표지 이미지의 로딩에 실패하더라도 화면이 깨지지 않도록 예외 처리를 구현했습니다.",
+        cause: "이미지 경로가 잘못되거나 외부 이미지 요청이 실패하면 브라우저에 깨진 이미지가 표시될 수 있었습니다. 이미지 로딩 실패에 대한 별도의 대응 로직이 없어 사용자에게 불완전한 화면이 노출되는 문제가 있었습니다.",
+        solution: "이미지 로딩 실패 시 onError 이벤트를 통해 SVG 대체 이미지로 전환하도록 처리했습니다. 별도의 외부 이미지 요청 없이 대체 표지를 표시하며, 오류 상황에서도 일관된 UI를 유지할 수 있도록 개선했습니다.",
+        result: "이미지 에러 발생 시 레이아웃 깨짐 없이 직관적인 대체 그래픽이 노출되도록 안정성을 높였습니다.",
+        language: "JavaScript",
+        after: `const BOOK_PLACEHOLDER =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(
+    \`<svg xmlns="http://www.w3.org/2000/svg"
+      width="110" height="150">
+      <rect width="100%" height="100%"
+        rx="8" fill="#f1f0f8"/>
+      <text x="50%" y="52%"
+        font-size="34"
+        text-anchor="middle"
+        dominant-baseline="middle">📕</text>
+    </svg>\`
+  );
+
+const handleImgError = (e) => {
+  e.target.onerror = null;
+  e.target.src = BOOK_PLACEHOLDER;
+};
+<img
+  src={item.image}
+  alt={item.title}
+  onError={handleImgError}
+/>`,
+      },
+    ],
+
+    outcomes: [
+      "Chart.js를 활용한 통계 시각화부터 도서·회원·게시판·관리자 계정 관리까지 다양한 기능을 하나의 대시보드로 구성했습니다.",
+      "검색·필터링·상세 조회 및 다양한 인터랙션을 구현하며 관리자가 필요한 정보를 효율적으로 확인할 수 있는 UI를 제작했습니다."
+    ],
+
+    retrospective: "React의 상태 관리를 활용해 관리자 정보 변경과 화면 갱신을 연결하고, 여러 UI 요소의 상태를 일관되게 유지하는 방법을 익혔습니다.\n\n이벤트 버블링 제어, 드래그와 클릭 이벤트 구분, 이미지 로딩 실패 처리 등을 구현하며 사용자 인터랙션과 예외 처리에 대한 이해를 높였습니다.",
+
+    improvements: "여러 관리 기능을 구현할 때 데이터 구조와 공통 컴포넌트의 기준을 초기에 명확히 정하면 중복 작업을 줄일 수 있다는 점을 배웠습니다.\n\n향후에는 기능별 구현 기준과 테스트 항목을 사전에 정리해 개발 과정의 일관성과 유지보수성을 높이고자 합니다.",
+  },
+  "05": {
+    ...emptyProjectDetail,
+    serviceName: "NODE",
+    siteUrl: "https://kimhyeonso.github.io/NODE/",
+    githubUrl: "https://github.com/kimhyeonso/NODE",
+    period: "2026.06.15 - 2026.06.30",
+    team: "3명 (팀 프로젝트)",
+    role: "사용자 인증·커머스 기능 개발 · 카카오맵 API 연동 · 서비스 기획 및 디자인",
+    stack: ["HTML5", "CSS3", "JavaScript", "GitHub"],
+    overview: "NODE는 프리미엄 오디오 제품을 소개하고, 사용자가 자신의 취향과 환경에 맞는 제품을 탐색할 수 있도록 기획한 오디오 브랜드 웹사이트입니다.\n\n블랙과 골드를 활용한 고급스러운 비주얼을 바탕으로 브랜드의 정체성을 표현했으며, 제품별 상세 정보와 스펙 비교 기능을 통해 합리적인 제품 선택을 돕고자 했습니다. 또한 회원 관리, 장바구니, 매장 위치 안내 기능을 구현하여 상품 탐색부터 구매 준비까지 이어지는 사용자 경험을 구성했습니다.",
+    
+    contributionGroups: [
+      {
+        title: "1. 개발 기여",
+        items: [
+          { title: "사용자 인증", anchor: "auth", description: "로그인·회원가입·비밀번호 찾기 및 변경 기능 구현" },
+          { title: "장바구니", anchor: "cart", description: "상품 담기·삭제 및 수량 변경 기능 구현" },
+          { title: "상품 비교", anchor: "compare", description: "선택 상품 데이터 연동 및 스펙 비교표 구현" },
+          { title: "Location", anchor: "location", description: "매장 안내 페이지 제작 및 카카오맵 API 연동" },
+          { title: "데이터 관리", description: "LocalStorage 기반 사용자·상품 데이터 저장 및 연동" },
+          { title: "기획·디자인", description: "시장 조사·경쟁사 SWOT 분석, 로고 디자인 및 발표 PPT 제작" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "auth",
+        title: "01. 로그인/회원가입",
+        summary: "사용자가 회원가입부터 로그인, 비밀번호 찾기 및 변경까지 계정 관련 기능을 이용할 수 있도록 구현했습니다.",
+        responsibilities: [
+          "- 로그인 및 회원가입 페이지 개발",
+          "- 비밀번호 찾기·변경 기능 구현",
+          "- LocalStorage 기반 사용자 인증 로직 구현"
+        ],
+        steps: ["회원가입 정보 입력", "LocalStorage 저장", "로그인 및 계정 인증"],
+        implementationDetails: "JavaScript를 활용해 회원가입 및 로그인 과정의 입력값을 검증하고, LocalStorage에 저장된 사용자 데이터와 입력 정보를 비교하는 인증 로직을 구현했습니다. 비밀번호 찾기 및 변경 기능도 연결하여 계정 관리 흐름을 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "cart",
+        title: "02. 장바구니",
+        summary: "사용자가 선택한 상품을 장바구니에 담고, 원하는 수량과 상품 목록을 관리할 수 있도록 구현했습니다.",
+        responsibilities: [
+          "- 상품 장바구니 추가 및 삭제",
+          "- 상품 수량 변경과 장바구니 정보 갱신",
+          "- LocalStorage 기반 장바구니 데이터 유지"
+        ],
+        steps: ["상품 장바구니 담기", "수량 조절 및 항목 삭제", "LocalStorage 데이터 동기화"],
+        implementationDetails: "JavaScript로 장바구니 상품 데이터를 관리하고, 사용자의 상품 추가·삭제 및 수량 변경에 따라 화면에 표시되는 정보를 갱신하도록 구현했습니다. LocalStorage와 연동해 페이지 이동 및 새로고침 이후에도 저장된 장바구니 정보를 활용할 수 있도록 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "compare",
+        title: "03. 비교하기",
+        summary: "여러 상품의 주요 스펙을 하나의 비교표에서 확인할 수 있도록 구현한 상품 비교 기능입니다.",
+        responsibilities: [
+          "- 선택한 상품 정보 비교 페이지 연동",
+          "- 제품 유형·주파수 응답·출력 등 스펙 비교",
+          "- 상품별 스펙 항목명 차이 처리"
+        ],
+        steps: ["비교할 상품 선택", "스펙 비교 페이지 진입", "상세 스펙 비교 확인"],
+        implementationDetails: "선택한 상품의 데이터를 비교 페이지로 전달하고, JavaScript 배열 탐색을 통해 각 상품의 스펙을 조회하도록 구현했습니다. 상품마다 서로 다른 출력 항목명을 고려해 복수의 검색 키를 적용했으며, 화면 표시용 항목명과 실제 데이터 조회용 키를 분리하여 비교표의 정확성을 개선했습니다.",
+        video: "/project/node/Mobile.mp4",
+        codeExamples: [
+          {
+            title: "스펙 데이터 복수 키 검색 및 조회",
+            summary: "화면 표시용 label과 실제 데이터 조회용 keys를 분리하여 다중 키로 스펙을 탐색",
+            filename: "compare.js",
+            code: `const productSpecRows = [
+  { label: "제품 유형", keys: ["Product Type"] },
+  { label: "주파수 응답", keys: ["Frequency Response"] },
+  {
+    label: "출력",
+    keys: ["Amp Power", "Rated Power", "Power Handling"]
+  },
+];
+
+function getSpecMulti(specs, keys) {
+  if (!specs) return "-";
+
+  for (var i = 0; i < keys.length; i++) {
+    var found = specs.find(function(s) {
+      return s[0] === keys[i];
+    });
+
+    if (found) return found[1];
+  }
+
+  return "-";
+}`,
+            rationale: "상품마다 스펙 데이터의 영문 표기 항목명이 다를 수 있다는 점을 고려하여 여러 개의 검색 키(keys)를 배열로 순회하며 일치하는 값을 유연하게 찾아내도록 설계했습니다.",
+          },
+        ],
+        images: [],
+      },
+      {
+        id: "location",
+        title: "04. 매장 위치 안내",
+        summary: "카카오맵 API를 활용하여 매장 위치를 지도에 표시하고, 선택한 지점을 직관적으로 확인할 수 있도록 구현했습니다.",
+        responsibilities: [
+          "- 카카오맵 API 연동 및 지도 출력",
+          "- 지점별 버튼과 매장 데이터 연결",
+          "- 선택 지점 마커 표시 및 지도 중심 이동"
+        ],
+        steps: ["매장 안내 페이지 진입", "특정 지점 버튼 선택", "해당 마커 표시 및 지도 중심 이동"],
+        implementationDetails: "카카오맵 API를 연동하여 매장 위치를 시각화하고, JavaScript 이벤트 처리로 지점 선택 기능을 구현했습니다. 선택한 지점에 해당하는 마커만 표시하고 map.setCenter()로 지도 중심을 이동시켜 원하는 매장의 위치를 쉽게 확인할 수 있도록 개선했습니다.",
+        codeExamples: [
+          {
+            title: "매장 선택에 따른 마커 갱신 및 지도 중심 이동",
+            summary: "버튼 클릭 시 기존 마커를 제거하고 선택된 지점의 마커 생성 및 지도 중심 이동",
+            filename: "location.js",
+            code: `$('.branch-btn').on('click', function () {
+  var index = $(this).data('index');
+
+  if ($(this).hasClass('active')) {
+    $(this).removeClass('active');
+    removeMarker();
+    activeFilter = null;
+  } else {
+    $('#btn-parking, .branch-btn').removeClass('active');
+    $(this).addClass('active');
+    activeFilter = 'branch';
+
+    removeMarker();
+    showSingleBranch(index);
+  }
+});
+
+function showSingleBranch(index) {
+  var b = branchData[index];
+
+  var marker = new kakao.maps.Marker({
+    map: map,
+    position: new kakao.maps.LatLng(b.lat, b.lng),
+    title: b.name
+  });
+
+  markers.push(marker);
+  map.setCenter(new kakao.maps.LatLng(b.lat, b.lng));
+}`,
+            rationale: "지점 선택 버튼의 토글 상태와 data-index를 연결하여 불필요한 마커를 지우고 선택한 지점에 집중할 수 있도록 직관적인 인터랙션을 구현했습니다.",
+          },
+        ],
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "비교표의 스펙 데이터 조회 오류",
+        subtitle: "영문 JSON 스펙 키값과 한글 검색어 불일치 해결",
+        problem: "선택한 상품들의 주요 스펙을 비교표에 표시하는 과정에서, 데이터가 존재함에도 일부 항목이 '-'로 출력되는 문제가 발생했습니다.",
+        cause: "실제 JSON 데이터의 스펙 항목명은 영문으로 저장되어 있었지만, 비교 코드에서는 한글 항목명으로 검색하고 있었습니다. 데이터 조회 시 문자열이 정확하게 일치해야 하는 구조였기 때문에, 항목을 찾지 못하고 기본값인 '-'가 반환되었습니다.",
+        solution: "화면 표시용 label과 데이터 조회용 keys를 분리하고, 실제 JSON 데이터의 영문 항목명과 일치하도록 수정했습니다. 또한 상품마다 출력 스펙의 항목명이 다른 점을 고려해 복수의 검색 키를 적용하여, 일치하는 스펙 값을 가져올 수 있도록 개선했습니다.",
+        result: "다양한 영문 스펙 키값을 안전하게 탐색하여 비교표에 정확한 데이터가 정상적으로 출력되도록 해결했습니다.",
+        codeAnchor: "compare-code-1",
+      },
+      {
+        title: "매장 선택에 따른 지도 표시 및 위치 이동 개선",
+        subtitle: "카카오맵 API 마커 제어 및 지도 중심 이동 기능 추가",
+        problem: "카카오 지도 API를 활용한 매장 안내 페이지에서 사용자가 특정 지점을 선택해도 해당 매장의 위치를 바로 확인하기 어려운 문제가 있었습니다.",
+        cause: "초기에는 모든 가맹점의 마커를 한 번에 표시했으며, 지점 선택에 따라 지도 중심을 이동하는 기능이 없었습니다. 이로 인해 초기 화면에서 멀리 떨어진 매장은 사용자가 직접 지도를 이동해야 확인할 수 있었습니다.",
+        solution: "각 지점 버튼의 data-index를 매장 데이터와 연결하여 선택한 지점의 마커만 표시하도록 변경했습니다. 기존 마커를 제거하고 map.setCenter()로 지도 중심을 이동시켜 선택한 매장의 위치를 즉시 확인할 수 있도록 개선했습니다. 동일한 버튼을 다시 클릭하면 선택이 해제되도록 처리해 UI 상태도 일관되게 관리했습니다.",
+        result: "사용자가 원하는 매장 위치를 지도 중심과 마커를 통해 즉각적으로 파악할 수 있어 탐색 편의성이 크게 향상되었습니다.",
+        codeAnchor: "location-code-1",
+      },
+    ],
+
+    outcomes: [
+      "HTML, CSS, JavaScript를 활용해 로그인·회원가입, 장바구니, 상품 비교, 매장 위치 안내 등 주요 기능을 구현했습니다.",
+      "LocalStorage 기반 데이터 연동과 카카오맵 API를 적용하여 사용자 계정 관리부터 상품 탐색까지 이어지는 기능을 구성했습니다.",
+      "시장 조사와 경쟁사 분석, 로고 디자인에도 참여해 서비스의 완성도를 높였습니다."
+    ],
+
+    retrospective: "JavaScript를 활용한 사용자 인증 로직과 LocalStorage 데이터 관리 기능을 구현하며 데이터 저장과 조회, 화면 갱신의 흐름을 이해했습니다. 또한 상품 비교표의 데이터 조회 오류를 해결하고 카카오맵 API의 마커 및 지도 중심 이동 기능을 개선하면서, 데이터 구조를 정확히 파악하고 사용자 경험을 고려해 기능을 구현하는 역량을 키웠습니다.",
+
+    improvements: "여러 페이지에서 사용자 정보와 상품 데이터를 함께 활용하는 과정에서 데이터 구조와 기능 간 연결 기준을 사전에 정하는 것이 중요하다는 점을 배웠습니다. 향후 팀 프로젝트에서는 공통 데이터 형식과 페이지 간 연동 방식을 초기 단계에서 명확히 정의하고, 기능별 통합 테스트를 통해 오류와 재작업을 줄이고자 합니다.",
+  },
+  "06": {
+    ...emptyProjectDetail,
+    serviceName: "Bikini Bottom 방명록",
+    siteUrl: "https://bikini-bottom-guestbook.vercel.app/", // 예시 주소, 필요시 수정하세요
+    githubUrl: "https://github.com/jiwoo1012/bikini-bottom-guestbook", // 예시 주소, 필요시 수정하세요
+    period: "2026.07.13 - 2026.07.15",
+    team: "1명 (개인 프로젝트)",
+    role: "기획/디자인, 프론트엔드 개발, 실시간 연동 및 미니게임 구현 단독 수행",
+    stack: ["React", "SCSS", "Firebase Authentication", "Cloud Firestore", "Zustand", "Vite"],
+    overview: "Guestbook은 사용자들이 자유롭게 메시지를 남기고 소통할 수 있는 실시간 방명록 웹사이트입니다.\n\nFirebase Authentication을 활용한 회원 인증과 Firestore 기반 방명록 등록·조회·수정·삭제 기능을 구현했습니다. 실시간 데이터 동기화를 통해 새로고침 없이 게시글 변경 사항을 확인할 수 있으며, 작성자별 접근 권한을 적용해 안전하게 데이터를 관리하도록 구성했습니다.\n또한 캐릭터 선택을 통한 방명록 작성과 미니게임, 사용자별 최고 기록 저장 기능을 더해 단순한 메시지 기록을 넘어 다양한 상호작용을 경험할 수 있도록 제작했습니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "기획 및 UI/UX 디자인", description: "스폰지밥 콘셉트의 방명록 서비스 기획, 캐릭터 기반 인터페이스 및 반응형 레이아웃 구현[cite: 9]" },
+          { title: "회원 인증 및 상태 관리", description: "Firebase Authentication 기반 회원가입·로그인·로그아웃, Zustand를 활용한 인증 상태 전역 관리[cite: 9]" },
+          { title: "방명록 CRUD 및 실시간 연동", description: "Cloud Firestore 기반 게시글 등록·조회·수정·삭제, onSnapshot 을 활용한 실시간 데이터 동기화[cite: 9]" },
+          { title: "접근 권한 및 데이터 검증", description: "Firestore Security Rules를 활용한 작성자별 수정·삭제 권한 제어, 데이터 생성·수정 시 유효성 검증[cite: 9]" },
+          { title: "미니게임 및 기록 관리", description: "캐릭터·음식 인터랙션, 충돌 판정과 점수 계산, localStorage 기반 사용자별 최고 기록 관리[cite: 9]" },
+          { title: "사용자 경험 및 오류 처리", description: "비동기 저장 실패 시 입력 데이터 유지, 오류 메시지 표시, 모바일 환경의 스크롤 및 반응형 화면 최적화[cite: 9]" },
+        ],
+      },
+      {
+        title: "사용 기술",
+        items: [
+          { title: "Frontend", description: "React, JavaScript, React Router" },
+          { title: "State Management", description: "Zustand" },
+          { title: "Styling", description: "SCSS, CSS Modules" },
+          { title: "Backend / BaaS", description: "Firebase Authentication, Cloud Firestore, Firestore Security Rules" },
+          { title: "Storage", description: "localStorage" },
+          { title: "Development", description: "Vite, Oxlint" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "auth",
+        title: "01. 회원 인증 및 로그인 상태 관리",
+        summary: "Firebase Authentication을 활용해 이메일 기반 회원가입·로그인·로그아웃 기능을 구현했습니다.",
+        responsibilities: [
+          "- Firebase Authentication 기반 이메일 회원가입·로그인·로그아웃 구현",
+          "- onAuthStateChanged와 Zustand 연동을 통한 인증 상태 전역 관리",
+          "- 로그인 여부에 따른 방명록 작성 권한 제어"
+        ],
+        steps: ["로그인/회원가입 요청", "Firebase 인증 처리", "Zustand 전역 상태 동기화"],
+        implementationDetails: "Firebase Authentication을 활용해 이메일 기반 회원가입·로그인·로그아웃 기능을 구현했습니다. onAuthStateChanged와 Zustand를 연동해 인증 상태를 전역 관리하고, 로그인 여부에 따라 방명록 작성 권한을 제어했습니다.",
+        images: [],
+      },
+      {
+        id: "crud",
+        title: "02. 실시간 방명록 관리",
+        summary: "Firestore를 활용해 방명록 등록·조회·수정·삭제(CRUD) 기능과 실시간 동기화를 구현했습니다.",
+        responsibilities: [
+          "- Firestore 기반 방명록 등록·조회·수정·삭제(CRUD) 구현",
+          "- onSnapshot을 활용한 실시간 데이터 동기화",
+          "- 최신순 정렬, 페이지네이션 및 저장 실패 시 입력값 유지 예외 처리"
+        ],
+        steps: ["방명록 작성 및 Firestore 전송", "onSnapshot 실시간 반영", "목록 갱신 및 페이징"],
+        implementationDetails: "Firestore를 활용해 방명록 등록·조회·수정·삭제(CRUD) 기능을 구현했습니다. onSnapshot으로 데이터 변경 사항을 실시간 반영하고, 최신순 정렬과 페이지네이션을 적용했습니다. 저장 실패 시에는 입력 내용을 유지하도록 예외 처리를 구현했습니다.",
+        images: [],
+      },
+      {
+        id: "auth-rules",
+        title: "03. 작성자 권한 및 데이터 검증",
+        summary: "게시글 작성자 UID 기준 접근 제어와 Firestore Security Rules를 통한 데이터 유효성 검증을 구현했습니다.",
+        responsibilities: [
+          "- 작성자 UID 기준 수정·삭제 접근 제어",
+          "- Firestore Security Rules를 통한 데이터 보안 적용",
+          "- 데이터 생성·수정 시 필수 필드 및 작성자 정보 유효성 검증"
+        ],
+        steps: ["작성자 권한 확인", "Security Rules 검증", "데이터 수정/삭제 처리"],
+        implementationDetails: "게시글 작성자의 UID를 기준으로 수정·삭제 기능의 접근을 제어했습니다. Firestore Security Rules를 적용해 작성자 본인만 데이터를 변경할 수 있도록 제한하고, 데이터 생성·수정 과정에서 필수 필드와 작성자 정보의 유효성을 검증했습니다.",
+        images: [],
+      },
+      {
+        id: "minigame",
+        title: "04. 미니게임 및 사용자별 기록 관리",
+        summary: "키보드·마우스 인터랙션과 충돌 판정, localStorage 기반 최고 기록 저장 기능을 갖춘 미니게임을 구현했습니다.",
+        responsibilities: [
+          "- 키보드·마우스 조작 및 충돌 판정 구현",
+          "- 제한 시간 및 점수 계산 로직 개발",
+          "- localStorage 기반 사용자별 최고 기록 저장 및 갱신"
+        ],
+        steps: ["미니게임 플레이 및 점수 획득", "제한 시간 종료 및 점수 산정", "localStorage 최고 기록 비교 및 갱신"],
+        implementationDetails: "키보드·마우스 조작과 충돌 판정, 제한 시간 및 점수 계산 기능을 갖춘 미니게임을 구현했습니다. localStorage를 활용해 사용자별 최고 점수를 저장하고, 게임 종료 시 기존 기록과 비교해 최고 기록을 갱신하도록 구성했습니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "실시간 데이터 변경 사항과 화면 상태 동기화",
+        subtitle: "Firestore onSnapshot과 Zustand를 활용한 실시간 구독 및 정리",
+        problem: "방명록 등록·수정·삭제 시 페이지를 새로고침하지 않아도 최신 데이터가 화면에 반영되도록 구현했습니다.",
+        cause: "최초 진입 시 데이터를 한 번만 조회하는 방식으로는 이후 Firestore에서 발생한 변경 사항을 자동으로 반영할 수 없었습니다. 또한 실시간 구독을 해제하지 않으면 페이지 재진입 시 불필요한 구독이 남을 수 있었습니다.",
+        solution: "Firestore의 onSnapshot을 활용해 데이터 변경을 실시간으로 구독하고, 변경된 목록을 Zustand 상태에 반영했습니다. 또한 컴포넌트 해제 시 구독을 종료하여 불필요한 리스너가 남지 않도록 관리했습니다.",
+        result: "새로고침 없이 데이터가 실시간으로 동기화되며, 컴포넌트 언마운트 시 메모리 누수 없이 구독이 안전하게 해제되도록 구현했습니다.",
+        language: "JavaScript",
+        after: `const unsubscribe = onSnapshot(q, (snapshot) => {
+  const posts = snapshot.docs.map((docSnapshot) => ({
+    id: docSnapshot.id,
+    ...docSnapshot.data(),
+  }));
+
+  set({ posts, loading: false, error: null });
+});
+
+return unsubscribe;
+useEffect(() => {
+  const unsubscribe = subscribeToPosts();
+  return () => unsubscribe();
+}, [subscribeToPosts]);`,
+      },
+      {
+        title: "비동기 저장 실패 시 입력 데이터 유실 방지",
+        subtitle: "async/await 완료 시점 제어를 통한 입력값 보존 및 오류 처리",
+        problem: "방명록 저장에 성공한 경우에만 입력창을 초기화하고, 실패 시 작성 내용을 유지하도록 구현했습니다.",
+        cause: "비동기 저장이 완료되기 전에 입력값을 초기화하면 저장 실패 시에도 사용자가 작성한 내용이 사라질 수 있었습니다. 또한 부모 컴포넌트에서 오류를 처리한 뒤 전달하지 않으면 자식 폼이 저장 성공으로 판단할 가능성이 있었습니다.",
+        solution: "async/await로 저장 완료를 확인한 뒤 입력값을 초기화하도록 변경했습니다. 저장 오류는 부모에서 처리한 후 다시 전달하여 초기화를 방지했습니다. 이를 통해 저장 실패 시 작성 내용을 유지하고 오류 메시지를 표시하도록 구현했습니다.",
+        result: "네트워크 오류 등 저장 실패 시에도 사용자가 작성한 텍스트와 선택 값이 유실되지 않고 유지되도록 개선했습니다.",
+        language: "JavaScript",
+        before: `try {
+  onAddPost(newPost);
+  setNickname('');
+  setMessage('');
+} catch (e) { ... }`,
+        after: `// 부모 컴포넌트
+catch (error) {
+  setSubmitError(
+    error.message || '방명록 저장에 실패했습니다.'
+  );
+  throw error;
+}
+// 자식 폼 컴포넌트
+try {
+  await onAddPost(newPost);
+
+  setNickname('');
+  setMessage('');
+  setCharacter('');
+} catch (error) {
+  console.error('방명록 저장 실패:', error);
+}`,
+      },
+      {
+        title: "모바일 환경에서 페이지 스크롤 차단 문제 해결",
+        subtitle: "경로 및 뷰포트 너비 조건 분기를 통한 동적 body overflow 제어",
+        problem: "페이지별 레이아웃을 유지하면서 모바일 방명록과 소개 페이지에서는 콘텐츠 길이에 따라 스크롤이 가능하도록 구현했습니다.",
+        cause: "전체 페이지에 overflow: hidden이 적용되어 화면 높이를 초과하는 콘텐츠까지 스크롤이 차단되었습니다. 특히 모바일에서는 입력 폼과 게시글 목록이 길어질 경우 하단 콘텐츠에 접근하기 어려웠습니다.",
+        solution: "현재 페이지 경로와 화면 너비를 기준으로 스크롤 허용 여부를 분기했습니다. resize 이벤트를 통해 화면 크기 변경에도 대응하고, 이벤트 리스너 정리와 스타일 초기화를 적용하여 페이지 간 스크롤 동작이 충돌하지 않도록 했습니다.",
+        result: "모바일 및 특정 페이지에서 세로 스크롤이 정상적으로 동작하여 모든 콘텐츠에 원활하게 접근할 수 있게 되었습니다.",
+        language: "JavaScript",
+        after: `const updateOverflow = () => {
+  const isAboutPage = location.pathname === '/about';
+  const isGuestbookPage = location.pathname === '/guestbook';
+  const isMobile = window.innerWidth <= 576;
+
+  document.body.style.overflow =
+    isAboutPage || (isGuestbookPage && isMobile)
+      ? 'unset'
+      : 'hidden';
+};
+
+updateOverflow();
+window.addEventListener('resize', updateOverflow);
+
+return () => {
+  document.body.style.overflow = 'unset';
+  window.removeEventListener('resize', updateOverflow);
+};`,
+      },
+    ],
+
+    outcomes: [
+      "Firebase Authentication과 Firestore를 활용해 회원 인증부터 방명록 CRUD, 실시간 데이터 동기화, 작성자별 접근 제어까지 구현했습니다.",
+      "스폰지밥 콘셉트의 인터페이스와 미니게임을 결합해 사용자 간 소통과 참여가 가능한 웹사이트를 완성했습니다."
+    ],
+
+    retrospective: "Zustand와 Firestore 실시간 구독을 연동하며 데이터 변경과 화면 상태를 동기화하는 방법을 익혔습니다.\n\n또한 비동기 저장 실패 시 입력값을 보존하고, Security Rules로 데이터 접근 권한을 검증하며 상태 관리와 데이터 무결성의 중요성을 이해했습니다.",
+
+    improvements: "현재 방명록은 전체 데이터를 구독한 뒤 클라이언트에서 페이지네이션을 처리하는 구조입니다.\n\n향후에는 게시글 증가에 대비해 Firestore 커서 기반 페이지네이션과 조회 범위 최적화를 적용하고, 데이터 요청 및 오류 처리 로직에 대한 테스트를 보강하고자 합니다.",
+  },
   "07": { ...emptyProjectDetail },
   "08": { ...emptyProjectDetail },
-  "18": { ...emptyProjectDetail },
+"18": {
+    ...emptyProjectDetail,
+    serviceName: "React Lab",
+    siteUrl: "https://react-lab-ai.vercel.app/", // 예시 주소, 필요시 수정하세요
+    githubUrl: "https://github.com/jiwoo1012/react-lab", // 예시 주소, 필요시 수정하세요
+    period: "2026.09.03 - 2026.10.16",
+    team: "1명 (개인 프로젝트)",
+    role: "프론트엔드 · 백엔드 개발 및 API 연동",
+    stack: ["Next.js", "WebSocket", "Node.js", "MySQL", "TypeScript", "Express", "OpenAI API", "Vercel", "Render"],
+    overview: "ReactLab은 React 학습을 지원하는 AI 기반 웹 플랫폼입니다.\n\n사용자의 학습 목적에 따라 개념 설명, 문제 생성, 힌트를 제공하는 AI 학습 기능과 학습 문서 검색 기반 챗봇을 구현했습니다. 또한 회원가입 및 로그인, 네이버·카카오 소셜 로그인, WebSocket 기반 실시간 채팅, 날씨 조회 기능을 통합했습니다.\nNext.js와 Node.js·Express를 기반으로 프론트엔드와 백엔드를 구성하고, MySQL을 활용한 사용자 데이터 관리와 외부 API 연동을 구현하며 클라이언트부터 서버까지 이어지는 데이터 처리 흐름을 학습한 프로젝트입니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "AI 학습 기능 개발", anchor: "ai-study", description: "OpenAI API를 활용한 개념 설명·문제 생성·힌트 제공 기능 구현, 학습 모드별 요청 처리 및 응답 데이터 검증" },
+          { title: "AI 챗봇 구현", anchor: "ai-chatbot", description: "키워드 기반 학습 문서 검색, 관련도 점수 계산 및 검색 결과 기반 AI 응답 생성" },
+          { title: "회원 인증 시스템 구현", anchor: "auth", description: "Express·MySQL 기반 회원가입 및 로그인 API, bcrypt 비밀번호 암호화(해싱) 및 검증 로직 구현" },
+          { title: "소셜 로그인 연동", anchor: "social-login", description: "OAuth 2.0 기반 네이버·카카오 로그인, 사용자 정보 조회 및 회원 데이터 저장" },
+          { title: "실시간 통신 기능 구현", anchor: "chat", description: "WebSocket을 활용한 실시간 채팅 및 메시지 브로드캐스트 처리" },
+          { title: "외부 API 연동", anchor: "weather", description: "날씨 및 도시 검색 API 구현, 검색 결과 정렬·중복 제거 및 오류 처리" },
+          { title: "프론트엔드 개발 및 배포", anchor: "deployment", description: "Next.js 기반 학습·인증·채팅·날씨 화면 구현, Vercel·Render 배포 및 CORS 문제 해결" },
+        ],
+      },
+      {
+        title: "사용 기술",
+        items: [
+          { title: "언어", description: "TypeScript, JavaScript" },
+          { title: "프론트엔드", description: "React, Next.js, SCSS Modules" },
+          { title: "백엔드", description: "Node.js, Express, Next.js Route Handlers" },
+          { title: "데이터베이스", description: "MySQL" },
+          { title: "AI", description: "OpenAI API" },
+          { title: "인증", description: "bcrypt, OAuth 2.0" },
+          { title: "실시간 통신", description: "WebSocket" },
+          { title: "외부 API", description: "OpenWeather API, Open-Meteo API" },
+          { title: "배포", description: "Vercel, Render" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "ai-study",
+        title: "01. AI 기반 React 학습 API",
+        summary: "사용자의 학습 목적에 따라 개념 설명·문제 생성·힌트를 제공하는 API를 구현했습니다.",
+        responsibilities: [
+          "- OpenAI API 활용 개념 설명·문제 생성·힌트 제공 기능 구현",
+          "- 학습 모드별 요청 처리 및 응답 데이터 검증"
+        ],
+        steps: ["학습 모드 선택 및 요청", "OpenAI API 구조화된 응답 생성", "JSON Schema 기반 데이터 검증 및 출력"],
+        implementationDetails: "사용자의 학습 목적에 따라 개념 설명·문제 생성·힌트를 제공하는 API를 구현했습니다. 학습 모드별로 요청 데이터를 구성하고, JSON Schema를 활용해 문제와 정답·해설을 구조화했습니다. 입력값 및 API 응답 검증을 적용해 안정적인 학습 흐름을 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "ai-chatbot",
+        title: "02. 학습 문서 검색 기반 AI 챗봇",
+        summary: "학습 문서를 단원별로 분리하고, 키워드 일치도를 계산하는 RAG 방식의 챗봇을 구현했습니다.",
+        responsibilities: [
+          "- 키워드 기반 학습 문서 검색",
+          "- 관련도 점수 계산 및 검색 결과 기반 AI 응답 생성"
+        ],
+        steps: ["사용자 질문 키워드 추출", "단원별 문서 검색 및 점수화", "관련 문서 기반 AI 응답 생성"],
+        implementationDetails: "학습 문서를 단원별로 분리하고, 사용자 질문과 키워드의 일치도를 계산하는 검색 로직을 구현했습니다. 관련도가 높은 문서 최대 3개를 AI에 전달하는 키워드 기반 RAG 방식을 적용하고, 검색 결과가 없으면 불필요한 API 호출을 방지했습니다.",
+        images: [],
+      },
+      {
+        id: "auth",
+        title: "03. MySQL 기반 회원 인증",
+        summary: "Express와 MySQL을 연동해 비밀번호 암호화와 세션/토큰 기반 인증 API를 구현했습니다.",
+        responsibilities: [
+          "- Express·MySQL 기반 회원가입 및 로그인 API 개발",
+          "- bcrypt 비밀번호 암호화(해싱) 및 검증 로직 구현"
+        ],
+        steps: ["회원가입 정보 입력 및 해싱", "로그인 검증 및 데이터베이스 조회", "데이터베이스 연결 풀 관리"],
+        implementationDetails: "Express와 MySQL을 연동해 회원가입 및 로그인 API를 구현했습니다. bcrypt를 이용한 비밀번호 해싱 및 검증, 아이디 중복 확인, SQL 파라미터 바인딩을 적용했습니다. 데이터베이스 연결 풀을 사용해 회원 데이터를 관리했습니다.",
+        images: [],
+      },
+      {
+        id: "social-login",
+        title: "04. 네이버·카카오 소셜 로그인",
+        summary: "OAuth 2.0 인가 코드 흐름을 활용하여 네이버 및 카카오 소셜 로그인을 연동했습니다.",
+        responsibilities: [
+          "- OAuth 2.0 기반 네이버·카카오 로그인 연동",
+          "- 사용자 정보 조회 및 회원 데이터 저장"
+        ],
+        steps: ["소셜 인가 코드 발급", "액세스 토큰 교환 및 유저 정보 조회", "기존 회원 확인 및 신규 회원 등록"],
+        implementationDetails: "OAuth 2.0 인가 코드 흐름을 활용해 네이버·카카오 로그인을 연동했습니다. 서버에서 액세스 토큰 교환 및 사용자 정보 조회를 처리하고, 공급자와 소셜 ID를 기준으로 기존 회원 조회와 신규 회원 등록 로직을 구현했습니다.",
+        images: [],
+      },
+      {
+        id: "chat",
+        title: "05. WebSocket 기반 실시간 채팅",
+        summary: "WebSocket을 활용하여 클라이언트 간 실시간 메시지 송수신 및 브로드캐스트를 구현했습니다.",
+        responsibilities: [
+          "- WebSocket을 활용한 실시간 채팅 구현",
+          "- 메시지 브로드캐스트 처리 및 연결 상태 관리"
+        ],
+        steps: ["WebSocket 서버 연결", "실시간 메시지 수신", "접속 중인 클라이언트 브로드캐스트"],
+        implementationDetails: "Express HTTP 서버에 WebSocket 서버를 연결해 실시간 메시지 송수신 기능을 구현했습니다. 메시지 수신 시 연결 상태를 확인한 후 접속 중인 클라이언트에 브로드캐스트하고, 환경변수로 서버 접속 주소를 관리했습니다.",
+        images: [],
+      },
+      {
+        id: "weather",
+        title: "06. 외부 날씨 API 및 도시 검색",
+        summary: "Next.js Route Handler를 통해 외부 날씨 API를 호출하고 예외 처리를 적용했습니다.",
+        responsibilities: [
+          "- 날씨 및 도시 검색 API 구현",
+          "- 검색 결과 정렬·중복 제거 및 오류 처리"
+        ],
+        steps: ["도시명·좌표 기반 날씨 조회", "검색 결과 정렬 및 중복 제거", "외부 API 오류 예외 처리"],
+        implementationDetails: "Next.js Route Handler를 활용해 외부 날씨 API를 서버에서 호출하고, API 키를 환경변수로 관리했습니다. 도시명·좌표 기반 날씨 조회와 검색 결과의 정렬·중복 제거를 구현하고, 입력 오류 및 외부 API 요청 실패에 대한 예외 처리를 적용했습니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "AI 학습 모드에서 문제와 힌트가 덮어써지는 현상",
+        subtitle: "상태 분리 및 현재 문제 데이터(currentQuiz) 서버 전달을 통한 힌트 유지",
+        problem: "OpenAI API를 활용해 사용자가 학습 방식을 선택하면 AI가 설명, 문제, 힌트를 제공하는 React 학습 기능을 구현했습니다.",
+        cause: "문제 풀이 모드에서 힌트를 요청하면 기존에 생성된 문제가 사라지거나, 힌트 응답이 문제 영역에 표시되는 현상이 발생했습니다. 문제와 힌트를 동일한 응답 상태로 관리하고 있어 새로운 API 응답이 이전 문제 데이터를 덮어쓰는 것이 원인이었습니다.",
+        solution: "문제와 힌트의 상태를 분리하고, 힌트를 요청할 때 현재 문제 정보인 currentQuiz를 서버에 전달하도록 수정했습니다. 또한 API 응답 형식을 구분하여 힌트 응답이 기존 문제를 변경하지 않도록 개선했습니다. 이를 통해 사용자가 기존 문제를 유지한 상태에서 힌트를 확인할 수 있도록 학습 흐름을 개선했습니다.",
+        result: "힌트 조회 시 기존 문제가 덮어써지지 않고 독립적으로 출력되도록 UI 상태를 안정화했습니다.",
+        language: "JavaScript",
+        before: `// 문제와 힌트를 동일한 상태로 처리하던 방식 (예시)
+const [content, setContent] = useState("");
+
+const requestHint = async () => {
+  const res = await fetch("/api/study", { method: "POST", body: JSON.stringify({ mode: "hint" }) });
+  const data = await res.json();
+  setContent(data.hint); // 기존 문제 내용이 힌트로 덮어써짐
+};`,
+        after: `// 문제와 힌트를 별도 상태로 관리
+const [currentQuiz, setCurrentQuiz] = useState("");
+const [hint, setHint] = useState("");
+
+// 힌트 요청 시 기존 문제 정보를 함께 전달
+const response = await fetch("/api/study", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    mode: "hint",
+    currentQuiz,
+  }),
+});
+
+const data = await response.json();
+
+// 기존 문제를 유지하고 힌트만 갱신
+setHint(data.hint);`,
+      },
+      {
+        title: "비동기 API 요청으로 이전 응답이 화면에 표시되는 문제",
+        subtitle: "AbortController를 활용한 비동기 요청 경쟁 상태(Race Condition) 해결",
+        problem: "AI 학습 기능에서 사용자가 학습 모드를 변경하거나 새로운 질문을 입력하면 해당 요청에 맞는 AI 응답을 화면에 표시하도록 구현했습니다.",
+        cause: "API 응답이 완료되기 전에 사용자가 다른 학습 모드를 선택하거나 새로운 요청을 보내면, 이전 요청의 응답이 나중에 도착해 현재 화면의 내용을 덮어쓸 가능성이 있었습니다. 이는 비동기 요청의 완료 순서가 요청 순서와 항상 일치하지 않아 발생하는 경쟁 상태(Race Condition) 문제였습니다.",
+        solution: "AbortController를 도입해 새로운 요청이 발생하면 이전 요청을 취소하도록 변경했습니다. 또한 API 요청 중에는 로딩 상태를 표시하고 관련 버튼을 비활성화해 중복 요청을 방지했습니다. 이를 통해 이전 요청의 응답이 현재 학습 결과를 덮어쓰는 문제를 방지하고, 사용자에게 일관된 학습 화면을 제공하도록 개선했습니다.",
+        result: "빠른 연속 요청 시 발생하던 응답 뒤바뀜(Race Condition) 현상을 완벽히 차단했습니다.",
+        language: "TypeScript",
+        after: `const abortControllerRef =
+  useRef<AbortController | null>(null);
+
+const requestStudy = async () => {
+  // 이전 요청 취소
+  abortControllerRef.current?.abort();
+
+  const controller = new AbortController();
+  abortControllerRef.current = controller;
+
+  setLoading(true);
+
+  try {
+    const response = await fetch("/api/study", {
+      method: "POST",
+      signal: controller.signal,
+    });
+
+    const data = await response.json();
+
+    if (!controller.signal.aborted) {
+      setAnswer(data.answer);
+    }
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.name !== "AbortError"
+    ) {
+      console.error(error);
+    }
+  } finally {
+    if (abortControllerRef.current === controller) {
+      setLoading(false);
+    }
+  }
+};`,
+      },
+    ],
+
+    outcomes: [
+      "Next.js와 Express를 활용해 AI 학습, 회원 인증, 실시간 채팅, 날씨 조회 기능을 하나의 웹 플랫폼으로 구현했습니다.",
+      "MySQL 데이터 연동과 외부 API 호출, 소셜 로그인 처리까지 경험하며 프론트엔드와 백엔드가 연결되는 서비스 구조를 학습했습니다."
+    ],
+
+    retrospective: "학습 모드별 API 요청과 응답 검증, bcrypt 기반 비밀번호 해싱, SQL 파라미터 바인딩 등을 구현하며 서버 측 데이터 처리와 보안의 기초를 익혔습니다. 또한 비동기 요청 간 경쟁 상태와 CORS 문제를 해결하면서 클라이언트와 서버 사이의 데이터 흐름을 이해할 수 있었습니다.",
+
+    improvements: "현재 회원 인증은 비밀번호 검증과 사용자 정보 조회 중심으로 구현되어 있어, JWT 또는 세션 기반 인증과 보호 API의 접근 제어를 추가할 필요가 있습니다. 향후에는 API 로직의 모듈화, 예외 처리 및 자동화 테스트를 보완해 유지보수성과 안정성을 높이고자 합니다.",
+  },
 };

@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { ProjectDetail } from "../project-details";
 import styles from "./page.module.scss";
+import ScrollingCapture from "./scrolling-capture";
 
 type Implementation = NonNullable<ProjectDetail["implementations"]>[number];
 gsap.registerPlugin(ScrollTrigger);
@@ -103,7 +104,7 @@ export function FeatureViewer({ items, screenshots }: { items: Implementation[];
       <div id="feature-panel" role="tabpanel" aria-labelledby={item.id} className={styles.featurePanel}>
         <div role="tablist" aria-label="구현 자료" aria-orientation="vertical" className={styles.viewTabs}>{views.map((entry) => <button key={entry.id} id={`view-${entry.id}`} role="tab" type="button" aria-selected={activeView === entry.id} aria-controls="feature-media" tabIndex={activeView === entry.id ? 0 : -1} onKeyDown={tabKeys} onClick={() => setView(entry.id)}>{entry.label}</button>)}</div>
         <div key={`${item.id}-${activeView}`} id="feature-media" role="tabpanel" aria-labelledby={`view-${activeView}`} className={styles.featureMedia} tabIndex={0}>
-          {activeView === "screen" && (item.images.length ? item.images.map((shot) => <figure key={shot.src}><a href={shot.src} target="_blank" rel="noopener noreferrer"><Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 55vw" /></a><figcaption>{shot.caption}</figcaption></figure>) : item.video && <video key={item.video} controls playsInline preload="metadata" aria-label={`${item.title} 시연`}><source src={item.video} type="video/mp4" /></video>)}
+          {activeView === "screen" && (item.images.length ? item.images.map((shot) => shot.autoScroll ? <ScrollingCapture key={shot.src} shot={shot} /> : <figure key={shot.src}><a href={shot.src} target="_blank" rel="noopener noreferrer"><Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 55vw" /></a><figcaption>{shot.caption}</figcaption></figure>) : item.video && <video key={item.video} controls playsInline preload="metadata" aria-label={`${item.title} 시연`}><source src={item.video} type="video/mp4" /></video>)}
           {activeView === "video" && <video key={item.video} controls playsInline preload="metadata" poster={item.images[0]?.src} aria-label={`${item.title} 시연`}><source src={item.video} type="video/mp4" /></video>}
           {activeView === "flow" && <>{item.flowchart && <Image src={item.flowchart.src} alt={item.flowchart.alt} width={item.flowchart.width} height={item.flowchart.height} sizes="(max-width: 700px) 90vw, 55vw" />}<ol className={styles.flowSteps}>{(item.userFlow ?? item.personalizationFlow ?? item.analyticsFlow ?? []).map((step) => <li key={step.title}><strong>{step.title}</strong><p>{step.description}</p></li>)}</ol></>}
           {activeView === "code" && item.codeExamples?.map((example) => <div key={example.title}><CodeBlock title={example.filename || example.title} code={example.code} /><p className={styles.codeReason}>{example.rationale}</p></div>)}
