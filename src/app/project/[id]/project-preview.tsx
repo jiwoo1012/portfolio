@@ -39,13 +39,13 @@ export default function ProjectPreview({
           PC
         </button>
 
-        <button
+        {!["07", "08", "18"].includes(id) && <button
           type="button"
           aria-pressed={device === "mobile"}
           onClick={() => setDevice("mobile")}
         >
           Mobile
-        </button>
+        </button>}
       </div>
 
       <ProjectImageTransition id={id}>

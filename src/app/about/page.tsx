@@ -9,7 +9,7 @@ import { projects } from "../project/projects";
 
 export const metadata: Metadata = {
   title: "About — 김지우",
-  description: "안녕하세요. 풀스택 개발자 김지우입니다.",
+  description: "안녕하세요. 웹퍼블리셔 김지우입니다.",
 };
 
 export default function AboutPage() {
@@ -25,7 +25,7 @@ export default function AboutPage() {
           <div className={styles.introStage}>
             <div className={styles.greeting}>
               <h2 id="intro-title">
-                {["안녕하세요.", "풀스택 개발자 김지우입니다."].map((line) => (
+                {["안녕하세요.", "웹퍼블리셔 김지우입니다."].map((line) => (
                   <span className={styles.line} data-intro-line key={line}>
                     <span>{line}</span>
                     <span className={styles.ink} aria-hidden="true">{line}</span>

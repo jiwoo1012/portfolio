@@ -3,7 +3,8 @@ export type ProjectDetail = {
   siteUrl?: string;
   githubUrl?: string;
   presentationUrl?: string;
-  proposalUrl?: string;
+  wireframeUrl?: string;
+  characterProposalUrl?: string;
   demoAccount?: { username: string; password: string };
   contributionGroups?: { title: string; items: { title: string; description: string; anchor?: string }[] }[];
   implementations?: {
@@ -60,8 +61,9 @@ export const projectDetails: Record<string, ProjectDetail> = {
     demoAccount: { username: "jajak-admin01@jajak-admin.com", password: "Jajak!Admin01" },
     siteUrl: "https://jajak-ten.vercel.app/",
     githubUrl: "https://github.com/jiwoo1012/TeamProject2",
-    presentationUrl: "",
-    proposalUrl: "",
+    presentationUrl: "https://drive.google.com/file/d/1nf2LojauKwL6H0yjc9x6jfAqVmFXsfjH/view?usp=drive_link",
+    wireframeUrl: "https://www.figma.com/design/yLeM4521hKoDcxwNPyr4b6/%EC%9E%90%EC%9E%91-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84-%EC%B5%9C%EC%A2%85%EB%B3%B8?node-id=0-1&t=TidjJf4tEKyOYtH5-1",
+    characterProposalUrl: "https://drive.google.com/file/d/1L3mmjmFX0dA0azi-fpyiNDGI3z58EuJA/view?usp=drive_link",
     scaffold: true,
     team: "5명 (팀 프로젝트)",
     stack: ["React", "Sass", "OpenAI", "Firebase", "GitHub", "Vercel"],
@@ -488,6 +490,8 @@ const chart = new Chart(context, {
   },
 "02": {
     ...emptyProjectDetail,
+    presentationUrl: "https://drive.google.com/file/d/1K_lMoqQjgvJ4LTUZ7BrEPr-yYvmk10Rv/view?usp=drive_link",
+    wireframeUrl: "https://www.figma.com/design/76zc3GTDywQgEaAyWTi3Jr/1.5%EC%B0%A8-%ED%8C%80%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8---%EC%B1%94%EB%B2%84%EC%8A%A4?node-id=0-1&t=LJWXH9TjVJb3gIZJ-1",
     serviceName: "CHAMVERSE",
     siteUrl: "https://kimhyeonso.github.io/CHAMVERSE/html/intro.html",
     githubUrl: "https://github.com/kimhyeonso/NODE",
@@ -773,6 +777,7 @@ const clearSelection = () => {
     implementations: [
       {
         id: "auth",
+        video: "/project/onve/login.mp4",
         title: "01. 회원가입 및 사용자 인증",
         summary: "Firebase Authentication을 기반으로 안전한 회원가입, 로그인, 로그아웃 및 권한별 접근 제어를 구현했습니다.",
         responsibilities: [
@@ -786,6 +791,7 @@ const clearSelection = () => {
       },
       {
         id: "product-search",
+        video: "/project/onve/product.mp4",
         title: "02. 상품 조회 및 검색·정렬",
         summary: "Firestore에 저장된 상품 데이터를 기반으로 세밀한 필터링과 정렬 기능을 제공합니다.",
         responsibilities: [
@@ -808,10 +814,18 @@ const clearSelection = () => {
         ],
         steps: ["장바구니 상품 및 수량 관리", "최종 결제 금액 계산", "트랜잭션 기반 주문 생성 및 재고 차감"],
         implementationDetails: "클라이언트 측에서는 localStorage로 장바구니 상태를 유지하고, 주문 단계에서는 Cloud Functions와 Firestore 트랜잭션을 결합하여 동시성 문제를 방지하며 재고가 안전하게 차감되도록 구현했습니다.",
-        images: [],
+        images: [{
+          src: "/project/onve/cart.png",
+          alt: "onvé 장바구니 상품과 주문 예정 금액 화면",
+          title: "장바구니",
+          caption: "장바구니 상품 및 주문 예정 금액 확인",
+          width: 1897,
+          height: 904,
+        }],
       },
       {
         id: "admin-dashboard",
+        video: "/project/onve/admin.mp4",
         title: "04. 관리자 페이지 및 대시보드",
         summary: "운영 데이터를 시각화하고 상품 및 회원 정보를 효율적으로 관리할 수 있는 관리자 대시보드입니다.",
         responsibilities: [
@@ -927,7 +941,7 @@ setCartItems(nextItems);`,
 "04": {
     ...emptyProjectDetail,
     serviceName: "Bookly",
-    siteUrl: "https://bookly-admin.vercel.app/", // 예시 주소, 필요시 수정하세요
+    siteUrl: "https://dashboard-tau-eight-12.vercel.app/",
     githubUrl: "https://github.com/jiwoo1012/bookly", // 예시 주소, 필요시 수정하세요
     period: "2026.08.24 - 2026.09.01",
     team: "1명 (개인 프로젝트)",
@@ -951,6 +965,7 @@ setCartItems(nextItems);`,
     implementations: [
       {
         id: "stats",
+        video: "/project/dashboard/one.mp4",
         title: "01. 통계 데이터 시각화",
         summary: "Chart.js를 활용하여 회원 추이 및 도서 장르별 독서 지표를 직관적으로 시각화했습니다.",
         responsibilities: [
@@ -963,6 +978,7 @@ setCartItems(nextItems);`,
       },
       {
         id: "books",
+        video: "/project/dashboard/two.mp4",
         title: "02. 도서 관리 기능",
         summary: "도서명·저자 검색, 카테고리 및 기간별 인기 도서 조회와 상세 정보를 제공합니다.",
         responsibilities: [
@@ -976,6 +992,7 @@ setCartItems(nextItems);`,
       },
       {
         id: "members",
+        video: "/project/dashboard/three.mp4",
         title: "03. 회원 관리 기능",
         summary: "아이디·이름·닉네임 검색과 회원 상태별 필터링, 상세 정보 모달을 통한 관리 기능을 제공합니다.",
         responsibilities: [
@@ -989,6 +1006,7 @@ setCartItems(nextItems);`,
       },
       {
         id: "board",
+        video: "/project/dashboard/four.mp4",
         title: "04. 게시판 관리 기능",
         summary: "리뷰, 이벤트, 공지사항, 문의 게시판의 통합 관리 및 상태별 조회 기능을 구현했습니다.",
         responsibilities: [
@@ -1002,6 +1020,7 @@ setCartItems(nextItems);`,
       },
       {
         id: "admins",
+        video: "/project/dashboard/five.mp4",
         title: "05. 관리자 계정 관리",
         summary: "관리자 등록·수정·삭제 및 역할 설정, 활성·비활성 상태를 제어하는 계정 관리 기능입니다.",
         responsibilities: [
@@ -1015,6 +1034,7 @@ setCartItems(nextItems);`,
       },
       {
         id: "interaction",
+        video: "/project/dashboard/six.mp4",
         title: "06. 사용자 인터랙션",
         summary: "드래그 기반 카테고리 스크롤, 슬라이딩 탭, 모달 및 토스트 알림을 구현했습니다.",
         responsibilities: [
@@ -1163,6 +1183,8 @@ const handleImgError = (e) => {
   },
   "05": {
     ...emptyProjectDetail,
+    presentationUrl: "https://drive.google.com/file/d/1BFYVyuTL-1zsb3pl1ZdLDes4s2ZUMQFi/view?usp=drive_link",
+    wireframeUrl: "https://www.figma.com/design/3vAQpERYs37RoL4CBtH7iQ/1%EC%B0%A8-%ED%8C%80%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8--node?node-id=0-1&t=AYoDREmt1UmvQAjt-1",
     serviceName: "NODE",
     siteUrl: "https://kimhyeonso.github.io/NODE/",
     githubUrl: "https://github.com/kimhyeonso/NODE",
@@ -1190,6 +1212,7 @@ const handleImgError = (e) => {
       {
         id: "auth",
         title: "01. 로그인/회원가입",
+        video: "/project/node/one.mp4",
         summary: "사용자가 회원가입부터 로그인, 비밀번호 찾기 및 변경까지 계정 관련 기능을 이용할 수 있도록 구현했습니다.",
         responsibilities: [
           "- 로그인 및 회원가입 페이지 개발",
@@ -1203,6 +1226,7 @@ const handleImgError = (e) => {
       {
         id: "cart",
         title: "02. 장바구니",
+        video: "/project/node/two.mp4",
         summary: "사용자가 선택한 상품을 장바구니에 담고, 원하는 수량과 상품 목록을 관리할 수 있도록 구현했습니다.",
         responsibilities: [
           "- 상품 장바구니 추가 및 삭제",
@@ -1224,7 +1248,7 @@ const handleImgError = (e) => {
         ],
         steps: ["비교할 상품 선택", "스펙 비교 페이지 진입", "상세 스펙 비교 확인"],
         implementationDetails: "선택한 상품의 데이터를 비교 페이지로 전달하고, JavaScript 배열 탐색을 통해 각 상품의 스펙을 조회하도록 구현했습니다. 상품마다 서로 다른 출력 항목명을 고려해 복수의 검색 키를 적용했으며, 화면 표시용 항목명과 실제 데이터 조회용 키를 분리하여 비교표의 정확성을 개선했습니다.",
-        video: "/project/node/Mobile.mp4",
+        video: "/project/node/three.mp4",
         codeExamples: [
           {
             title: "스펙 데이터 복수 키 검색 및 조회",
@@ -1260,6 +1284,7 @@ function getSpecMulti(specs, keys) {
       {
         id: "location",
         title: "04. 매장 위치 안내",
+        video: "/project/node/four.mp4",
         summary: "카카오맵 API를 활용하여 매장 위치를 지도에 표시하고, 선택한 지점을 직관적으로 확인할 수 있도록 구현했습니다.",
         responsibilities: [
           "- 카카오맵 API 연동 및 지도 출력",
@@ -1343,8 +1368,8 @@ function showSingleBranch(index) {
   "06": {
     ...emptyProjectDetail,
     serviceName: "Bikini Bottom 방명록",
-    siteUrl: "https://bikini-bottom-guestbook.vercel.app/", // 예시 주소, 필요시 수정하세요
-    githubUrl: "https://github.com/jiwoo1012/bikini-bottom-guestbook", // 예시 주소, 필요시 수정하세요
+    siteUrl: "https://guestbook-fawn-eight.vercel.app/",
+    githubUrl: "https://github.com/jiwoo1012/Guestbook",
     period: "2026.07.13 - 2026.07.15",
     team: "1명 (개인 프로젝트)",
     role: "기획/디자인, 프론트엔드 개발, 실시간 연동 및 미니게임 구현 단독 수행",
@@ -1380,6 +1405,7 @@ function showSingleBranch(index) {
       {
         id: "auth",
         title: "01. 회원 인증 및 로그인 상태 관리",
+        video: "/project/guestbook/one.mp4",
         summary: "Firebase Authentication을 활용해 이메일 기반 회원가입·로그인·로그아웃 기능을 구현했습니다.",
         responsibilities: [
           "- Firebase Authentication 기반 이메일 회원가입·로그인·로그아웃 구현",
@@ -1393,6 +1419,7 @@ function showSingleBranch(index) {
       {
         id: "crud",
         title: "02. 실시간 방명록 관리",
+        video: "/project/guestbook/two.mp4",
         summary: "Firestore를 활용해 방명록 등록·조회·수정·삭제(CRUD) 기능과 실시간 동기화를 구현했습니다.",
         responsibilities: [
           "- Firestore 기반 방명록 등록·조회·수정·삭제(CRUD) 구현",
@@ -1419,6 +1446,7 @@ function showSingleBranch(index) {
       {
         id: "minigame",
         title: "04. 미니게임 및 사용자별 기록 관리",
+        video: "/project/guestbook/four.mp4",
         summary: "키보드·마우스 인터랙션과 충돌 판정, localStorage 기반 최고 기록 저장 기능을 갖춘 미니게임을 구현했습니다.",
         responsibilities: [
           "- 키보드·마우스 조작 및 충돌 판정 구현",
@@ -1524,13 +1552,307 @@ return () => {
 
     improvements: "현재 방명록은 전체 데이터를 구독한 뒤 클라이언트에서 페이지네이션을 처리하는 구조입니다.\n\n향후에는 게시글 증가에 대비해 Firestore 커서 기반 페이지네이션과 조회 범위 최적화를 적용하고, 데이터 요청 및 오류 처리 로직에 대한 테스트를 보강하고자 합니다.",
   },
-  "07": { ...emptyProjectDetail },
-  "08": { ...emptyProjectDetail },
+  "07": {
+    ...emptyProjectDetail,
+    serviceName: "Interactive Drawing App",
+    siteUrl: "", // 실제 배포 주소가 있다면 입력하세요
+    githubUrl: "https://github.com/jiwoo1012/canvas_drawing", // 예시 주소, 필요시 수정하세요
+    period: "2026.04", // 적절한 진행 기간으로 수정 가능합니다
+    team: "1명 (개인 프로젝트)",
+    role: "HTML5 Canvas API 활용 드로잉 툴 및 UI/UX 구현 단독 수행",
+    stack: ["HTML5", "CSS3", "JavaScript", "Canvas API"],
+    overview: "HTML5 Canvas API와 JavaScript를 활용하여 브라우저에서 직접 그림을 그리고 파일을 다운로드할 수 있도록 구현한 인터랙티브 드로잉 웹 애플리케이션입니다.\n\n사용자 편의를 고려한 툴바를 구성하여 브러시 색상, 굵기, 배경색을 실시간으로 변경할 수 있으며, 마우스 이벤트와 좌표 보정을 통해 매끄러운 드로잉 경험을 제공합니다. 또한 캔버스 데이터를 이미지 파일로 변환하는 다운로드 기능과 전체 초기화 기능을 구현했습니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "Canvas 드로잉 로직", anchor: "drawing", description: "mousedown, mousemove, mouseup 이벤트를 활용한 드로잉 경로 및 선 스타일 제어" },
+          { title: "툴바 인터랙션", anchor: "toolbar", description: "color, number input을 활용한 브러시 및 배경색 실시간 변경 기능 구현" },
+          { title: "캔버스 유틸리티", anchor: "utility", description: "캔버스 전체 초기화(clear) 및 toDataURL 기반 이미지 다운로드 기능 구현" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "drawing",
+        video: "/project/canvas/one.mp4",
+        title: "01. 마우스 기반 드로잉 및 좌표 보정",
+        summary: "mousedown, mousemove, mouseup 이벤트를 조합하여 사용자의 마우스 움직임에 따라 부드럽게 선이 그려지도록 구현했습니다.",
+        responsibilities: [
+          "- 마우스 입력 상태(isDrawing) 관리",
+          "- 툴바 높이를 고려한 마우스 Y축 좌표 보정",
+          "- lineCap을 활용한 선 끝단 디자인 처리"
+        ],
+        steps: ["마우스 클릭(mousedown)으로 드로잉 시작", "마우스 이동(mousemove)에 따른 선 연결 및 렌더링", "마우스 해제(mouseup) 시 경로 분리"],
+        implementationDetails: "window 크기와 툴바 높이를 동적으로 계산하여 캔버스 크기를 설정하고, clientY 좌표에서 툴바 오프셋을 보정하여 마우스 커서와 그려지는 선의 위치 오차를 해결했습니다.",
+        images: [],
+      },
+      {
+        id: "toolbar",
+        video: "/project/canvas/one.mp4",
+        title: "02. 실시간 툴바 및 스타일 제어",
+        summary: "change 이벤트 위임을 활용해 브러시 색상, 두께, 캔버스 배경색을 실시간으로 변경할 수 있는 커스텀 툴바를 구현했습니다.",
+        responsibilities: [
+          "- 이벤트 위임을 통한 툴바 입력 감지",
+          "- ctx.strokeStyle 및 lineWidth 동적 변경",
+          "- 캔버스 및 body 배경색 실시간 동기화"
+        ],
+        steps: ["툴바 옵션 변경", "change 이벤트 타겟 감지", "Canvas context 및 스타일 즉시 반영"],
+        implementationDetails: "toolbar 요소에 change 이벤트를 위임하여 사용자가 색상이나 브러시 두께를 바꿀 때마다 캔버스 설정(ctx.strokeStyle, lineWidth)이 실시간으로 반영되도록 처리했습니다.",
+        images: [],
+      },
+      {
+        id: "utility",
+        video: "/project/canvas/one.mp4",
+        title: "03. 화면 초기화 및 이미지 다운로드",
+        summary: "clearRect와 a 태그의 download 속성을 활용해 그림 초기화 및 파일 저장 기능을 구현했습니다.",
+        responsibilities: [
+          "- clearRect를 이용한 캔버스 전체 지우기",
+          "- toDataURL을 활용한 캔버스 데이터를 이미지로 변환",
+          "- 가공된 데이터 URL을 가진 a 태그 동적 생성 및 다운로드 실행"
+        ],
+        steps: ["버튼 클릭 이벤트 감지", "데이터 URL 변환 또는 clearRect 실행", "파일 다운로드 트리거"],
+        implementationDetails: "clearRect(0, 0, canvas.width, canvas.height)를 통해 캔버스를 초기화하고, canvas.toDataURL('image/png')를 동적으로 생성한 a 태그의 href에 주입하여 사용자가 그린 그림을 PNG 파일로 즉시 다운로드할 수 있게 구현했습니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "마우스 좌표 오차 및 선 끊김 현상 해결",
+        subtitle: "canvas offset 위치 계산 및 beginPath를 통한 경로 분리",
+        problem: "초기 구현 시 화면 전체 크기 기준의 clientY 좌표를 그대로 사용하거나 마우스를 뗄 때 경로가 이어지는 현상이 발생했습니다.",
+        cause: "상단에 위치한 툴바의 높이만큼 캔버스 내부 좌표계와 마우스 좌표계 간의 오차가 발생했으며, mouseup 시 beginPath()를 호출하지 않아 다음 드로잉 시작점과 이전 선이 의도치 않게 연결되었습니다.",
+        solution: "clientY - canvasOffsetY를 통해 Y축 좌표를 정확히 보정하고, mouseup 이벤트 발생 시 ctx.beginPath()를 호출하여 새로운 경로(Path)를 강제로 분리하도록 수정했습니다.",
+        result: "커서 위치와 정확히 일치하는 지점에 선이 그려지며, 마우스를 뗄 때마다 독립된 선 객체로 깔끔하게 처리되도록 개선했습니다.",
+        language: "JavaScript",
+        after: `canvas.addEventListener("mousemove", function(e){
+  if(!isDrawing) return;
+  ctx.lineWidth = lineWidth;
+  ctx.lineCap = 'round';
+  ctx.lineTo(e.clientX, e.clientY - canvasOffsetY); // Y축 좌표 보정
+  ctx.stroke();
+});
+
+canvas.addEventListener("mouseup", function(){
+  isDrawing = false;
+  ctx.beginPath(); // 경로 분리
+});`,
+      },
+    ],
+
+    outcomes: [
+      "HTML5 Canvas API와 순수 JavaScript를 활용해 별도의 외부 라이브러리 없이 커스텀 드로잉 앱을 완성했습니다.",
+      "마우스 좌표 제어, 이벤트 위임, 동적 파일 다운로드 기능을 구현하며 프론트엔드 인터랙션 개발 역량을 높였습니다."
+    ],
+
+    retrospective: "Canvas API의 기본 개념과 2D Context의 선 스타일, 경로 관리 방식을 깊이 있게 이해할 수 있었습니다. 특히 UI 이벤트와 캔버스 내부 좌표를 일치시키는 과정에서 DOM과 그래픽 렌더링 간의 관계를 학습했습니다.",
+
+    improvements: "현재는 자유로운 선 긋기 기능 중심으로 구현되어 있으나, 향후 사각형·원 등 도형 그리기 도구나 지우개 모드, 실행 취소(Undo/Redo) 기능을 추가하여 사용성를 더욱 확장하고자 합니다.",
+  },
+  "08": {
+    ...emptyProjectDetail,
+    serviceName: "React CRUD Board",
+    siteUrl: "https://react-crud-board-zeta.vercel.app/", // 예시 주소, 필요시 수정하세요
+    githubUrl: "https://github.com/jiwoo1012/bulletin-board",
+    period: "2026.06.29 - 2026.07.07",
+    team: "1명 (개인 프로젝트)",
+    role: "프론트엔드 개발, 사용자 인증 구현, 데이터베이스 연동 및 예외 처리 단독 수행",
+    stack: ["React", "JavaScript", "Zustand", "Firebase", "SCSS", "Vite"],
+    overview: "React CRUD Board는 React와 Firebase를 활용해 구현한 게시판 웹 애플리케이션입니다. 회원가입 및 로그인 기능을 기반으로 게시글 작성·조회·수정·삭제(CRUD) 기능을 제공하며, Cloud Firestore를 통해 게시글 데이터를 저장하고 관리합니다.\n\nZustand를 활용한 전역 상태 관리와 Firebase Authentication을 통한 사용자 인증을 구현했으며, 비동기 데이터 처리 과정에서 발생하는 오류와 상태 불일치를 해결하는 데 중점을 두었습니다. 이를 통해 프론트엔드와 데이터베이스 간의 데이터 흐름 및 인증 구조를 학습한 프로젝트입니다.",
+    
+    contributionGroups: [
+      {
+        title: "담당 역할 & 구현 내용",
+        items: [
+          { title: "프론트엔드 개발", description: "React 기반 게시판 UI 및 회원가입·로그인·게시글 목록·상세·작성·수정 화면 구현[cite: 10]" },
+          { title: "사용자 인증", description: "Firebase Authentication을 활용한 회원가입·로그인·로그아웃 및 인증 상태 복원[cite: 10]" },
+          { title: "데이터베이스 연동", description: "Cloud Firestore를 활용한 게시글 등록·조회·수정·삭제(CRUD) 구현[cite: 10]" },
+          { title: "라우팅 및 상태 관리", description: "React Router 기반 페이지 이동 및 Zustand를 활용한 인증·게시글 전역 상태 관리[cite: 10]" },
+          { title: "입력 검증 및 예외 처리", description: "필수 입력값 검증, 비동기 요청 상태 관리, 저장 실패 시 오류 처리 및 입력 데이터 유지[cite: 10]" },
+        ],
+      },
+      {
+        title: "사용 기술",
+        items: [
+          { title: "프론트엔드", description: "React, JavaScript(JSX) — 컴포넌트 기반 UI 및 기능 구현[cite: 11]" },
+          { title: "라우팅", description: "React Router — 게시판 목록·상세 페이지 이동[cite: 11]" },
+          { title: "상태 관리", description: "Zustand — 사용자 인증 정보와 게시글 전역 상태 관리[cite: 11]" },
+          { title: "스타일링", description: "SCSS(Sass), CSS Modules — 스타일 작성 및 컴포넌트별 스타일 분리[cite: 11]" },
+          { title: "인증", description: "Firebase Authentication — 이메일 기반 회원가입·로그인·로그아웃[cite: 11]" },
+          { title: "데이터베이스", description: "Cloud Firestore — 게시글 저장·조회·수정·삭제[cite: 11]" },
+          { title: "개발·빌드", description: "Vite — 개발 서버 실행 및 배포용 빌드[cite: 11]" },
+          { title: "코드 검사", description: "Oxlint — 코드 오류 및 품질 검사[cite: 11]" },
+        ],
+      },
+    ],
+
+    implementations: [
+      {
+        id: "auth",
+        title: "01. 사용자 인증 및 로그인 상태 관리",
+        summary: "Firebase Authentication을 활용해 이메일 기반 회원가입·로그인·로그아웃 및 인증 상태 복원을 구현했습니다.",
+        responsibilities: [
+          "- Firebase Authentication을 활용한 이메일 기반 회원가입·로그인·로그아웃 구현",
+          "- 인증 상태 구독과 Zustand 연동을 통한 새로고침 후 로그인 상태 복원",
+          "- 인증 처리 결과에 따른 사용자 정보 갱신 및 오류 메시지 표시"
+        ],
+        steps: ["회원가입/로그인 요청", "Firebase 인증 처리", "Zustand 전역 상태 및 인증 복원"],
+        implementationDetails: "Firebase Authentication을 활용해 이메일 기반 회원가입·로그인·로그아웃 기능을 구현했습니다. 인증 상태 구독과 Zustand 연동을 통해 새로고침 후 로그인 상태를 복원하고, 인증 처리 결과에 따라 사용자 정보를 갱신하도록 구성했습니다.",
+        images: [],
+      },
+      {
+        id: "crud",
+        title: "02. 게시글 CRUD 및 데이터베이스 연동",
+        summary: "Cloud Firestore를 활용한 게시글 등록·조회·수정·삭제 기능과 최신순 정렬, 상세 조회를 구현했습니다.",
+        responsibilities: [
+          "- Cloud Firestore를 활용한 게시글 등록·조회·수정·삭제 기능 구현",
+          "- 생성 시각을 기준으로 게시글 목록을 최신순 정렬",
+          "- React Router의 URL 파라미터를 활용한 게시글 상세 조회 구현"
+        ],
+        steps: ["게시글 작성 및 Firestore 저장", "생성 시각 기준 최신순 정렬 조회", "URL 파라미터 기반 상세 페이지 이동"],
+        implementationDetails: "Cloud Firestore를 활용한 게시글 등록·조회·수정·삭제 기능 구현했습니다. 생성 시각을 기준으로 게시글 목록을 최신순 정렬하고, React Router의 URL 파라미터를 활용한 게시글 상세 조회를 제공합니다.",
+        images: [],
+      },
+      {
+        id: "state",
+        title: "03. 전역 상태 관리 및 데이터 동기화",
+        summary: "Zustand를 활용해 전역 상태를 관리하고, Firestore 성공 여부에 따라 화면과 데이터를 동기화했습니다.",
+        responsibilities: [
+          "- Zustand를 활용한 사용자 인증 정보와 게시글 데이터의 전역 상태 관리",
+          "- Firestore 저장 성공 후 게시글 목록을 갱신해 화면과 데이터 상태 동기화",
+          "- 비동기 요청의 로딩·성공·실패 상태에 따른 화면 업데이트"
+        ],
+        steps: ["Zustand 스토어 상태 변경", "Firestore 연동 및 결과 처리", "로딩 및 성공/실패 상태 화면 반영"],
+        implementationDetails: "Zustand를 활용한 사용자 인증 정보와 게시글 데이터의 전역 상태 관리를 수행했습니다. Firestore 저장 성공 후 게시글 목록을 갱신해 화면과 데이터 상태를 동기화하고, 비동기 요청의 로딩·성공·실패 상태에 따라 화면을 업데이트합니다.",
+        images: [],
+      },
+      {
+        id: "validation",
+        title: "04. 입력 검증 및 예외 처리",
+        summary: "필수 입력값 검증과 등록 버튼 비활성화를 통한 중복 요청 방지, 저장 실패 시 예외 처리를 구현했습니다.",
+        responsibilities: [
+          "- 게시글 작성 시 로그인 여부 및 제목·내용 필수 입력값 검증",
+          "- 데이터 저장 중 등록 버튼 비활성화를 통한 중복 요청 방지",
+          "- 저장 실패 시 오류 메시지 표시 및 작성 중인 입력값 유지"
+        ],
+        steps: ["입력값 및 로그인 검증", "비동기 저장 중 버튼 비활성화", "실패 시 에러 출력 및 입력값 보존"],
+        implementationDetails: "게시글 작성 시 로그인 여부 및 제목·내용 필수 입력값 검증을 수행하고, 데이터 저장 중 등록 버튼 비활성화를 통해 중복 요청을 방지합니다. 저장 실패 시 오류 메시지를 표시하고 작성 중인 입력값을 유지하도록 예외 처리했습니다.",
+        images: [],
+      },
+    ],
+
+    challenges: [
+      {
+        title: "Firestore 전환에 따른 게시글 상세 조회 오류",
+        subtitle: "URL 파라미터와 Firestore 문서 ID 간 데이터 타입 일치화",
+        problem: "게시글 목록에서 제목을 클릭하면 URL의 ID에 해당하는 게시글을 찾아 상세 페이지에 표시해야 했습니다. 기존 데이터 구조에서 Firestore로 전환한 이후에도 정상적으로 게시글을 조회할 수 있도록 식별자 비교 로직을 수정해야 했습니다.",
+        cause: "기존 게시글은 숫자형 ID를 사용했지만, Firestore의 문서 ID는 문자열로 관리됩니다. URL에서 전달받은 ID를 Number()로 변환하면서 Firestore 문서 ID와 데이터 타입이 일치하지 않아 게시글을 찾지 못하는 문제가 발생했습니다.",
+        solution: "URL 파라미터와 Firestore 문서 ID를 동일한 문자열 타입으로 비교하도록 수정해 게시글 상세 조회 오류를 해결했습니다. 이를 통해 데이터베이스의 식별자 구조가 변경될 때 프론트엔드의 라우팅 및 조회 로직도 함께 고려해야 한다는 점을 배웠습니다.",
+        result: "문자열 기반의 문서 ID로 정확하게 매칭되어 상세 페이지 정보가 정상적으로 렌더링되도록 수정했습니다.",
+        language: "JavaScript",
+        before: `// 숫자형 변환으로 인해 Firestore 문자열 ID와 불일치하던 비교 로직 (예시)
+const { id } = useParams();
+const post = posts.find((item) => item.id === Number(id));`,
+        after: `Detail.jsx
+const { id } = useParams();
+const posts = usePostStore((state) => state.posts);
+
+const post = posts.find((item) => item.id === id);`,
+      },
+      {
+        title: "새로고침 시 로그인 상태 초기화 문제",
+        subtitle: "Firebase 인증 상태 변경 구독 및 인증 확인 완료 전 조건부 렌더링",
+        problem: "로그인한 사용자가 페이지를 새로고침하더라도 인증 상태가 유지되어야 했습니다. 또한 Firebase 인증 정보를 복원하는 동안 사용자가 일시적으로 비로그인 상태로 표시되는 문제를 방지해야 했습니다.",
+        cause: "Zustand의 전역 상태는 메모리에 저장되기 때문에 페이지를 새로고침하면 초기화됩니다. Firebase가 기존 인증 정보를 복원하기 전에 user: null 상태를 기준으로 화면을 렌더링하면서 로그인한 사용자도 일시적으로 비로그인 상태로 표시되는 문제가 발생했습니다.",
+        solution: "Firebase의 인증 상태 변경을 구독해 복원된 사용자 정보를 Zustand에 반영하고, 인증 확인이 완료될 때까지 대기 화면을 표시하도록 구현했습니다. 이를 통해 인증 상태와 초기화 완료 여부를 분리해 관리하고, 비동기 인증 처리 과정에서 발생할 수 있는 화면 상태 불일치를 방지했습니다.",
+        result: "새로고침 직후 인증 상태가 복원될 때까지 로딩 화면을 거치므로 깜빡임이나 비로그인 오인 현상이 사라졌습니다.",
+        language: "JavaScript",
+        after: `firebaseAuth.js / authStore.js / App.jsx
+// Firebase 인증 상태 유지 및 구독
+setPersistence(auth, browserLocalPersistence);
+
+export const subscribeAuthState = (callback) =>
+  onAuthStateChanged(auth, callback);
+
+// 인증 상태 복원 후 전역 상태 업데이트
+listenAuthState: () => {
+  return subscribeAuthState((user) => {
+    set({
+      user: mapUser(user),
+      initialized: true,
+    });
+  });
+},
+
+// 인증 상태 구독 및 해제
+useEffect(() => {
+  const unsubscribe = listenAuthState();
+  return unsubscribe;
+}, [listenAuthState]);
+
+// 인증 확인 완료 여부에 따른 조건부 렌더링
+{initialized ? <AuthForm /> : <p>로그인 상태 확인 중</p>}`,
+      },
+      {
+        title: "게시글 저장 실패 시 화면과 DB 상태 불일치 문제",
+        subtitle: "비동기 DB 저장 완료 시점 보장 및 로딩 중 중복 요청 방지",
+        problem: "게시글 작성 시 Firestore 저장이 완료된 후에만 목록에 데이터를 반영하고 입력값을 초기화해야 했습니다. 저장 요청에 실패하더라도 사용자가 작성한 내용은 유지되도록 처리해야 했습니다.",
+        cause: "비동기 DB 저장이 완료되기 전에 화면 상태를 변경하면, 저장 실패 시 실제 DB에는 존재하지 않는 게시글이 목록에 표시되거나 작성 중인 내용이 사라질 수 있습니다. 또한 저장 요청 중 등록 버튼을 반복 클릭하면 중복 요청이 발생할 가능성이 있었습니다.",
+        solution: "Firestore 저장이 성공한 경우에만 게시글 목록을 갱신하고 입력값을 초기화하도록 처리했습니다. 저장 실패 시에는 오류 메시지를 표시하면서 작성 내용을 유지하고, 요청 중에는 등록 버튼을 비활성화해 반복 요청을 방지했습니다. 이를 통해 비동기 데이터 처리에서 성공·실패 상태를 명확하게 구분하고, 화면과 DB 간 데이터 일관성을 고려하는 방법을 익혔습니다.",
+        result: "네트워크 통신 중 버튼이 잠겨 중복 생성이 차단되며, 저장 성공 시에만 폼이 초기화되어 데이터 정합성이 확보되었습니다.",
+        language: "JavaScript",
+        after: `postStore.js
+addPost: async (newPost) => {
+  set({ loading: true, error: '' });
+
+  try {
+    const savedPost = await addPostToFirestore(newPost);
+
+    set((state) => ({
+      posts: [savedPost, ...state.posts],
+      loading: false,
+    }));
+  } catch (error) {
+    set({
+      error: getPostErrorMessage(error),
+      loading: false,
+    });
+    throw error;
+  }
+},
+PostForm.jsx
+try {
+  await addPost(newPost);
+  setTitle('');
+  setContent('');
+} catch (error) {
+  alert(error.message);
+}
+
+<button onClick={submitB} disabled={loading}>
+  {loading ? '등록 중' : '등록'}
+</button>`,
+      },
+    ],
+
+    outcomes: [
+      "React와 Firebase를 연동해 회원가입·로그인부터 게시글 CRUD까지 제공하는 인증 기반 게시판을 구현했습니다.",
+      "Zustand를 활용한 전역 상태 관리와 Firestore 데이터 연동을 통해 사용자 인증, 게시글 조회·저장, 화면 갱신으로 이어지는 기능을 완성했습니다."
+    ],
+
+    retrospective: "Firebase Authentication의 비동기 인증 상태 복원과 Firestore 문서 ID 기반 조회 로직을 구현하며 인증 및 데이터 처리 흐름에 대한 이해를 높였습니다.\n\n또한 DB 저장 결과에 따라 화면 상태를 갱신하고 오류를 처리하며 데이터 일관성과 예외 처리의 중요성을 배웠습니다.",
+
+    improvements: "현재 게시글 상세 조회는 전역 상태에 저장된 데이터를 기준으로 동작해 새로고침 시 데이터가 정상적으로 표시되지 않을 수 있습니다.\n\n향후에는 Firestore 문서 ID를 활용한 개별 조회 기능과 작성자 기반 수정·삭제 권한 검증을 추가해 데이터 접근의 안정성과 보안성을 개선하고자 합니다.",
+  },
+  
 "18": {
     ...emptyProjectDetail,
     serviceName: "React Lab",
-    siteUrl: "https://react-lab-ai.vercel.app/", // 예시 주소, 필요시 수정하세요
-    githubUrl: "https://github.com/jiwoo1012/react-lab", // 예시 주소, 필요시 수정하세요
+    siteUrl: "https://reactlab-nu.vercel.app/",
+    githubUrl: "https://github.com/jiwoo1012/reactlab",
     period: "2026.09.03 - 2026.10.16",
     team: "1명 (개인 프로젝트)",
     role: "프론트엔드 · 백엔드 개발 및 API 연동",
@@ -1569,6 +1891,7 @@ return () => {
     implementations: [
       {
         id: "ai-study",
+        video: "/project/reactLab/one.mp4",
         title: "01. AI 기반 React 학습 API",
         summary: "사용자의 학습 목적에 따라 개념 설명·문제 생성·힌트를 제공하는 API를 구현했습니다.",
         responsibilities: [
@@ -1581,6 +1904,7 @@ return () => {
       },
       {
         id: "ai-chatbot",
+        video: "/project/reactLab/two.mp4",
         title: "02. 학습 문서 검색 기반 AI 챗봇",
         summary: "학습 문서를 단원별로 분리하고, 키워드 일치도를 계산하는 RAG 방식의 챗봇을 구현했습니다.",
         responsibilities: [
@@ -1605,6 +1929,7 @@ return () => {
       },
       {
         id: "social-login",
+        video: "/project/reactLab/four.mp4",
         title: "04. 네이버·카카오 소셜 로그인",
         summary: "OAuth 2.0 인가 코드 흐름을 활용하여 네이버 및 카카오 소셜 로그인을 연동했습니다.",
         responsibilities: [
@@ -1617,6 +1942,7 @@ return () => {
       },
       {
         id: "chat",
+        video: "/project/reactLab/five.mp4",
         title: "05. WebSocket 기반 실시간 채팅",
         summary: "WebSocket을 활용하여 클라이언트 간 실시간 메시지 송수신 및 브로드캐스트를 구현했습니다.",
         responsibilities: [
@@ -1629,6 +1955,7 @@ return () => {
       },
       {
         id: "weather",
+        video: "/project/reactLab/six.mp4",
         title: "06. 외부 날씨 API 및 도시 검색",
         summary: "Next.js Route Handler를 통해 외부 날씨 API를 호출하고 예외 처리를 적용했습니다.",
         responsibilities: [

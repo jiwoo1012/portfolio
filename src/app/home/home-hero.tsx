@@ -7,7 +7,7 @@ import styles from "./hero.module.scss";
 
 const keywords = ["OBSERVATION", "PRINCIPLE", "CONNECTION", "EXECUTION", "INITIATIVE"];
 const alphabet = keywords.join("").split("");
-const roleTitle = "FULL-STACK DEVELOPER";
+const roleTitle = "WEB PUBLISH";
 const scatteredLetters = Array.from({ length: 20 }, (_, index) => {
   const sourceIndex = Math.floor(index * alphabet.length / 20);
   return { letter: alphabet[sourceIndex], sourceIndex };
@@ -201,7 +201,7 @@ export default function HomeHero() {
   return <>
     <section ref={root} className={styles.scrollScene} aria-labelledby="home-title">
       <div data-stage className={styles.hero}>
-        <h1 id="home-title" className={styles.srOnly}>김지우 — 풀스택 개발자 포트폴리오</h1>
+        <h1 id="home-title" className={styles.srOnly}>김지우 — 웹 퍼블리셔 포트폴리오</h1>
         <div className={styles.marquee} aria-hidden="true">
           <div data-track className={styles.track}>
             {[0, 1].map((copy) => <div className={styles.keywords} key={copy}>

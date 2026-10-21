@@ -17,6 +17,7 @@ export const mobileCaptures: Partial<Record<string, StaticImageData>> = {};
 export const mobileVideos: Partial<Record<string, string>> = {
   "01": "/project/jajak/jajak_Mobile.mp4",
   "02": "/project/chamverse/mobile-web.mp4",
+  "03": "/project/onve/mobile-web.mp4",
   "05": "/project/node/mobile-web.mp4",
   "06": "/project/guestbook/Mobile.mp4",
 };

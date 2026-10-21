@@ -11,7 +11,7 @@ import styles from "./page.module.scss";
 import HomeHero from "./home-hero";
 import footerStyles from "./home-footer.module.scss";
 
-export const metadata: Metadata = { title: "김지우 | Full-stack Developer", description: "AI 닿지 않는 디테일까지 코드로 완성합니다. 풀스택 개발자 김지우의 포트폴리오." };
+export const metadata: Metadata = { title: "김지우 | Full-stack Developer", description: "AI 닿지 않는 디테일까지 코드로 완성합니다. 웹 퍼블리셔 김지우의 포트폴리오." };
 
 export default function HomePage() {
   return <HomeExperience>

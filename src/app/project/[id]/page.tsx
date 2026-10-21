@@ -29,8 +29,11 @@ export default async function ProjectDetailPage({ params }: Props) {
   const links = [
     { label: "사이트 바로가기", url: detail.siteUrl || project.siteUrl },
     { label: "깃허브 주소", url: detail.githubUrl || project.githubUrl },
-    { label: "발표 자료", url: detail.presentationUrl },
-    { label: "기획서", url: detail.proposalUrl },
+    ...(["03", "04", "06", "07", "08", "18"].includes(id) ? [] : [
+      { label: "발표 자료", url: detail.presentationUrl },
+      { label: "와이어프레임", url: detail.wireframeUrl },
+    ]),
+    ...(detail.characterProposalUrl ? [{ label: "막동이 캐릭터 기획안", url: detail.characterProposalUrl }] : []),
   ];
   return <div className={styles.page} id="top">
     <a className={styles.skip} href="#overview">본문으로 건너뛰기</a>

@@ -14,7 +14,10 @@ import ProjectImageTransition from "./project-image-transition";
 import { projectDetails } from "./project-details";
 import { backendProjectOrder, projectToolIcons, projectTools } from "./project-tools";
 import vintage from "../home/page.module.scss";
-import { desktopCaptures as hoverCaptures } from "./project-captures";
+import { desktopCaptures } from "./project-captures";
+import reactLabCapture from "../../../public/project/reactLab/hover.webp";
+
+const hoverCaptures: typeof desktopCaptures = { ...desktopCaptures, "18": reactLabCapture };
 
 const categories = [
   { id: "frontend", label: "FRONTEND" },
@@ -73,7 +76,7 @@ export default function ProjectGallery({ category }: { category: string }) {
             <DraggableProjectRow id={`${category.id}-row`} label={category.label}>
               {items.map((project) => {
                 const siteUrl = projectDetails[project.id]?.siteUrl || project.siteUrl || project.youtube?.url;
-                const content = <><ProjectImageTransition id={project.id}><div className={archive.thumbnail}>
+                const content = <><ProjectImageTransition id={project.id}><div className={`${archive.thumbnail} ${["07", "08"].includes(project.id) ? archive.zoomThumbnail : ""}`}>
                   <Image src={project.image} alt={`${project.title} 대표 화면`} fill sizes="(max-width: 700px) 68vw, 27vw" />
                   {hoverCaptures[project.id] && <Image className={archive.hoverCapture} src={hoverCaptures[project.id]!} alt="" aria-hidden="true" fill sizes="(max-width: 700px) 68vw, 27vw" />}
                   {project.youtube && <span className={archive.playIcon} aria-hidden="true">▶</span>}
@@ -108,7 +111,7 @@ export default function ProjectGallery({ category }: { category: string }) {
           <div className={styles.dialogHeader}><span>PROJECT / {selected.id}</span><button autoFocus onClick={() => dialogRef.current?.close()} aria-label="미리보기 닫기">닫기 ×</button></div>
           {selected.youtube ? <div className={styles.videoPlayer}>
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${selected.youtube.id}?start=${selected.youtube.start}&rel=0`}
+              src={`https://www.youtube-nocookie.com/embed/${selected.youtube.id}?start=${selected.youtube.start}&rel=0&autoplay=1&mute=1&playsinline=1`}
               title={selected.youtube.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
